@@ -1,4 +1,4 @@
-﻿using Application.Exceptions;
+﻿using Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Web.API.Controllers
 {
-    public class TestController : WithVersionBaseApiController
+    public class UsersController : BaseApiController
     {
-        [HttpGet("/test")]
-        public ActionResult<object> Test()
+        [HttpGet]
+        public ActionResult Get()
         {
             return Ok();
         }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Text;
 
 namespace Infrastructure.Persistence
@@ -18,11 +19,13 @@ namespace Infrastructure.Persistence
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static void AddPersistenceInfrastructure(this IServiceCollection services)
         {
+            Configuration config = new Configuration();
+
             services.AddDbContext<SportDbContext>(options =>
             {
-                options.UseNpgsql(configuration.GetConnectionString("local"), b => b.MigrationsAssembly(typeof(SportDbContext).FullName));
+                options.UseNpgsql(config.ConnectionString, b => b.MigrationsAssembly(typeof(SportDbContext).FullName));
             }).AddUnitOfWork<SportDbContext>();
 
             services.AddScoped<IAccountService, AccountService>();

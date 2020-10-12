@@ -47,5 +47,22 @@ namespace Infrastructure.Persistence.Identity.Services
 
             await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<User> FindById(int id)
+        {
+            return await _unitOfWork
+                .GetRepository<User>()
+                .FindAsync(id);
+        }
+
+        public async Task<User> FindByIdWithRoleClaims(int id)
+        {
+            return await _unitOfWork
+                .GetRepository<User>()
+                .GetSingleOrDefaultAsync(
+                predicate: x => x.Id == id,
+                include: source => source.Include(u => u.Roles)
+                .ThenInclude(r => r.RoleClaims));
+        }
     }
 }

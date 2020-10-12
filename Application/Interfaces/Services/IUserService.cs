@@ -22,5 +22,14 @@ namespace Application.Interfaces.Services
         /// <param name="checkForSamePhoneNumber">Проверить на наличие похожего телефона?</param>
         /// <returns></returns>
         Task AddNewUser(User user, bool checkForSamePhoneNumber = false);
+
+        /// <summary>
+        /// Найти пользователя по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<User> FindById(int id);
+
+        Task<User> FindByIdWithRoleClaims(int id);
     }
 }

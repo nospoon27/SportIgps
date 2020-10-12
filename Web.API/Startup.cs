@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application;
+using Application.DTOs.Account.Validation;
 using Application.Interfaces.Services;
+using FluentValidation.AspNetCore;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +17,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Web.API.Configurations.ControllerModelConventions;
 using Web.API.Extensions;
+using Web.API.Filters;
+using Web.API.Handlers;
 using Web.API.Middlewares;
+using Web.API.Providers;
 using Web.API.Services;
 
 namespace Web.API
@@ -34,7 +40,8 @@ namespace Web.API
 
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true)
-                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>());
 
             services.AddSwaggerExtension();
 
@@ -42,11 +49,15 @@ namespace Web.API
 
             services.AddApiVersioningExtension();
 
-            services.AddPersistenceInfrastructure(Configuration);
+            services.AddPersistenceInfrastructure();
 
             services.AddRouting();
 
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+            services.AddTransient<IValidatorInterceptor, ValidatorInterceptor>();
 
         }
 

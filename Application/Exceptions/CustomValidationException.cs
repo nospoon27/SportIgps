@@ -6,15 +6,15 @@ using System.Text;
 
 namespace Application.Exceptions
 {
-    public class ValidationException : Exception
+    public class CustomValidationException : Exception
     {
-        public ValidationException()
-            : base("One or more validation failures have occurred.")
+        public CustomValidationException()
+            : base("Произошла одна или несколько ошибок при проверке запроса.")
         {
             Failures = new Dictionary<string, string[]>();
         }
 
-        public ValidationException(List<ValidationFailure> failures)
+        public CustomValidationException(IList<ValidationFailure> failures)
             : this()
         {
             var propertyNames = failures

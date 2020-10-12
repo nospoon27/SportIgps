@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ValidationException = Application.Exceptions.ValidationException;
+using CustomValidationException = Application.Exceptions.CustomValidationException;
 
 namespace Application.Behaviours
 {
@@ -31,7 +31,7 @@ namespace Application.Behaviours
 
             if(failures.Count > 0)
             {
-                throw new ValidationException(failures);
+                throw new CustomValidationException(failures);
             }
 
             return next();

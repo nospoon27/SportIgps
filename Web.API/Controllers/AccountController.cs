@@ -6,11 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Filters;
 
 namespace Web.API.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController : BaseApiController
+    public class AccountController : WithVersionBaseApiController
     {
         private readonly IAccountService _accountService;
         public AccountController(IAccountService accountService)
@@ -21,7 +22,7 @@ namespace Web.API.Controllers
         [HttpPost("authenticate")]
         public async Task<ActionResult<Response<AuthenticationResponse>>> Authenticate(AuthenticationRequest request)
         {
-            return Ok(await _accountService.AuthenticateAsync(request, GenerateIPAddress());
+            return Ok(await _accountService.AuthenticateAsync(request, GenerateIPAddress()));
         }
 
         [HttpPost("register")]

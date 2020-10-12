@@ -30,12 +30,13 @@ namespace Infrastructure.Persistence
         public DbSet<PersonalWorkout> PersonalWorkouts { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Sport> Sports { get; set; }
-        public DbSet<SportType> SportType { get; set; }
+        public DbSet<SportType> SportTypes { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<TrainerSpecialization> TrainerSpecializations { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<RoleClaim> RoleClaims { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

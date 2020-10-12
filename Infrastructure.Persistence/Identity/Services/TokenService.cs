@@ -44,11 +44,7 @@ namespace Infrastructure.Persistence.Identity.Services
                 CryptoProviderFactory = new CryptoProviderFactory() { CacheSignatureProviders = false }
             };
 
-            var roleClaims = new List<Claim>();
-            for(int i = 0; i < user.Roles.Count; i++)
-            {
-                roleClaims.Add(new Claim("roles", user.Roles[i].Name));
-            }
+            var roleClaims = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Name)).ToArray();
 
             DateTime jwtDate = DateTime.Now;
             string ipAddress = IpHelper.GetIpAddress();
