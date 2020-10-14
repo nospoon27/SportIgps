@@ -9,11 +9,11 @@ namespace Application.Interfaces.Services
     public interface IUserService
     {
         /// <summary>
-        /// Найти пользователя по номеру телефона
+        /// Найти пользователя по номеру телефона и коду страны
         /// </summary>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        Task<User> FindByPhoneNumber(string phoneNumber);
+        Task<User> FindByPhoneNumber(CountryCode countryCode, string phoneNumber);
 
         /// <summary>
         /// Добавить пользователя

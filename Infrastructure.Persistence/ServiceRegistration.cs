@@ -32,6 +32,7 @@ namespace Infrastructure.Persistence
             services.AddScoped<IPasswordHashService, PasswordHashService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICountryCodeService, CountryCodeService>();
         }
     }
 }

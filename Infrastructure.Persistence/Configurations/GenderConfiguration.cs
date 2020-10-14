@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -18,14 +17,11 @@ namespace Infrastructure.Persistence.Configurations
                 .HasConversion<int>();
 
             builder
-                .HasData(
-                Enum.GetValues(typeof(GenderId))
-                .Cast<GenderId>()
-                .Select(@enum => new Gender()
+                .HasData(new List<Gender>()
                 {
-                    Id = (int)@enum,
-                    Name = @enum.ToString()
-                }));
+                    new Gender { Id = 1, Name = "Мужской" },
+                    new Gender { Id = 2, Name = "Женский" }
+                });
         }
     }
 }

@@ -19,15 +19,15 @@ namespace Infrastructure.Persistence.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<User> FindByPhoneNumber(string phoneNumber)
+        public async Task<User> FindByPhoneNumber(CountryCode countryCode, string phoneNumber)
         {
-            if (phoneNumber == null) throw new ArgumentNullException("Номер не может быть null");
+            if (phoneNumber == null || countryCode == null) throw new ArgumentNullException("Один из аргументов был null");
 
             var user = await _unitOfWork
                 .GetRepository<User>()
                 .GetSingleOrDefaultAsync(
-                predicate: x => x.PhoneNumber == phoneNumber,
-                include: source => source.Include(u => u.Roles),
+                predicate: x => x.PhoneNumber == phoneNumber && x.CountryCode.Id == countryCode.Id,
+                include: source => source.Include(u => u.Roles).Include(u => u.CountryCode),
                 disableTracking: false);
 
             return user;
@@ -54,9 +54,21 @@ namespace Infrastructure.Persistence.Identity.Services
         public async Task<User> FindById(int id)
         {
             if (id == 0) throw new ArgumentException("id не может быть равен 0");
-            return await _unitOfWork
-                .GetRepository<User>()
-                .FindAsync(id);
+            try
+            {
+                return await _unitOfWork
+                        .GetRepository<User>()
+                        .GetSingleOrDefaultAsync(
+                        predicate: x => x.Id == id,
+                        include: source => source
+                        .Include(x => x.Gender)
+                        .Include(x => x.CountryCode));
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public async Task<User> FindByIdWithRoleClaims(int id)
@@ -74,19 +86,24 @@ namespace Infrastructure.Persistence.Identity.Services
         {
             if (user == null || roleName == null) throw new ArgumentNullException();
 
+            var currentUser = await FindById(user.Id);
             var role = await FindRoleByName(roleName);
-            if (role == null) throw new ApiException($"Не удалось присвоить роль. Роль {roleName} не найдена");
 
-            var actualUser = await _unitOfWork.GetRepository<User>()
-                .GetSingleOrDefaultAsync(
-                predicate: x => x.Id == user.Id,
-                include: source => source.Include(u => u.Roles));
+            if (user == null) throw new KeyNotFoundException($"не удалось привоить роль. Пользователь с ключом {user.Id} не найден");
+            if (role == null) throw new KeyNotFoundException($"Не удалось присвоить роль. Роль {roleName} не найдена");
 
-            actualUser.Roles.Add(role);
+            //var actualUser = await _unitOfWork.GetRepository<User>()
+            //    .GetSingleOrDefaultAsync(
+            //    predicate: x => x.Id == user.Id,
+            //    include: source => source.Include(u => u.Roles),
+            //    disableTracking: false);
 
-            await _unitOfWork.SaveChangesAsync();
-            //await _unitOfWork.GetRepository<UserRole>()
-            //    .InsertAsync(new UserRole(user.Id, role.Id));
+            //actualUser.Roles.Add(role);
+
+            //await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.GetRepository<UserRole>()
+                .InsertAsync(new UserRole(currentUser.Id, role.Id));
         }
 
         public async Task<Role> FindRoleByName(string roleName)

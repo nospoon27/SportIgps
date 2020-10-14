@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201014114724_AddSeeds")]
+    partial class AddSeeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -637,7 +639,7 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CountryCodeId")
+                    b.Property<int?>("CountryCodeId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
@@ -808,9 +810,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.CountryCode", "CountryCode")
                         .WithMany()
-                        .HasForeignKey("CountryCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryCodeId");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>

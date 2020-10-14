@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -18,14 +17,11 @@ namespace Infrastructure.Persistence.Configurations
                 .HasConversion<int>();
 
             builder
-                .HasData(
-                Enum.GetValues(typeof(GenderId))
-                .Cast<AbonementLimitTypeId>()
-                .Select(@enum => new AbonementLimitType
+                .HasData(new List<AbonementLimitType>()
                 {
-                   Id = (int)@enum,
-                   Name = @enum.ToString()
-                }));
+                    new AbonementLimitType { Id = 1, Name = "Ограниченный" },
+                    new AbonementLimitType { Id = 1 , Name = "Безлимитный" }
+                });
         }
     }
 }

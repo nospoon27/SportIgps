@@ -1,9 +1,10 @@
 ﻿using Application.DTOs.Account;
 using Application.Exceptions;
 using Application.Interfaces.Services;
+using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
+using AutoMapper;
 using Domain.Entities;
-using Domain.Enums;
 using Domain.Settings;
 using Infrastructure.Persistence.Identity.Helpers;
 using Microsoft.Extensions.Logging;
@@ -27,22 +28,30 @@ namespace Infrastructure.Persistence.Identity.Services
         private readonly ILogger<AccountService> _logger;
         private readonly IPasswordHashService _passwordHashService;
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
+        private readonly ICountryCodeService _countryCodeService;
         public AccountService(
             IOptions<JWTSettings> jwtSetting,
             IUserService userService,
             ILogger<AccountService> logger,
             IPasswordHashService passwordHashService,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            IMapper mapper,
+            ICountryCodeService countryCodeService)
         {
             _jwtSettings = jwtSetting.Value;
             _userService = userService;
             _logger = logger;
             _passwordHashService = passwordHashService;
             _tokenService = tokenService;
+            _mapper = mapper;
+            _countryCodeService = countryCodeService;
         }
         public async Task<Response<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request, string ipAddress)
         {
-            var user = await _userService.FindByPhoneNumber(request.PhoneNumber);
+            var countryCode = await _countryCodeService.GetById(request.CountryCodeId);
+
+            var user = await _userService.FindByPhoneNumber(countryCode, request.PhoneNumber);
             if (user == null || !_passwordHashService.VerifyHashedPassword(user.Password, request.Password))
             {
                 _logger.LogInformation($"{nameof(AuthenticateAsync)}, не найден пользователь с номером {request.PhoneNumber}");
@@ -63,24 +72,30 @@ namespace Infrastructure.Persistence.Identity.Services
 
         public async Task<Response<string>> RegisterAsync(RegisterRequest request, string origin)
         {
-            var userWithSameUserName = await _userService.FindByPhoneNumber(request.PhoneNumber);
-            if (userWithSameUserName != null)
-            {
-                _logger.LogInformation($"{nameof(RegisterAsync)}, пользователь {request.PhoneNumber} уже существует");
-                throw new ApiException($"Пользователь с таким номером телефона уже существует");
-            }
+            var countryCode = await _countryCodeService.GetById(request.CountryCodeId);
 
-            // TODO: Использовать automapper
-            var user = new User()
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber,
-                Password = request.Password
-            };
+            //var userWithSameUserName = await _userService.FindByPhoneNumber(countryCode, request.PhoneNumber);
+            //if (userWithSameUserName != null)
+            //{
+            //    _logger.LogInformation($"{nameof(RegisterAsync)}, пользователь {request.PhoneNumber} уже существует");
+            //    throw new ApiException($"Пользователь с таким номером телефона уже существует");
+            //}
 
-            await _userService.AddNewUser(user);
-            await _userService.AddRoleToUser(user, RoleId.client.ToString());
+            var user = _mapper.Map<User>(request);
+            //var user = new User()
+            //{
+            //    FirstName = request.FirstName,
+            //    LastName = request.LastName,
+            //    PhoneNumber = request.PhoneNumber,
+            //    Password = request.Password
+            //};
+            user.CountryCodeId = countryCode.Id;
+
+            await _userService.AddNewUser(user, true);
+
+            var clientRole = await _userService.FindRoleByName("client");
+
+            await _userService.AddRoleToUser(user, clientRole.Name);
 
             return new Response<string>(user.Id.ToString(), $"Пользователь зарегистрирован");
         }

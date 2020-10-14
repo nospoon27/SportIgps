@@ -22,7 +22,7 @@ namespace Application.Features.Users.Commands.UpdateUser
         public async Task<Response<int>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.GetRepository<User>()
-                .FindAsync(request.Id, cancellationToken);
+                .FindAsync(request.Id);
             if (user == null) throw new KeyNotFoundException($"Пользователь с ключом {request.Id} не найден");
 
             user.FirstName = request.FirstName;

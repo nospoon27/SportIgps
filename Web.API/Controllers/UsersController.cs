@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Commands.UpdateUser;
+﻿using Application.Features.Users.Commands.DeleteUserById;
+using Application.Features.Users.Commands.UpdateUser;
 using Application.Features.Users.Queries.GetAll;
 using Application.Features.Users.Queries.GetById;
 using Application.Wrappers;
@@ -27,6 +28,12 @@ namespace Web.API.Controllers
         {
             if (id != command.Id) return BadRequest();
             return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            return Ok(await Mediator.Send(new DeleteUserByIdCommand { Id = id }));
         }
     }
 }

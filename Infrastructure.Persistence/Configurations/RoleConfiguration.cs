@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -18,14 +17,13 @@ namespace Infrastructure.Persistence.Configurations
                 .HasConversion<int>();
 
             builder
-                .HasData(
-                Enum.GetValues(typeof(RoleId))
-                .Cast<RoleId>()
-                .Select(@enum => new Role()
+                .HasData(new List<Role>
                 {
-                    Id = (int)@enum,
-                    Name = @enum.ToString()
-                }));
+                    new Role { Id = 1, Name = "admin" },
+                    new Role { Id = 2, Name = "manager" },
+                    new Role { Id = 3, Name = "trainer" },
+                    new Role { Id = 4, Name = "client" }
+                });
         }
     }
 }

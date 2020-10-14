@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,9 +14,10 @@ namespace Domain.Entities
         public string MiddleName { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public GenderId GenderId { get; set; }
-        [NotMapped]
+        public int GenderId { get; set; }
         public Gender Gender { get; set; }
+        public int CountryCodeId { get; set; }
+        public CountryCode CountryCode { get; set; }
         public string Password { get; set; }
 
         [JsonIgnore]

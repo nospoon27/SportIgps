@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces.Services;
 using Domain.Common;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +36,7 @@ namespace Infrastructure.Persistence
         public DbSet<Location> Locations { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
+        public DbSet<CountryCode> CountryCodes { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

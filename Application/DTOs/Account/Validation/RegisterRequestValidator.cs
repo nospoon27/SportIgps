@@ -8,8 +8,8 @@ namespace Application.DTOs.Account.Validation
 {
     public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {
-        private string InvalidFormat = "{PropertyName} имеет неверный формат";
-        private string Required = "Поле {PropertyName} обязательно к заполнению";
+        private readonly string InvalidFormat = "{PropertyName} имеет неверный формат";
+        private readonly string Required = "Поле {PropertyName} обязательно к заполнению";
         public RegisterRequestValidator()
         {
             RuleFor(v => v.FirstName)
@@ -21,13 +21,17 @@ namespace Application.DTOs.Account.Validation
             RuleFor(v => v.PhoneNumber)
                 .NotNull().WithMessage(Required).WithName("Номер телефона")
                 .MaximumLength(13)
-                .MinimumLength(10).WithMessage("{PropertyName} должен состоять от 10 до 13 символов")
+                .MinimumLength(10).WithMessage("{PropertyName} должен состоять от {MinLength} до {MaxLength} символов")
                 .Matches(@"\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})").WithMessage(InvalidFormat);
 
-            RuleFor(v => v.CountryCode)
-                .NotNull().WithMessage(Required)
-                .WithName("Код страны")
-                .Matches(@"^\+\d{1,3}$").WithMessage(InvalidFormat);
+            //RuleFor(v => v.CountryCode)
+            //    .NotEqual(0).WithMessage(Required)
+            //    .WithName("Код страны")
+            //    .Matches(@"^\+\d{1,3}$").WithMessage(InvalidFormat);
+
+            RuleFor(v => v.CountryCodeId)
+                .NotEqual(0).WithMessage(Required)
+                .WithName("Код страны");
 
             RuleFor(v => v.Password)
                 .NotNull().WithMessage(Required).WithName("Пароль");

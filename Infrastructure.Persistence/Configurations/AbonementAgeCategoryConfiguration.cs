@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -19,13 +18,11 @@ namespace Infrastructure.Persistence.Configurations
 
             builder
                 .HasData(
-                Enum.GetValues(typeof(AbonementAgeCategoryId))
-                .Cast<AbonementAgeCategoryId>()
-                .Select(@enum => new AbonementAgeCategory()
+                new List<AbonementAgeCategory>()
                 {
-                    Id = (int)@enum,
-                    Name = @enum.ToString()
-                }));
+                    new AbonementAgeCategory { Id = 1, Name = "Взрослый" },
+                    new AbonementAgeCategory { Id = 2, Name = "Детский" }
+                });
         }
     }
 }

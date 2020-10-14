@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -18,14 +17,11 @@ namespace Infrastructure.Persistence.Configurations
                 .HasConversion<int>();
 
             builder
-                .HasData(
-                Enum.GetValues(typeof(AccessCardTypeId))
-                .Cast<AccessCardTypeId>()
-                .Select(@enum => new AccessCardType
+                .HasData(new List<AccessCardType>()
                 {
-                    Id = (int)@enum,
-                    Name = @enum.ToString()
-                }));
+                    new AccessCardType { Id = 1, Name = "Ограниченный" },
+                    new AccessCardType { Id = 1 , Name = "Свободный" }
+                });
         }
     }
 }

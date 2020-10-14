@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    [Migration("20201014092111_EditCountryCodeAndAddSeedData")]
-    partial class EditCountryCodeAndAddSeedData
+    [Migration("20201014122653_AddCountryCode_User_Relation")]
+    partial class AddCountryCode_User_Relation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,7 +117,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CountryCode");
+                    b.ToTable("CountryCodes");
 
                     b.HasData(
                         new
@@ -639,6 +639,9 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("CountryCodeId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
 
@@ -673,6 +676,8 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryCodeId");
 
                     b.ToTable("Users");
                 });
@@ -797,6 +802,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasOne("Domain.Entities.Trainer", "Trainer")
                         .WithMany("TrainerSpecialization")
                         .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.HasOne("Domain.Entities.CountryCode", "CountryCode")
+                        .WithMany()
+                        .HasForeignKey("CountryCodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Queries.GetAll;
+﻿using Application.DTOs.Account;
+using Application.Features.Users.Queries.GetAll;
 using Application.Features.Users.Queries.GetById;
 using AutoMapper;
 using Domain.Entities;
@@ -12,8 +13,17 @@ namespace Application.Mappings
     {
         public UserMapper()
         {
-            CreateMap<User, GetAllUsersResponse>().ReverseMap();
-            CreateMap<User, GetUserByIdResponse>().ReverseMap();
+            CreateMap<User, GetAllUsersResponse>()
+                .ForMember(x => x.Gender, o => o.MapFrom(x => x.Gender.Name))
+                .ForMember(x => x.CounrtyCode, o => o.MapFrom(x => x.CountryCode.Code));
+
+            CreateMap<User, GetUserByIdResponse>()
+                .ForMember(x => x.Gender, o => o.MapFrom(x => x.Gender.Name))
+                .ForMember(x => x.CounrtyCode, o => o.MapFrom(x => x.CountryCode.Code));
+
+            CreateMap<AuthenticationRequest, User>().ReverseMap();
+
+            CreateMap<RegisterRequest, User>().ReverseMap();
         }
     }
 }

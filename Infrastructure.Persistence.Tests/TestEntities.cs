@@ -23,6 +23,12 @@ namespace Infrastructure.Persistence.Tests
                             Gender = new Gender { Id = 1, Name = "мужской" },
                             GenderId = Domain.Enums.GenderId.Мужской,
                             PhoneNumber = "9119407574",
+                            CountryCode = new CountryCode
+                            {
+                                Id = 1,
+                                Code = "+7",
+                                ISOName = "RUS"
+                            }
                 },      new User
                         {
                             Id = 2,
@@ -32,6 +38,12 @@ namespace Infrastructure.Persistence.Tests
                      Gender = new Gender { Id = 1, Name = "мужской" },
                     GenderId = Domain.Enums.GenderId.Мужской,
                      PhoneNumber = "9998887766",
+                     CountryCode = new CountryCode
+                     {
+                         Id = 1,
+                         Code = "+7",
+                         ISOName = "RUS"
+                     }
                 }
             };
         }
