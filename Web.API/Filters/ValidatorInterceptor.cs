@@ -14,7 +14,11 @@ namespace Web.API.Filters
     {
         public ValidationResult AfterMvcValidation(ControllerContext controllerContext, IValidationContext commonContext, ValidationResult result)
         {
-            throw new CustomValidationException(result.Errors);
+            if (!controllerContext.ModelState.IsValid)
+            {
+                throw new CustomValidationException(result.Errors);
+            }
+            return result;
         }
 
         public IValidationContext BeforeMvcValidation(ControllerContext controllerContext, IValidationContext commonContext)

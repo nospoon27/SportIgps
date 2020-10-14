@@ -3,102 +3,23 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201014090347_AddCountryCode")]
+    partial class AddCountryCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("Domain.Entities.AbonementAgeCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AbonementAgeCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Взрослый"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Детский"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.AbonementLimitType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AbonementLimitType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ограниченный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Безлимитный"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.AccessCardType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccessCardType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ограниченный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Свободный"
-                        });
-                });
 
             modelBuilder.Entity("Domain.Entities.CountryCode", b =>
                 {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain.Enums
 {
-    public enum AbonementAgeCategoryId : int
+    public enum AbonementAgeCategoryId
     {
         Взрослый = 1,
         Детский

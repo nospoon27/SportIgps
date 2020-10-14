@@ -84,6 +84,7 @@ namespace Infrastructure.Persistence.Identity.Services
 
             actualUser.Roles.Add(role);
 
+            await _unitOfWork.SaveChangesAsync();
             //await _unitOfWork.GetRepository<UserRole>()
             //    .InsertAsync(new UserRole(user.Id, role.Id));
         }

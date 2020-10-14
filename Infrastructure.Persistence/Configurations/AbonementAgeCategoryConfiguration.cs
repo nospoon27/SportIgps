@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class AbonementAgeCategoryConfiguration : IEntityTypeConfiguration<AbonementAgeCategory>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<AbonementAgeCategory> builder)
         {
             builder
                 .Property(x => x.Id)
@@ -19,9 +19,9 @@ namespace Infrastructure.Persistence.Configurations
 
             builder
                 .HasData(
-                Enum.GetValues(typeof(RoleId))
-                .Cast<RoleId>()
-                .Select(@enum => new Role()
+                Enum.GetValues(typeof(AbonementAgeCategoryId))
+                .Cast<AbonementAgeCategoryId>()
+                .Select(@enum => new AbonementAgeCategory()
                 {
                     Id = (int)@enum,
                     Name = @enum.ToString()
