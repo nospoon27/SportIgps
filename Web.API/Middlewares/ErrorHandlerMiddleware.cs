@@ -34,7 +34,7 @@ namespace Web.API.Middlewares
 
                 switch (error)
                 {
-                    case ApiException e:
+                    case ApiException _:
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
@@ -43,7 +43,7 @@ namespace Web.API.Middlewares
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         responseModel.ValidationErrors = e.Failures;
                         break;
-                    case KeyNotFoundException e:
+                    case KeyNotFoundException _:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;

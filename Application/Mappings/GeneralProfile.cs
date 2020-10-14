@@ -11,7 +11,6 @@ namespace Application.Mappings
     {
         public GeneralProfile()
         {
-            CreateMap<User, GetAllUsersResponse>().ReverseMap();
         }
     }
 }
