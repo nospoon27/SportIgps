@@ -1,4 +1,5 @@
-﻿using Application.Wrappers;
+﻿using Application.Features.Users.Queries.GetAll;
+using Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace Web.API.Controllers
     public class UsersController : BaseApiController
     {
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult<PagedResponse<IList<GetAllUsersResponse>>>> Get([FromQuery] GetAllUsersQuery request)
         {
-            return Ok();
+            return Ok(await Mediator.Send(request));
         }
     }
 }

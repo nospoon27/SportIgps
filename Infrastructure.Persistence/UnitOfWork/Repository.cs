@@ -148,11 +148,11 @@ namespace Infrastructure.Persistence.UnitOfWork
 
             if (orderBy != null)
             {
-                return orderBy(query).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return orderBy(query).ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
             else
             {
-                return query.ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return query.ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
         }
 
@@ -728,5 +728,38 @@ namespace Infrastructure.Persistence.UnitOfWork
             }
         }
 
+        public async Task<IReadOnlyList<TEntity>> GetPagedResponseAsync(Expression<Func<TEntity, bool>> predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null, int pageIndex = 0, int pageSize = 20, bool disableTracking = true, CancellationToken cancellationToken = default(CancellationToken), bool ignoreQueryFilters = false)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (disableTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (ignoreQueryFilters)
+            {
+                query = query.IgnoreQueryFilters();
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).ToListAsync(cancellationToken);
+            }
+            else
+            {
+                return await query.ToListAsync(cancellationToken);
+            }
+        }
     }
 }

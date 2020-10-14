@@ -3,6 +3,7 @@ using Application.Exceptions;
 using Application.Interfaces.Services;
 using Application.Wrappers;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Settings;
 using Infrastructure.Persistence.Identity.Helpers;
 using Microsoft.Extensions.Logging;
@@ -79,6 +80,7 @@ namespace Infrastructure.Persistence.Identity.Services
             };
 
             await _userService.AddNewUser(user);
+            await _userService.AddRoleToUser(user, RoleId.client.ToString());
 
             return new Response<string>(user.Id.ToString(), $"Пользователь зарегистрирован");
         }

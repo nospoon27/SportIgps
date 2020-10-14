@@ -8,15 +8,23 @@ namespace Application.Wrappers
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public int TotalCount { get; set; }
+        public int TotalPages { get; set; }
+        public int IndexFrom { get; set; }
+        public bool HasPreviousPage => PageNumber - IndexFrom > 0;
+        public bool HasNextPage => PageNumber - IndexFrom + 1 < TotalPages;
 
-        public PagedResponse(T data, int pageNumber, int pageSize)
+        public PagedResponse(T data, int pageNumber, int pageSize, int totalCount, int totalPages)
         {
-            this.PageNumber = pageNumber;
-            this.PageSize = pageSize;
-            this.Data = data;
-            this.Message = null;
-            this.Succeeded = true;
-            this.Errors = null;
+            Data = data;
+            Message = null;
+            Succeeded = true;
+
+            PageSize = pageSize;
+            PageNumber = pageNumber;
+            Errors = null;
+            TotalCount = totalCount;
+            TotalPages = totalPages;
         }
     }
 }

@@ -17,6 +17,14 @@ namespace Application.Interfaces.UnitOfWork
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public interface IRepository<TEntity> where TEntity : class
     {
+        Task<IReadOnlyList<TEntity>> GetPagedResponseAsync(Expression<Func<TEntity, bool>> predicate = null,
+                                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                         int pageIndex = 0,
+                                         int pageSize = 20,
+                                         bool disableTracking = true,
+                                         CancellationToken cancellationToken = default(CancellationToken),
+                                         bool ignoreQueryFilters = false);
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>

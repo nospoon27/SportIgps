@@ -41,7 +41,7 @@ namespace Web.API.Middlewares
                     case CustomValidationException e:
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        responseModel.ValidateErrors = e.Failures;
+                        responseModel.ValidationErrors = e.Failures;
                         break;
                     case KeyNotFoundException e:
                         // not found error

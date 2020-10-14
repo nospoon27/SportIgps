@@ -53,6 +53,7 @@ namespace Web.API.Extensions
                         }, new List<string>()
                     },
                 });
+                c.DescribeAllParametersInCamelCase();
             });
         }
 

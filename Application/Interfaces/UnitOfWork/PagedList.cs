@@ -62,7 +62,7 @@ namespace Application.Interfaces.UnitOfWork
         /// <param name="pageIndex">The index of the page.</param>
         /// <param name="pageSize">The size of the page.</param>
         /// <param name="indexFrom">The index from.</param>
-        internal PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int indexFrom)
+        internal PagedList(IEnumerable<T> source, int pageIndex, int pageSize, int indexFrom = 1)
         {
             if (indexFrom > pageIndex)
             {
@@ -157,7 +157,7 @@ namespace Application.Interfaces.UnitOfWork
         /// <param name="pageIndex">The index of the page.</param>
         /// <param name="pageSize">The size of the page.</param>
         /// <param name="indexFrom">The index from.</param>
-        public PagedList(IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter, int pageIndex, int pageSize, int indexFrom)
+        public PagedList(IEnumerable<TSource> source, Func<IEnumerable<TSource>, IEnumerable<TResult>> converter, int pageIndex, int pageSize, int indexFrom = 1)
         {
             if (indexFrom > pageIndex)
             {

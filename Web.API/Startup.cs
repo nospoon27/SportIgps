@@ -79,6 +79,7 @@ namespace Web.API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

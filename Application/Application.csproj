@@ -5,9 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Users\Commands\" />
     <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Mappings\" />
-    <Folder Include="Features\" />
   </ItemGroup>
 
   <ItemGroup>

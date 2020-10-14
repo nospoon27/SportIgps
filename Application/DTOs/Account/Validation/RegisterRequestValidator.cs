@@ -8,22 +8,29 @@ namespace Application.DTOs.Account.Validation
 {
     public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {
+        private string InvalidFormat = "{PropertyName} имеет неверный формат";
+        private string Required = "Поле {PropertyName} обязательно к заполнению";
         public RegisterRequestValidator()
         {
             RuleFor(v => v.FirstName)
-                .NotNull().WithMessage("Поле {PropertyName} обязательно к заполнению").WithName("Имя");
+                .NotNull().WithMessage(Required).WithName("Имя");
 
             RuleFor(v => v.LastName)
-                .NotNull().WithMessage("Поле {PropertyName} обязательно к заполнению").WithName("Фамилия");
+                .NotNull().WithMessage(Required).WithName("Фамилия");
 
             RuleFor(v => v.PhoneNumber)
-                .Cascade(CascadeMode.Stop)
-                .NotNull().WithMessage("Поле {PropertyName} обязательно к заполнению").WithName("Номер телефона")
+                .NotNull().WithMessage(Required).WithName("Номер телефона")
                 .MaximumLength(13)
-                .MinimumLength(10).WithMessage("Номер телефона должен состоять от 10 до 13 символов");
+                .MinimumLength(10).WithMessage("{PropertyName} должен состоять от 10 до 13 символов")
+                .Matches(@"\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})").WithMessage(InvalidFormat);
+
+            RuleFor(v => v.CountryCode)
+                .NotNull().WithMessage(Required)
+                .WithName("Код страны")
+                .Matches(@"^\+\d{1,3}$").WithMessage(InvalidFormat);
 
             RuleFor(v => v.Password)
-                .NotNull().WithMessage("Вы забыли указать пароль").WithName("Пароль");
+                .NotNull().WithMessage(Required).WithName("Пароль");
 
             RuleFor(v => v.ConfirmPassword)
                 .Equal(p => p.Password)

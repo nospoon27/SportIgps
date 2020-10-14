@@ -31,5 +31,9 @@ namespace Application.Interfaces.Services
         Task<User> FindById(int id);
 
         Task<User> FindByIdWithRoleClaims(int id);
+
+        Task AddRoleToUser(User user, string roleName);
+
+        Task<Role> FindRoleByName(string roleName);
     }
 }

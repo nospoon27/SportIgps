@@ -23,7 +23,7 @@ namespace Application.Wrappers
         public bool Succeeded { get; set; }
         public string Message { get; set; }
         public IList<string> Errors { get; set; }
-        public IDictionary<string, string[]> ValidateErrors {get; set;}
+        public IDictionary<string, string[]> ValidationErrors {get; set;}
         public T Data { get; set; }
     }
 }
