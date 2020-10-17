@@ -11,5 +11,7 @@ namespace Application.Interfaces.Services
     {
         Task<Response<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request, string ipAddress);
         Task<Response<string>> RegisterAsync(RegisterRequest request, string origin);
+        Task<Response<AuthenticationResponse>> RefreshToken(string cookieRefreshToken, string ipAddress);
+        Task<bool> RevokeToken(string token, string ipAddress);
     }
 }

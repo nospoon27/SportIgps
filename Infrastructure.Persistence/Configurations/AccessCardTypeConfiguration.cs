@@ -12,16 +12,8 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AccessCardType> builder)
         {
-            builder
-                .Property(x => x.Id)
-                .HasConversion<int>();
-
-            builder
-                .HasData(new List<AccessCardType>()
-                {
-                    new AccessCardType { Id = 1, Name = "Ограниченный" },
-                    new AccessCardType { Id = 1 , Name = "Свободный" }
-                });
+            
+           
         }
     }
 }

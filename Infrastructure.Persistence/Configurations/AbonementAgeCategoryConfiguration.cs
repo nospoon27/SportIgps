@@ -12,17 +12,7 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AbonementAgeCategory> builder)
         {
-            builder
-                .Property(x => x.Id)
-                .HasConversion<int>();
-
-            builder
-                .HasData(
-                new List<AbonementAgeCategory>()
-                {
-                    new AbonementAgeCategory { Id = 1, Name = "Взрослый" },
-                    new AbonementAgeCategory { Id = 2, Name = "Детский" }
-                });
+            
         }
     }
 }

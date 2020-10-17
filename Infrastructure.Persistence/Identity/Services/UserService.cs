@@ -27,7 +27,11 @@ namespace Infrastructure.Persistence.Identity.Services
                 .GetRepository<User>()
                 .GetSingleOrDefaultAsync(
                 predicate: x => x.PhoneNumber == phoneNumber && x.CountryCode.Id == countryCode.Id,
-                include: source => source.Include(u => u.Roles).Include(u => u.CountryCode),
+                include: source => source
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .Include(u => u.CountryCode)
+                .Include(u => u.RefreshTokens),
                 disableTracking: false);
 
             return user;
@@ -78,8 +82,10 @@ namespace Infrastructure.Persistence.Identity.Services
                 .GetRepository<User>()
                 .GetSingleOrDefaultAsync(
                 predicate: x => x.Id == id,
-                include: source => source.Include(u => u.Roles)
-                .ThenInclude(r => r.RoleClaims));
+                include: source => source.Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .ThenInclude(r => r.RoleClaims)
+                .ThenInclude(rc => rc.Role));
         }
 
         public async Task AddRoleToUser(User user, string roleName)
@@ -104,6 +110,7 @@ namespace Infrastructure.Persistence.Identity.Services
 
             await _unitOfWork.GetRepository<UserRole>()
                 .InsertAsync(new UserRole(currentUser.Id, role.Id));
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Role> FindRoleByName(string roleName)

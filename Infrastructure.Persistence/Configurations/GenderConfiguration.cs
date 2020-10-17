@@ -12,16 +12,7 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Gender> builder)
         {
-            builder
-                .Property(x => x.Id)
-                .HasConversion<int>();
-
-            builder
-                .HasData(new List<Gender>()
-                {
-                    new Gender { Id = 1, Name = "Мужской" },
-                    new Gender { Id = 2, Name = "Женский" }
-                });
+           
         }
     }
 }

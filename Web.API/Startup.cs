@@ -43,13 +43,13 @@ namespace Web.API
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>());
 
+            // Swagger
             services.AddSwaggerExtension();
-
+            // HttpContextAccessor (Context DI)
             services.AddHttpContextAccessor();
-
             services.AddApiVersioningExtension();
 
-            services.AddPersistenceInfrastructure();
+            services.AddPersistenceInfrastructure(Configuration);
 
             services.AddRouting();
 
@@ -58,7 +58,6 @@ namespace Web.API
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
             services.AddTransient<IValidatorInterceptor, ValidatorInterceptor>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

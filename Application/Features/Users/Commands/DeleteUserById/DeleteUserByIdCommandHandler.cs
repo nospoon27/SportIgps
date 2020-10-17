@@ -25,7 +25,7 @@ namespace Application.Features.Users.Commands.DeleteUserById
             if (user == null) throw new KeyNotFoundException($"Пользователь с ключом {request.Id} не найден");
 
             _unitOfWork.GetRepository<User>()
-                .Delete(request.Id);
+                .Delete(user);
 
             return new Response<int>(request.Id);
         }

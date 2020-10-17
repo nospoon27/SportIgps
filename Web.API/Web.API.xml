@@ -4,5 +4,75 @@
         <name>Web.API</name>
     </assembly>
     <members>
+        <member name="M:Web.API.Controllers.AccountController.Authenticate(Application.DTOs.Account.AuthenticationRequest)">
+            <summary>
+            Аутентификация
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.AccountController.RegisterAsync(Application.DTOs.Account.RegisterRequest)">
+            <summary>
+            Регистрация
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.AccountController.RefreshToken">
+            <summary>
+            Обновление токена
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.AccountController.RevokeToken(Application.DTOs.Account.RevokeTokenRequest)">
+            <summary>
+            Отозвать токен
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.GetAll(Application.Features.Locations.Queris.GetAll.GetAllLocationsQuery)">
+            <summary>
+            Все локации
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.Get(System.Int32)">
+            <summary>
+            Локация по id
+            </summary>
+            <param name="id">id локации</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.GetAllPaged(Application.Features.Locations.Queris.GetAllPaged.GetAllPagedLocationsQuery)">
+            <summary>
+            Все локации страницами
+            </summary>
+            <param name="query">Фильтр страницы</param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.Create(Application.Features.Locations.Commands.CreateLocation.CreateLocationCommand)">
+            <summary>
+            Добавить локацию
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.Update(System.Int32,Application.Features.Locations.Commands.UpdateLocation.UpdateLocationCommand)">
+            <summary>
+            Изменить локацию
+            </summary>
+            <param name="id"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.Delete(System.Int32)">
+            <summary>
+            Удалить локацию
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    [Migration("20201014122653_AddCountryCode_User_Relation")]
-    partial class AddCountryCode_User_Relation
+    [Migration("20201015093644_RemoveHasDataAndAddRoleIdToUser")]
+    partial class RemoveHasDataAndAddRoleIdToUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,18 +34,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AbonementAgeCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Взрослый"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Детский"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.AbonementLimitType", b =>
@@ -61,18 +49,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AbonementLimitType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ограниченный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Безлимитный"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.AccessCardType", b =>
@@ -88,18 +64,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AccessCardType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ограниченный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Свободный"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.CountryCode", b =>
@@ -195,18 +159,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Мужской"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Женский"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.GroupWorkout", b =>
@@ -383,34 +335,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "client"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "trainer"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.RoleClaim", b =>
@@ -426,7 +353,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("text");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -679,20 +606,26 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("CountryCodeId");
 
+                    b.HasIndex("GenderId");
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("LastModified")
@@ -701,20 +634,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                    b.HasKey("UserId", "RoleId");
 
-                    b.Property<int?>("RoleId1")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId1");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
                 });
@@ -752,18 +674,13 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Role", b =>
-                {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("Domain.Entities.RoleClaim", b =>
                 {
                     b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("RoleClaims")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Section", b =>
@@ -813,13 +730,21 @@ namespace Infrastructure.Persistence.Migrations
                         .HasForeignKey("CountryCodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("UserRoles")
-                        .HasForeignKey("RoleId1");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("UserRoles")

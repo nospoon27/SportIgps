@@ -26,12 +26,12 @@ namespace Infrastructure.Persistence
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<GroupWorkout> GroupWorkouts { get; set; }
+        public DbSet<GroupWorkoutClient> GroupWorkoutClients { get; set; }
+        public DbSet<GroupWorkoutTrainer> GroupWorkoutTrainers { get; set; }
         public DbSet<PersonalWorkout> PersonalWorkouts { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Sport> Sports { get; set; }
-        public DbSet<SportType> SportTypes { get; set; }
         public DbSet<Section> Sections { get; set; }
-        public DbSet<Trainer> Trainers { get; set; }
         public DbSet<TrainerSpecialization> TrainerSpecializations { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Gender> Genders { get; set; }

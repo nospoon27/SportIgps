@@ -7,6 +7,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Settings;
 using Infrastructure.Persistence.Identity.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +31,8 @@ namespace Infrastructure.Persistence.Identity.Services
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
         private readonly ICountryCodeService _countryCodeService;
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        private readonly IUnitOfWork _unitOfWork;
         public AccountService(
             IOptions<JWTSettings> jwtSetting,
             IUserService userService,
@@ -37,7 +40,9 @@ namespace Infrastructure.Persistence.Identity.Services
             IPasswordHashService passwordHashService,
             ITokenService tokenService,
             IMapper mapper,
-            ICountryCodeService countryCodeService)
+            ICountryCodeService countryCodeService,
+            IAuthenticatedUserService authenticatedUserService,
+            IUnitOfWork unitOfWork)
         {
             _jwtSettings = jwtSetting.Value;
             _userService = userService;
@@ -46,6 +51,8 @@ namespace Infrastructure.Persistence.Identity.Services
             _tokenService = tokenService;
             _mapper = mapper;
             _countryCodeService = countryCodeService;
+            _authenticatedUserService = authenticatedUserService;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Response<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request, string ipAddress)
         {
@@ -65,7 +72,7 @@ namespace Infrastructure.Persistence.Identity.Services
 
             AuthenticationResponse response = new AuthenticationResponse(
                 user,
-                new JwtSecurityTokenHandler().WriteToken(jwt),
+                jwt,
                 refreshToken.Token);
             return new Response<AuthenticationResponse>(response, $"Authenticated {user.PhoneNumber} ({user.LastName} {user.FirstName} {user.MiddleName})");
         }
@@ -97,7 +104,59 @@ namespace Infrastructure.Persistence.Identity.Services
 
             await _userService.AddRoleToUser(user, clientRole.Name);
 
+            await _unitOfWork.SaveChangesAsync();
+
             return new Response<string>(user.Id.ToString(), $"Пользователь зарегистрирован");
+        }
+
+        public async Task<Response<AuthenticationResponse>> RefreshToken(string cookieRefreshToken, string ipAddress)
+        {
+            var userId = _authenticatedUserService.UserId;
+
+            var token = cookieRefreshToken ?? await _tokenService.GetRefreshTokenAsync(userId.Value);
+            var user = await _unitOfWork.GetRepository<User>()
+                .GetSingleOrDefaultAsync(
+                predicate: x => x.RefreshTokens.Any(x => x.Token == token),
+                include: source => source.Include(t => t.RefreshTokens).Include(r => r.UserRoles).ThenInclude(x => x.Role),
+                disableTracking: false);
+
+            var actualToken = user.RefreshTokens.SingleOrDefault(x => x.Token == token);
+            if (actualToken == null || !actualToken.IsActive) return null;
+
+            var newToken = _tokenService.GenerateRefreshToken(ipAddress);
+            actualToken.Revoked = DateTime.Now;
+            actualToken.RevokedByIp = ipAddress;
+            actualToken.ReplacedByToken = newToken.Token;
+
+            user.RefreshTokens.Add(newToken);
+            await _unitOfWork.SaveChangesAsync();
+
+            var jwt = _tokenService.GenerateJWToken(user);
+
+            return new Response<AuthenticationResponse>(
+                new AuthenticationResponse(
+                    user, 
+                    jwt, 
+                    newToken.Token));
+        }
+
+        public async Task<bool> RevokeToken(string token, string ipAddress)
+        {
+            var refreshToken = await _unitOfWork.GetRepository<Domain.Entities.RefreshToken>()
+                .GetSingleOrDefaultAsync(
+                predicate: x => x.Token == token, 
+                disableTracking: false);
+
+            if(refreshToken == null || !refreshToken.IsActive)
+            {
+                return false;
+            }
+
+            refreshToken.Revoked = DateTime.Now;
+            refreshToken.RevokedByIp = ipAddress;
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
         }
 
     }

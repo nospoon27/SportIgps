@@ -12,16 +12,7 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AbonementLimitType> builder)
         {
-            builder
-                .Property(x => x.Id)
-                .HasConversion<int>();
-
-            builder
-                .HasData(new List<AbonementLimitType>()
-                {
-                    new AbonementLimitType { Id = 1, Name = "Ограниченный" },
-                    new AbonementLimitType { Id = 1 , Name = "Безлимитный" }
-                });
+            
         }
     }
 }

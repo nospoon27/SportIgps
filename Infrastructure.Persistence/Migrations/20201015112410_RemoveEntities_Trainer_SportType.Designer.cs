@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    [Migration("20201014114724_AddSeeds")]
-    partial class AddSeeds
+    [Migration("20201015112410_RemoveEntities_Trainer_SportType")]
+    partial class RemoveEntities_Trainer_SportType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,18 +34,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AbonementAgeCategory");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Взрослый"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Детский"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.AbonementLimitType", b =>
@@ -61,18 +49,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AbonementLimitType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ограниченный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Безлимитный"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.AccessCardType", b =>
@@ -88,18 +64,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AccessCardType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ограниченный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Свободный"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.CountryCode", b =>
@@ -118,68 +82,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CountryCodes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "+7",
-                            ISOName = "RUS"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "+380",
-                            ISOName = "UKR"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "+374",
-                            ISOName = "ARM"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Code = "+994",
-                            ISOName = "AZE"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Code = "+375",
-                            ISOName = "BLR"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Code = "+359",
-                            ISOName = "BGR"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Code = "+7",
-                            ISOName = "KAZ"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Code = "+996",
-                            ISOName = "KGZ"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Code = "+381",
-                            ISOName = "SRB"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Code = "+82",
-                            ISOName = "KOR"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Gender", b =>
@@ -195,18 +97,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Мужской"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Женский"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.GroupWorkout", b =>
@@ -231,7 +121,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PeopleAmount")
+                    b.Property<int?>("PeopleAmount")
                         .HasColumnType("integer");
 
                     b.Property<double>("Price")
@@ -250,6 +140,50 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("TrainerId");
 
                     b.ToTable("GroupWorkouts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GroupWorkoutClient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("GroupWorkoutId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("GroupWorkoutId");
+
+                    b.ToTable("GroupWorkoutClients");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GroupWorkoutTrainer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("GroupWorkoutId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrainerId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupWorkoutId");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("GroupWorkoutTrainers");
                 });
 
             modelBuilder.Entity("Domain.Entities.Location", b =>
@@ -383,34 +317,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "client"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "trainer"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.RoleClaim", b =>
@@ -426,7 +335,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("text");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -526,76 +435,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int?>("SportTypeId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SportTypeId");
 
                     b.ToTable("Sports");
-                });
-
-            modelBuilder.Entity("Domain.Entities.SportType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("LastModifiedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SportTypes");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Trainer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Biography")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("LastModifiedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("Domain.Entities.TrainerSpecialization", b =>
@@ -639,7 +481,10 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("CountryCodeId")
+                    b.Property<string>("Biography")
+                        .HasColumnType("text");
+
+                    b.Property<int>("CountryCodeId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
@@ -679,20 +524,26 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("CountryCodeId");
 
+                    b.HasIndex("GenderId");
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("LastModified")
@@ -701,20 +552,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                    b.HasKey("UserId", "RoleId");
 
-                    b.Property<int?>("RoleId1")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId1");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
                 });
@@ -727,7 +567,37 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Trainer", "Trainer")
+                    b.HasOne("Domain.Entities.User", "Trainer")
+                        .WithMany()
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.GroupWorkoutClient", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GroupWorkout", "GroupWorkout")
+                        .WithMany()
+                        .HasForeignKey("GroupWorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.GroupWorkoutTrainer", b =>
+                {
+                    b.HasOne("Domain.Entities.GroupWorkout", "GroupWorkout")
+                        .WithMany()
+                        .HasForeignKey("GroupWorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "Trainer")
                         .WithMany()
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -752,18 +622,13 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Role", b =>
-                {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("Domain.Entities.RoleClaim", b =>
                 {
                     b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("RoleClaims")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Section", b =>
@@ -771,22 +636,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasOne("Domain.Entities.Sport", "Sport")
                         .WithMany()
                         .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Sport", b =>
-                {
-                    b.HasOne("Domain.Entities.SportType", "SportType")
-                        .WithMany()
-                        .HasForeignKey("SportTypeId");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Trainer", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -799,7 +648,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Trainer", "Trainer")
+                    b.HasOne("Domain.Entities.User", "Trainer")
                         .WithMany("TrainerSpecialization")
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -810,14 +659,24 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.CountryCode", "CountryCode")
                         .WithMany()
-                        .HasForeignKey("CountryCodeId");
+                        .HasForeignKey("CountryCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("UserRoles")
-                        .HasForeignKey("RoleId1");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("UserRoles")

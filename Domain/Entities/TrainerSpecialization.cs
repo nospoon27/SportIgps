@@ -13,6 +13,6 @@ namespace Domain.Entities
         public int SportId { get; set; }
         public Sport Sport { get; set; }
         public int TrainerId { get; set; }
-        public Trainer Trainer { get; set; }
+        public User Trainer { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Infrastructure.Persistence.Identity.Services
             _unitOfWork = unitOfWork;
         }
 
-        public JwtSecurityToken GenerateJWToken(User user)
+        public string GenerateJWToken(User user)
         {
             using RSA rsa = RSA.Create();
             rsa.ImportRSAPrivateKey(
@@ -44,7 +44,7 @@ namespace Infrastructure.Persistence.Identity.Services
                 CryptoProviderFactory = new CryptoProviderFactory() { CacheSignatureProviders = false }
             };
 
-            var roleClaims = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Name)).ToArray();
+            var roleClaims = user.UserRoles.Select(ur => new Claim(ClaimTypes.Role, ur.Role.Name)).ToArray();
 
             DateTime jwtDate = DateTime.Now;
             string ipAddress = IpHelper.GetIpAddress();
@@ -55,14 +55,15 @@ namespace Infrastructure.Persistence.Identity.Services
                 new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
             }.Union(roleClaims);
 
-            var jwt = new JwtSecurityToken(
+            var jwt = new JwtSecurityTokenHandler()
+                .WriteToken(new JwtSecurityToken(
                 audience: "jwt",
                 issuer: "jwt",
                 claims: claims,
                 notBefore: jwtDate,
                 expires: jwtDate.AddMinutes(_jwtSettings.DurationInMinutes),
                 signingCredentials: signingCredentials
-            );
+            ));
             return jwt;
         }
 

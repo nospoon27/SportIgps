@@ -28,7 +28,7 @@ namespace Web.API.Handlers
             //var permissions = user.Roles.Select(r => r.RoleClaims
             //    .Select(c => c).Where(c => c.ClaimType == CustomClaimTypes.Permission 
             //                            && c.ClaimValue == requirement.Permission));
-            var permissions = user.Roles.SelectMany(r => r.RoleClaims)
+            var permissions = user.UserRoles.SelectMany(r => r.Role.RoleClaims)
                 .Select(c => c).Where(c => c.ClaimType == CustomClaimTypes.Permission
                                         && c.ClaimValue == requirement.Permission);
             if (permissions.Any())

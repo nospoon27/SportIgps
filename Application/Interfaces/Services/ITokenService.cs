@@ -14,7 +14,7 @@ namespace Application.Interfaces.Services
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        JwtSecurityToken GenerateJWToken(User user);
+        string GenerateJWToken(User user);
 
         /// <summary>
         /// Сгенерировать токен обновления

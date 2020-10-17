@@ -12,18 +12,7 @@ namespace Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder
-                .Property(x => x.Id)
-                .HasConversion<int>();
-
-            builder
-                .HasData(new List<Role>
-                {
-                    new Role { Id = 1, Name = "admin" },
-                    new Role { Id = 2, Name = "manager" },
-                    new Role { Id = 3, Name = "trainer" },
-                    new Role { Id = 4, Name = "client" }
-                });
+            
         }
     }
 }
