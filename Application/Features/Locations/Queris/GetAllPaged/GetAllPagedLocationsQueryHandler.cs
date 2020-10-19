@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Locations.Queris.GetAllPaged
 {
-    public class GetAllPagedLocationsHandler : IRequestHandler<GetAllPagedLocationsQuery, PagedResponse<IList<GetAllPagedLocationsResponse>>>
+    public class GetAllPagedLocationsQueryHandler : IRequestHandler<GetAllPagedLocationsQuery, PagedResponse<IList<GetAllPagedLocationsResponse>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public GetAllPagedLocationsHandler(
+        public GetAllPagedLocationsQueryHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper)
         {

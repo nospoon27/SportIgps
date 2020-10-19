@@ -25,7 +25,7 @@ namespace Application.Features.Locations.Commands.DeleteLocationById
             if (location == null) throw new KeyNotFoundException($"Локация с ключом {request.Id} не найдена");
 
             _unitOfWork.GetRepository<Location>().Delete(location);
-
+            await _unitOfWork.SaveChangesAsync();
             return new Response<int>(request.Id);
         }
     }

@@ -9,10 +9,11 @@ namespace Domain.Entities
     {
         public DateTime Duration { get; set; }
         public int? PeopleAmount { get; set; }
-        public int TrainerId { get; set; }
-        public User Trainer { get; set; }
         public int SectionId { get; set; }
         public Section Section { get; set; }
         public double Price { get; set; }
+
+        public IList<User> Trainers { get; set; }
+        public IList<User> Clients { get; set; }
     }
 }
