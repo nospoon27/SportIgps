@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Application.DTOs.Account
@@ -13,8 +14,9 @@ namespace Application.DTOs.Account
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
-        public List<string> Roles { get; set; }
         public string JWT { get; set; }
+        public string[] Roles { get; set; }
+        public string Gender { get; set; }
 
         [JsonIgnore]
         public string RefreshToken { get; set; }
@@ -26,6 +28,8 @@ namespace Application.DTOs.Account
             LastName = user.LastName;
             MiddleName = user.MiddleName;
             PhoneNumber = user.PhoneNumber;
+            Roles = user.UserRoles?.Select(x => x.Role?.Name).ToArray();
+            Gender = user.Gender?.Name;
             JWT = jwtToken;
             RefreshToken = refreshToken;
         }

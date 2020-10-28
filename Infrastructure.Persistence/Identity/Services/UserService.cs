@@ -31,7 +31,8 @@ namespace Infrastructure.Persistence.Identity.Services
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .Include(u => u.CountryCode)
-                .Include(u => u.RefreshTokens),
+                .Include(u => u.RefreshTokens)
+                .Include(u => u.Gender),
                 disableTracking: false);
 
             return user;

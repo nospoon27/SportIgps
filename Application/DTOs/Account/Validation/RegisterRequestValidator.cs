@@ -20,8 +20,6 @@ namespace Application.DTOs.Account.Validation
 
             RuleFor(v => v.PhoneNumber)
                 .NotNull().WithMessage(Required).WithName("Номер телефона")
-                .MaximumLength(13)
-                .MinimumLength(10).WithMessage("{PropertyName} должен состоять от {MinLength} до {MaxLength} символов")
                 .Matches(@"\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})").WithMessage(InvalidFormat);
 
             //RuleFor(v => v.CountryCode)
@@ -34,11 +32,19 @@ namespace Application.DTOs.Account.Validation
                 .WithName("Код страны");
 
             RuleFor(v => v.Password)
-                .NotNull().WithMessage(Required).WithName("Пароль");
+                .NotEmpty().WithMessage(Required).WithName("Пароль");
 
-            RuleFor(v => v.ConfirmPassword)
-                .Equal(p => p.Password)
-                .WithMessage("Пароли не совпадают");
+            //RuleFor(v => v.ConfirmPassword)
+            //    .Equal(p => p.Password)
+            //    .WithMessage("Пароли не совпадают");
+
+            RuleFor(x => x).Custom((x, context) =>
+            {
+                if (x.Password != x.ConfirmPassword)
+                {
+                    context.AddFailure(nameof(x.ConfirmPassword), "Пароли не совпадают");
+                }
+            });
         }
     }
 }

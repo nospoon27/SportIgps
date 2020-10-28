@@ -43,6 +43,8 @@ namespace Web.API
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>());
 
+            services.AddCors();
+
             // Swagger
             services.AddSwaggerExtension();
             // HttpContextAccessor (Context DI)
@@ -67,6 +69,8 @@ namespace Web.API
                 app.UseDeveloperExceptionPage();
             }
 
+            
+
             // swagger
             app.UseConfiguredSwagger();
 
@@ -74,6 +78,11 @@ namespace Web.API
             app.UseErrorHandlingMiddleware();
 
             app.UseRouting();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowCredentials().AllowAnyHeader();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

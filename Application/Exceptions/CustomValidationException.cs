@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Results;
+using Humanizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Application.Exceptions
                     .Select(e => e.ErrorMessage)
                     .ToArray();
 
-                Failures.Add(propertyName, propertyFailures);
+                Failures.Add(propertyName.Camelize(), propertyFailures);
             }
         }
 

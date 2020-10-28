@@ -80,7 +80,7 @@ namespace Infrastructure.Persistence.Identity.Services
         public async Task<Response<string>> RegisterAsync(RegisterRequest request, string origin)
         {
             var countryCode = await _countryCodeService.GetById(request.CountryCodeId);
-
+            var gender = await _unitOfWork.GetRepository<Gender>().FindAsync(request.GenderId);
             //var userWithSameUserName = await _userService.FindByPhoneNumber(countryCode, request.PhoneNumber);
             //if (userWithSameUserName != null)
             //{
@@ -97,6 +97,7 @@ namespace Infrastructure.Persistence.Identity.Services
             //    Password = request.Password
             //};
             user.CountryCodeId = countryCode.Id;
+            user.GenderId = gender.Id;
 
             await _userService.AddNewUser(user, true);
 

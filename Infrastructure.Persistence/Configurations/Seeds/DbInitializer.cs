@@ -17,59 +17,11 @@ namespace Infrastructure.Persistence.Configurations.Seeds
         {
             var unitOfWork = scope.ServiceProvider.GetService<IUnitOfWork>();
             var passwordHashService = scope.ServiceProvider.GetService<IPasswordHashService>();
-            await AddAbonementAgeCategory(unitOfWork);
-            await AddAbonementLimitType(unitOfWork);
-            await AddAccessCardType(unitOfWork);
             await AddCountryCode(unitOfWork);
             await AddGender(unitOfWork);
             await AddRole(unitOfWork);
             await AddUser(unitOfWork, passwordHashService);
             await AddUserRole(unitOfWork);
-        }
-
-        private static async Task AddAbonementAgeCategory(IUnitOfWork unitOfWork)
-        {
-            var count = await unitOfWork.GetRepository<AbonementAgeCategory>().CountAsync();
-            if (count == 0)
-            {
-                await unitOfWork.GetRepository<AbonementAgeCategory>()
-                .InsertAsync(new List<AbonementAgeCategory>()
-                {
-                    new AbonementAgeCategory { Name = "Взрослый" },
-                    new AbonementAgeCategory { Name = "Детский" }
-                });
-            }
-            await unitOfWork.SaveChangesAsync();
-        }
-
-        private static async Task AddAbonementLimitType(IUnitOfWork unitOfWork)
-        {
-            var count = await unitOfWork.GetRepository<AbonementLimitType>().CountAsync();
-            if (count == 0)
-            {
-                await unitOfWork.GetRepository<AbonementLimitType>()
-                    .InsertAsync(new List<AbonementLimitType>()
-                    {
-                        new AbonementLimitType { Name = "Ограниченный" },
-                        new AbonementLimitType { Name = "Безлимитный" }
-                    });
-            }
-            await unitOfWork.SaveChangesAsync();
-        }
-
-        private static async Task AddAccessCardType(IUnitOfWork unitOfWork)
-        {
-            var count = await unitOfWork.GetRepository<AccessCardType>().CountAsync();
-            if (count == 0)
-            {
-                await unitOfWork.GetRepository<AccessCardType>()
-                    .InsertAsync(new List<AccessCardType>()
-                    {
-                        new AccessCardType { Name = "Ограниченный" },
-                        new AccessCardType { Name = "Свободный" }
-                    });
-            }
-            await unitOfWork.SaveChangesAsync();
         }
 
         private static async Task AddCountryCode(IUnitOfWork unitOfWork)
@@ -80,16 +32,16 @@ namespace Infrastructure.Persistence.Configurations.Seeds
                 await unitOfWork.GetRepository<CountryCode>()
                     .InsertAsync(new List<CountryCode>()
                     {
-                        new CountryCode { Code = "+7", ISOName = "RUS" },
-                        new CountryCode { Code = "+380", ISOName = "UKR" },
-                        new CountryCode { Code = "+374", ISOName = "ARM" },
-                        new CountryCode { Code = "+994", ISOName = "AZE" },
-                        new CountryCode { Code = "+375", ISOName = "BLR" },
-                        new CountryCode { Code = "+359", ISOName = "BGR" },
-                        new CountryCode { Code = "+7", ISOName = "KAZ" },
-                        new CountryCode { Code = "+996", ISOName = "KGZ" },
-                        new CountryCode { Code = "+381", ISOName = "SRB" },
-                        new CountryCode { Code = "+82", ISOName = "KOR" },
+                        new CountryCode { Code = "+7", ISOName = "RU" },
+                        new CountryCode { Code = "+380", ISOName = "UA" },
+                        new CountryCode { Code = "+374", ISOName = "AM" },
+                        new CountryCode { Code = "+994", ISOName = "AZ" },
+                        new CountryCode { Code = "+375", ISOName = "BY" },
+                        new CountryCode { Code = "+359", ISOName = "BG" },
+                        new CountryCode { Code = "+7", ISOName = "KZ" },
+                        new CountryCode { Code = "+996", ISOName = "KG" },
+                        new CountryCode { Code = "+381", ISOName = "RS" },
+                        new CountryCode { Code = "+82", ISOName = "KR" },
                     });
             }
             await unitOfWork.SaveChangesAsync();

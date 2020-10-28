@@ -1,4 +1,5 @@
 ﻿using Application.Features.Sports.Commands.CreateSport;
+using Application.Features.Sports.Commands.DeleteSportById;
 using Application.Features.Sports.Commands.UpdateSport;
 using Application.Features.Sports.Queries.GetAll;
 using Application.Features.Sports.Queries.GetAllPaged;
@@ -41,7 +42,7 @@ namespace Web.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<int>>> Delete([FromRoute] int id)
         {
-            return Ok(await Mediator.Send(new DeleteSportByIdCommand));
+            return Ok(await Mediator.Send(new DeleteSportByIdCommand() { Id = id }));
         }
     }
 }

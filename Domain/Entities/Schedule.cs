@@ -19,5 +19,7 @@ namespace Domain.Entities
         /// Дата создания
         /// </summary>
         public DateTime CreatedAt { get; } = DateTime.Now;
+        public WorkoutGroup WorkoutGroup { get; set; }
+        public int WorkoutGroupId { get; set; }
     }
 }

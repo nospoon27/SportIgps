@@ -74,10 +74,5 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:Web.API.Controllers.SportsController">
-            <summary>
-            Спорт
-            </summary>
-        </member>
     </members>
 </doc>

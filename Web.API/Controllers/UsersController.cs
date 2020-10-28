@@ -2,7 +2,10 @@
 using Application.Features.Users.Commands.UpdateUser;
 using Application.Features.Users.Queries.GetAll;
 using Application.Features.Users.Queries.GetById;
+using Application.Features.Users.Queries.GetCountryCodes;
+using Application.Features.Users.Queries.GetGenders;
 using Application.Wrappers;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,6 +37,18 @@ namespace Web.API.Controllers
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
             return Ok(await Mediator.Send(new DeleteUserByIdCommand { Id = id }));
+        }
+
+        [HttpGet("genders")]
+        public async Task<ActionResult<Response<IList<GetGendersResponse>>>> GetGenders()
+        {
+            return Ok(await Mediator.Send(new GetGendersQuery()));
+        }
+
+        [HttpGet("countryCodes")]
+        public async Task<ActionResult<Response<IList<GetCountryCodesResponse>>>> GetCountryCodes()
+        {
+            return Ok(await Mediator.Send(new GetCountryCodesQuery()));
         }
     }
 }

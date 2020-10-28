@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.Account;
 using Application.Features.Users.Queries.GetAll;
 using Application.Features.Users.Queries.GetById;
+using Application.Features.Users.Queries.GetCountryCodes;
+using Application.Features.Users.Queries.GetGenders;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -24,6 +26,10 @@ namespace Application.Mappings
             CreateMap<AuthenticationRequest, User>().ReverseMap();
 
             CreateMap<RegisterRequest, User>().ReverseMap();
+
+            CreateMap<Gender, GetGendersResponse>();
+
+            CreateMap<CountryCode, GetCountryCodesResponse>();
         }
     }
 }

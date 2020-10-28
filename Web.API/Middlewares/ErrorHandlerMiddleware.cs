@@ -2,6 +2,8 @@
 using Application.Wrappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,11 +57,12 @@ namespace Web.API.Middlewares
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
-                var result = JsonSerializer.Serialize(responseModel, 
-                    options: new JsonSerializerOptions 
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                    });
+                DefaultContractResolver contractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
+                var result = JsonConvert.SerializeObject(responseModel,
+                    new JsonSerializerSettings { Formatting = Formatting.Indented, ContractResolver = contractResolver });
 
                 await response.WriteAsync(result);
             }
