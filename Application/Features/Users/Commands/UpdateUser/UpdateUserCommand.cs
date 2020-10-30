@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
+using Domain.Entities.Enums;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Application.Features.Users.Commands.UpdateUser
         public string MiddleName { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int GenderId { get; set; }
+        public Gender Gender { get; set; }
         public int CountryCode { get; set; }
     }
 }

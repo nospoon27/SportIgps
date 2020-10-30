@@ -30,7 +30,7 @@ namespace Application.Features.Users.Commands.UpdateUser
             user.MiddleName = request.MiddleName;
             user.PhoneNumber = request.PhoneNumber;
             user.DateOfBirth = request.DateOfBirth;
-            user.GenderId = request.GenderId;
+            user.Gender = request.Gender;
 
             await _unitOfWork.SaveChangesAsync();
 

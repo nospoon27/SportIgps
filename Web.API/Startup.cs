@@ -38,10 +38,17 @@ namespace Web.API
         {
             services.AddApplicationLayer();
 
-            services.AddControllers()
-                .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true)
-                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>());
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new OverridingResultFilter());
+            })
+            .ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+                options.SuppressMapClientErrors = true;
+            })
+            .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>());
 
             services.AddCors();
 

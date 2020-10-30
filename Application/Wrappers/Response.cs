@@ -11,16 +11,16 @@ namespace Application.Wrappers
         }
         public Response(T data, string message = null)
         {
-            Succeeded = true;
+            Successed = true;
             Message = message;
             Data = data;
         }
         public Response(string message)
         {
-            Succeeded = false;
+            Successed = false;
             Message = message;
         }
-        public bool Succeeded { get; set; }
+        public bool Successed { get; set; }
         public string Message { get; set; }
         public IList<string> Errors { get; set; }
         public IDictionary<string, string[]> ValidationErrors {get; set;}

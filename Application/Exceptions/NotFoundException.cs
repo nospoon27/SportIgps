@@ -10,5 +10,9 @@ namespace Application.Exceptions
             : base($"Объект {name} ({key}) не был найден.")
         {
         }
+
+        public NotFoundException(string message) : base(message)
+        {
+        }
     }
 }

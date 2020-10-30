@@ -72,11 +72,12 @@ namespace Web.API.Controllers
         public async Task<ActionResult> RevokeToken([FromBody] RevokeTokenRequest request)
         {
             var refreshToken = request.Token ?? Request.Cookies["refreshToken"];
+            
             if (string.IsNullOrEmpty(refreshToken)) return BadRequest();
 
             var result = await _accountService.RevokeToken(refreshToken, GenerateIPAddress());
 
-            return result ? (ActionResult) Ok() : NotFound();
+            return result ? Ok() : throw new NotFoundException("Токен не найден");
         }
 
         private void setTokenCookie(string token)

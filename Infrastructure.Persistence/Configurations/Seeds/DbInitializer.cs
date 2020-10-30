@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWork;
 using Domain.Entities;
+using Domain.Entities.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,6 @@ namespace Infrastructure.Persistence.Configurations.Seeds
             var unitOfWork = scope.ServiceProvider.GetService<IUnitOfWork>();
             var passwordHashService = scope.ServiceProvider.GetService<IPasswordHashService>();
             await AddCountryCode(unitOfWork);
-            await AddGender(unitOfWork);
             await AddRole(unitOfWork);
             await AddUser(unitOfWork, passwordHashService);
             await AddUserRole(unitOfWork);
@@ -47,21 +47,6 @@ namespace Infrastructure.Persistence.Configurations.Seeds
             await unitOfWork.SaveChangesAsync();
         }
 
-        private static async Task AddGender (IUnitOfWork unitOfWork)
-        {
-            var count = await unitOfWork.GetRepository<Gender>().CountAsync();
-            if(count == 0)
-            {
-                await unitOfWork.GetRepository<Gender>()
-                    .InsertAsync(new Gender[]
-                    {
-                        new Gender { Name = "Мужской" },
-                        new Gender { Name = "Женский" }
-                    });
-            }
-            await unitOfWork.SaveChangesAsync();
-        }
-
         private static async Task AddRole (IUnitOfWork unitOfWork)
         {
             var count = await unitOfWork.GetRepository<Role>().CountAsync();
@@ -84,8 +69,6 @@ namespace Infrastructure.Persistence.Configurations.Seeds
             var count = await unitOfWork.GetRepository<User>().CountAsync();
             if(count == 0)
             {
-                var genders = await unitOfWork.GetRepository<Gender>().GetAllAsync();
-                var gender = await unitOfWork.GetRepository<Gender>().GetSingleOrDefaultAsync(predicate: x => x.Name.ToLower() == "мужской");
                 var countyCode = await unitOfWork.GetRepository<CountryCode>().GetSingleOrDefaultAsync(predicate: x => x.ISOName == "RUS");
                 await unitOfWork.GetRepository<User>()
                     .InsertAsync(new User[]
@@ -98,7 +81,7 @@ namespace Infrastructure.Persistence.Configurations.Seeds
                             MiddleName = "Вилданович",
                             PhoneNumber = "9500280027",
                             DateOfBirth = new DateTime(1998, 1, 29),
-                            GenderId = gender.Id,
+                            Gender = Gender.Male,
                             CountryCodeId = countyCode.Id,
                             Password = passwordHashService.HashPassword("secret")
                         }

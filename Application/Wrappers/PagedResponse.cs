@@ -18,7 +18,7 @@ namespace Application.Wrappers
         {
             Data = data;
             Message = null;
-            Succeeded = true;
+            Successed = true;
 
             PageSize = pageSize;
             PageNumber = pageNumber;

@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Application.DTOs.Account
         public string MiddleName { get; set; }
         public string JWT { get; set; }
         public string[] Roles { get; set; }
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [JsonIgnore]
         public string RefreshToken { get; set; }
@@ -29,7 +30,7 @@ namespace Application.DTOs.Account
             MiddleName = user.MiddleName;
             PhoneNumber = user.PhoneNumber;
             Roles = user.UserRoles?.Select(x => x.Role?.Name).ToArray();
-            Gender = user.Gender?.Name;
+            Gender = user.Gender;
             JWT = jwtToken;
             RefreshToken = refreshToken;
         }

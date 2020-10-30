@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,8 +28,6 @@ namespace Domain.Entities
         public string PhoneNumber { get; set; }
 
         public DateTime DateOfBirth { get; set; }
-
-        public int GenderId { get; set; }
 
         public Gender Gender { get; set; }
 

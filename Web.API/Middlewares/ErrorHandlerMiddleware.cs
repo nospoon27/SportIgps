@@ -32,7 +32,7 @@ namespace Web.API.Middlewares
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-                var responseModel = new Response<string>() { Succeeded = false, Message = $"{error?.Message} {error?.InnerException}" };
+                var responseModel = new Response<string>() { Successed = false, Message = $"{error?.Message} {error?.InnerException}" };
 
                 switch (error)
                 {
@@ -41,8 +41,8 @@ namespace Web.API.Middlewares
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case CustomValidationException e:
-                        // custom application error
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        // invalid data / не прошел вадацию
+                        response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
                         responseModel.ValidationErrors = e.Failures;
                         break;
                     case KeyNotFoundException _:

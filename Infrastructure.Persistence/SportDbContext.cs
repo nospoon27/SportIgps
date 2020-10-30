@@ -32,7 +32,6 @@ namespace Infrastructure.Persistence
         public DbSet<Sport> Sports { get; set; }
         public DbSet<TrainerSpecialization> TrainerSpecializations { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<Gender> Genders { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<CountryCode> CountryCodes { get; set; }
         public DbSet<Abonement> Abonements { get; set; }
