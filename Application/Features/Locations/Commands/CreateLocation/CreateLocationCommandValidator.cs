@@ -11,8 +11,7 @@ namespace Application.Features.Locations.Commands.CreateLocation
         public CreateLocationCommandValidator()
         {
             RuleFor(l => l.Name)
-                .NotEmpty().WithMessage("{PropertyName} должно быть заполнено")
-                .NotNull().WithMessage("{PropertyName} должно быть заполнено");
+                .NotEmpty().WithMessage("{PropertyName} должно быть заполнено");
         }
     }
 }

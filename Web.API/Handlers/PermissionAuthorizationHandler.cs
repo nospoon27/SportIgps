@@ -25,17 +25,29 @@ namespace Web.API.Handlers
             if (context.User == null) return;
 
             var user = await _userService.FindByIdWithRoleClaims(_authenticatedUserService.UserId.Value);
+            var userRoles = user.UserRoles;
+            foreach(var ur in userRoles)
+            {
+                var permissions = ur.Role.RoleClaims
+                    .Where(c => c.ClaimType == CustomClaimTypes.Permission
+                           && (c.ClaimValue == requirement.Permission || c.ClaimValue == "*"));
+                if (permissions.Any())
+                {
+                    context.Succeed(requirement);
+                    return;
+                }
+            }
             //var permissions = user.Roles.Select(r => r.RoleClaims
             //    .Select(c => c).Where(c => c.ClaimType == CustomClaimTypes.Permission 
             //                            && c.ClaimValue == requirement.Permission));
-            var permissions = user.UserRoles.SelectMany(r => r.Role.RoleClaims)
-                .Select(c => c).Where(c => c.ClaimType == CustomClaimTypes.Permission
-                                        && c.ClaimValue == requirement.Permission);
-            if (permissions.Any())
-            {
-                context.Succeed(requirement);
-                return;
-            }
+            //var permissions = user.UserRoles.SelectMany(r => r.Role.RoleClaims)
+            //    .Select(c => c).Where(c => c.ClaimType == CustomClaimTypes.Permission
+            //                            && (c.ClaimValue == requirement.Permission || c.ClaimValue == "*"));
+            //if (permissions.Any()) 
+            //{
+            //    context.Succeed(requirement);
+            //    return;
+            //}
         }
     }
 }

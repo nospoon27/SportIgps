@@ -24,7 +24,7 @@ namespace Application.Interfaces.Services
         Task AddNewUser(User user, bool checkForSamePhoneNumber = false);
 
         /// <summary>
-        /// Найти пользователя по ID
+        /// Поиск пользователя по id, возвращает пользователя с UserRoles=>Role, CountryCode
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

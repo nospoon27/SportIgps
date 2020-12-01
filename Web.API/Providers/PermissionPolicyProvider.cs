@@ -27,7 +27,7 @@ namespace Web.API.Providers
         // The policy name must match the permission that is needed.
         public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            if (policyName.StartsWith("can", StringComparison.OrdinalIgnoreCase))
+            if (policyName.StartsWith("Permissions", StringComparison.OrdinalIgnoreCase))
             {
                 var policy = new AuthorizationPolicyBuilder();
                 policy.AddRequirements(new PermissionRequirement(policyName));

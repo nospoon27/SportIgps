@@ -233,11 +233,11 @@ namespace Infrastructure.Persistence.UnitOfWork
 
             if (orderBy != null)
             {
-                return orderBy(query).Select(selector).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return orderBy(query).Select(selector).ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
             else
             {
-                return query.Select(selector).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
+                return query.Select(selector).ToPagedListAsync(pageIndex, pageSize, 1, cancellationToken);
             }
         }
 

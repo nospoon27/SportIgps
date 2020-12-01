@@ -41,6 +41,7 @@ namespace Domain.Entities
         /// </summary>
         public CountryCode CountryCode { get; set; }
 
+        [JsonIgnore]
         public string Password { get; set; }
 
         /// <summary>
@@ -48,6 +49,11 @@ namespace Domain.Entities
         /// </summary>
         [JsonIgnore]
         public IList<UserRole> UserRoles { get; set; }
+
+        public object Include(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Токены обновления

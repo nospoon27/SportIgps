@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Mappings;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ namespace Application
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //services.AddAutoMapper(typeof(LocationMapper));
             //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             
             services.AddMediatR(Assembly.GetExecutingAssembly());

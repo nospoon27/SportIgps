@@ -17,9 +17,13 @@ namespace Web.API.Controllers
     public class AccountController : WithVersionBaseApiController
     {
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private readonly IAuthenticatedUserService _authenticatedUserService;
+        public AccountController(
+            IAccountService accountService,
+            IAuthenticatedUserService authenticatedUserService)
         {
             _accountService = accountService;
+            _authenticatedUserService = authenticatedUserService;
         }
 
         /// <summary>
@@ -51,14 +55,14 @@ namespace Web.API.Controllers
         /// Обновление токена
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("refreshToken")]
         public async Task<ActionResult<Response<AuthenticationResponse>>> RefreshToken()
         {
             var cookieRefreshToken = Request.Cookies["refreshToken"];
             var ipAddress = GenerateIPAddress();
             var result = await _accountService.RefreshToken(cookieRefreshToken, ipAddress);
-            if (result == null) return Unauthorized("Невалидный токен");
+            if (result == null) throw new  UnauthorizedException("Невалидный токен");
             setTokenCookie(result.Data.RefreshToken);
             return Ok(result);
         }
@@ -69,15 +73,37 @@ namespace Web.API.Controllers
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost("revokeToken")]
-        public async Task<ActionResult> RevokeToken([FromBody] RevokeTokenRequest request)
+        public async Task<ActionResult<Response<bool>>> RevokeToken([FromBody] RevokeTokenRequest request)
         {
             var refreshToken = request.Token ?? Request.Cookies["refreshToken"];
             
-            if (string.IsNullOrEmpty(refreshToken)) return BadRequest();
-
+            if (string.IsNullOrEmpty(refreshToken)) throw new ApiException("Ошибка обновления доступа");
             var result = await _accountService.RevokeToken(refreshToken, GenerateIPAddress());
+            Response.Cookies.Delete("refreshToken");
 
-            return result ? Ok() : throw new NotFoundException("Токен не найден");
+            return result.Data ? result : throw new NotFoundException("Токен не найден");
+        }
+
+        /// <summary>
+        /// Получить данные пользователя
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult> Me()
+        {
+            var userId = _authenticatedUserService.UserId;
+            var response = await _accountService.AccountData(userId.Value);
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet("permissions")]
+        public async Task<ActionResult<Response<IList<string>>>> GetPermissions()
+        {
+            var userId = _authenticatedUserService.UserId;
+            var response = await _accountService.GetPermissions(userId.Value);
+            return Ok(response);
         }
 
         private void setTokenCookie(string token)

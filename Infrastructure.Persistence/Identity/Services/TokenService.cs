@@ -52,7 +52,8 @@ namespace Infrastructure.Persistence.Identity.Services
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
+                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
+                new Claim("code", user.CountryCodeId.ToString())
             }.Union(roleClaims);
 
             var jwt = new JwtSecurityTokenHandler()

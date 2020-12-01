@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Account;
+using Application.DTOs.Users;
 using Application.Features.Users.Queries.GetAll;
 using Application.Features.Users.Queries.GetById;
 using Application.Features.Users.Queries.GetCountryCodes;
@@ -25,6 +26,8 @@ namespace Application.Mappings
             CreateMap<RegisterRequest, User>().ReverseMap();
 
             CreateMap<CountryCode, GetCountryCodesResponse>();
+
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

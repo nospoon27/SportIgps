@@ -9,7 +9,13 @@ namespace Infrastructure.Persistence.Identity.AccessControl
     {
         public static class Users
         {
-            public const string Read = "can.users.read";
+            public const string Read = "Permissions.Users.Read";
+        }
+
+        public static class Locations
+        {
+            public const string Read = "Permissions.Locations.Read";
+            public const string CreateUpdateDelete = "Permissions.Locations.CreateUpdateDelete";
         }
     }
 }

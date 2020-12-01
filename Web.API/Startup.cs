@@ -38,6 +38,8 @@ namespace Web.API
         {
             services.AddApplicationLayer();
 
+            services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+
             services.AddControllers(options =>
             {
                 options.Filters.Add(new OverridingResultFilter());
@@ -61,8 +63,7 @@ namespace Web.API
             services.AddPersistenceInfrastructure(Configuration);
 
             services.AddRouting();
-
-            services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+            
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
@@ -75,8 +76,6 @@ namespace Web.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            
 
             // swagger
             app.UseConfiguredSwagger();

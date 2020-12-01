@@ -11,5 +11,13 @@ namespace Domain.Entities
         public Role Role { get; set; }
         public string ClaimType { get; set; }
         public string ClaimValue { get; set; }
+
+        public RoleClaim() {}
+        public RoleClaim(int roleId, string type, string value)
+        {
+            RoleId = roleId;
+            ClaimType = type;
+            ClaimValue = value;
+        }
     }
 }

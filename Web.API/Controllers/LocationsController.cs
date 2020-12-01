@@ -1,10 +1,13 @@
 ﻿using Application.Features.Locations.Commands.CreateLocation;
 using Application.Features.Locations.Commands.DeleteLocationById;
 using Application.Features.Locations.Commands.UpdateLocation;
-using Application.Features.Locations.Queris.GetAll;
+using Application.Features.Locations.Queries.GetAll;
+using Application.Features.Locations.Queries.GetAllPaged;
 using Application.Features.Locations.Queris.GetAllPaged;
 using Application.Features.Locations.Queris.GetById;
+using Application.Parameters;
 using Application.Wrappers;
+using Infrastructure.Persistence.Identity.AccessControl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,12 +22,11 @@ namespace Web.API.Controllers
         /// <summary>
         /// Все локации
         /// </summary>
-        /// <param name="request"></param>
         /// <returns></returns>
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll([FromQuery] GetAllLocationsQuery request)
+        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll()
         {
-            return Ok(await Mediator.Send(request));
+            return Ok(await Mediator.Send(new GetAllLocationsQuery()));
         }
 
         /// <summary>
@@ -39,12 +41,12 @@ namespace Web.API.Controllers
         }
 
         /// <summary>
-        /// Все локации страницами
+        /// Локации с пагинацией и сортировкой
         /// </summary>
-        /// <param name="query">Фильтр страницы</param>
+        /// <param name="query">Пагинация и сортировка</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<Response<GetAllPagedLocationsResponse>>> GetAllPaged([FromQuery] GetAllPagedLocationsQuery query)
+        public async Task<ActionResult<PagedResponse<GetAllPagedLocationsResponse>>> GetAllPaged([FromQuery] GetAllPagedLocationsQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
@@ -56,6 +58,7 @@ namespace Web.API.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
+        //[Authorize(Permissions.Locations.CreateUpdateDelete)]
         public async Task<ActionResult<Response<int>>> Create([FromBody] CreateLocationCommand command)
         {
             var result = await Mediator.Send(command);
@@ -70,6 +73,7 @@ namespace Web.API.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
+        //[Authorize(Permissions.Locations.CreateUpdateDelete)]
         public async Task<ActionResult<Response<int>>> Update([FromRoute] int id, [FromBody] UpdateLocationCommand command)
         {
             if (id != command.Id) return BadRequest();
@@ -83,6 +87,7 @@ namespace Web.API.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpDelete("{id}")]
+        //[Authorize(Permissions.Locations.CreateUpdateDelete)]
         public async Task<ActionResult<Response<int>>> Delete([FromRoute] int id)
         {
             return Ok(await Mediator.Send(new DeleteLocationByIdCommand { Id = id }));

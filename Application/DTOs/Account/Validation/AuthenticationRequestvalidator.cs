@@ -13,12 +13,11 @@ namespace Application.DTOs.Account.Validation
         {
             RuleFor(x => x.Password)
                 .NotNull()
-                .WithMessage(Required);
+                .WithMessage(Required)
+                .Length(6);
 
             RuleFor(v => v.PhoneNumber)
-                .NotNull().WithMessage(Required)
-                .MaximumLength(13)
-                .MinimumLength(10).WithMessage("Номер телефона должен состоять от {MinLength} до {MaxLength} символов");
+                .NotNull().WithMessage(Required);
 
             RuleFor(v => v.CountryCodeId)
                 .NotEqual(0).WithMessage(Required)

@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Account;
+﻿using Application.CustomTypes;
+using Application.DTOs.Account;
 using Application.Exceptions;
 using Application.Interfaces.Services;
 using Application.Interfaces.UnitOfWork;
@@ -98,12 +99,13 @@ namespace Infrastructure.Persistence.Identity.Services
             user.CountryCodeId = countryCode.Id;
             user.Gender = user.Gender;
 
+            // Добавляем пользователя
             await _userService.AddNewUser(user, true);
+            await _unitOfWork.SaveChangesAsync();
 
+            // Добавляем роль пользователю
             var clientRole = await _userService.FindRoleByName("client");
-
             await _userService.AddRoleToUser(user, clientRole.Name);
-
             await _unitOfWork.SaveChangesAsync();
 
             return new Response<string>(user.Id.ToString(), $"Пользователь зарегистрирован");
@@ -140,24 +142,51 @@ namespace Infrastructure.Persistence.Identity.Services
                     newToken.Token));
         }
 
-        public async Task<bool> RevokeToken(string token, string ipAddress)
+        public async Task<Response<bool>> RevokeToken(string token, string ipAddress)
         {
             var refreshToken = await _unitOfWork.GetRepository<Domain.Entities.RefreshToken>()
                 .GetSingleOrDefaultAsync(
                 predicate: x => x.Token == token, 
                 disableTracking: false);
 
-            if(refreshToken == null || !refreshToken.IsActive)
+            if (refreshToken == null || !refreshToken.IsActive)
             {
-                return false;
+                new Response<bool>(false);
             }
 
             refreshToken.Revoked = DateTime.Now;
             refreshToken.RevokedByIp = ipAddress;
             await _unitOfWork.SaveChangesAsync();
 
-            return true;
+            return new Response<bool>(true);
         }
 
+        public async Task<Response<MeResponse>> AccountData(int userId)
+        {
+            var user = await _userService.FindById(userId);
+
+            if (user == null) throw new NotFoundException("Пользователь не найден");
+
+            var response = new MeResponse(user);
+
+            return new Response<MeResponse>(response);            
+        }
+
+        public async Task<Response<IList<string>>> GetPermissions(int userId)
+        {
+            var user = await _unitOfWork.GetRepository<User>()
+                .GetFirstOrDefaultAsync(
+                predicate: x => x.Id == userId,
+                include: source => source
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .ThenInclude(r => r.RoleClaims));
+
+            var permissions = user.UserRoles
+                .SelectMany(ur => ur.Role.RoleClaims?.Where(rc => rc.ClaimType == CustomClaimTypes.Permission)
+                .Select(rc => rc.ClaimValue));
+
+            return new Response<IList<string>>(permissions.ToList());
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Application.Features.Sports.Commands.CreateSport;
+﻿using Application.Features.Sports.Commands.Create;
 using Application.Features.Sports.Commands.DeleteSportById;
 using Application.Features.Sports.Commands.UpdateSport;
 using Application.Features.Sports.Queries.GetAll;
@@ -21,7 +21,8 @@ namespace Web.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedSportsResponse>>>> GetAllPaged([FromQuery] GetAllPagedSportsQuery request)
+        public async Task<ActionResult<PagedResponse<IList<GetAllPagedSportsResponse>>>> GetAllPaged(
+            [FromQuery] GetAllPagedSportsQuery request)
         {
             return Ok(await Mediator.Send(request));
         }

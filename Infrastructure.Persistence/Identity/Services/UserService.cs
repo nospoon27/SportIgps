@@ -58,34 +58,34 @@ namespace Infrastructure.Persistence.Identity.Services
         public async Task<User> FindById(int id)
         {
             if (id == 0) throw new ArgumentException("id не может быть равен 0");
+            return await _unitOfWork
+                        .GetRepository<User>()
+                        .GetSingleOrDefaultAsync(
+                        predicate: x => x.Id == id,
+                        include: source => source
+                        .Include(x => x.CountryCode)
+                        .Include(u => u.UserRoles)
+                        .ThenInclude(ur => ur.Role),
+                        disableTracking: true);
+        }
+
+        public async Task<User> FindByIdWithRoleClaims(int id)
+        {
+            if (id == 0) throw new ArgumentException("id не может быть равен 0");
             try
             {
                 return await _unitOfWork
                         .GetRepository<User>()
                         .GetSingleOrDefaultAsync(
                         predicate: x => x.Id == id,
-                        include: source => source
-                        .Include(x => x.Gender)
-                        .Include(x => x.CountryCode));
+                        include: source => source.Include(u => u.UserRoles)
+                        .ThenInclude(ur => ur.Role)
+                        .ThenInclude(r => r.RoleClaims));
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-        }
-
-        public async Task<User> FindByIdWithRoleClaims(int id)
-        {
-            if (id == 0) throw new ArgumentException("id не может быть равен 0");
-            return await _unitOfWork
-                .GetRepository<User>()
-                .GetSingleOrDefaultAsync(
-                predicate: x => x.Id == id,
-                include: source => source.Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .ThenInclude(r => r.RoleClaims)
-                .ThenInclude(rc => rc.Role));
         }
 
         public async Task AddRoleToUser(User user, string roleName)
@@ -97,16 +97,6 @@ namespace Infrastructure.Persistence.Identity.Services
 
             if (user == null) throw new KeyNotFoundException($"не удалось привоить роль. Пользователь с ключом {user.Id} не найден");
             if (role == null) throw new KeyNotFoundException($"Не удалось присвоить роль. Роль {roleName} не найдена");
-
-            //var actualUser = await _unitOfWork.GetRepository<User>()
-            //    .GetSingleOrDefaultAsync(
-            //    predicate: x => x.Id == user.Id,
-            //    include: source => source.Include(u => u.Roles),
-            //    disableTracking: false);
-
-            //actualUser.Roles.Add(role);
-
-            //await _unitOfWork.SaveChangesAsync();
 
             await _unitOfWork.GetRepository<UserRole>()
                 .InsertAsync(new UserRole(currentUser.Id, role.Id));

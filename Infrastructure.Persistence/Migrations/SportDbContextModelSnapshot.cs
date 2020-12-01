@@ -90,8 +90,20 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ISOName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

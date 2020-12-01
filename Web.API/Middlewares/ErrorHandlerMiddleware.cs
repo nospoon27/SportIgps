@@ -32,7 +32,17 @@ namespace Web.API.Middlewares
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-                var responseModel = new Response<string>() { Successed = false, Message = $"{error?.Message} {error?.InnerException}" };
+
+                string message = string.Empty;
+                message = $"{error?.Message}{error?.InnerException}";
+//#if DEBUG
+//                message = $"{error?.Message} {error?.InnerException}\n{error.StackTrace}";
+//#endif
+                var responseModel = new Response<string>() 
+                { 
+                    Successed = false, 
+                    Message = message
+                };
 
                 switch (error)
                 {
@@ -44,6 +54,7 @@ namespace Web.API.Middlewares
                         // invalid data / не прошел вадацию
                         response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
                         responseModel.ValidationErrors = e.Failures;
+                        responseModel.Errors = e.Failures;
                         break;
                     case KeyNotFoundException _:
                         // not found error
@@ -51,6 +62,9 @@ namespace Web.API.Middlewares
                         break;
                     case NotFoundException _:
                         response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    case UnauthorizedException _:
+                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         break;
                     default:
                         // unhandled error

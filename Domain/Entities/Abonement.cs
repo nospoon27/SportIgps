@@ -18,6 +18,8 @@ namespace Domain.Entities
         public int AbonementLimitId { get; set; }
         public double Price { get; set; }
         public Workout Workout { get; set; }
+        public string WorkoutName { get; set; }
+        public string WorkoutDescription { get; set; }
         public int WorkoutId { get; set; }
     }
 }

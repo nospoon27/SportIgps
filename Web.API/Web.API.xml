@@ -31,11 +31,16 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.GetAll(Application.Features.Locations.Queris.GetAll.GetAllLocationsQuery)">
+        <member name="M:Web.API.Controllers.AccountController.Me">
+            <summary>
+            Получить данные пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.LocationsController.GetAll">
             <summary>
             Все локации
             </summary>
-            <param name="request"></param>
             <returns></returns>
         </member>
         <member name="M:Web.API.Controllers.LocationsController.Get(System.Int32)">
@@ -47,9 +52,9 @@
         </member>
         <member name="M:Web.API.Controllers.LocationsController.GetAllPaged(Application.Features.Locations.Queris.GetAllPaged.GetAllPagedLocationsQuery)">
             <summary>
-            Все локации страницами
+            Локации с пагинацией и сортировкой
             </summary>
-            <param name="query">Фильтр страницы</param>
+            <param name="query">Пагинация и сортировка</param>
             <returns></returns>
         </member>
         <member name="M:Web.API.Controllers.LocationsController.Create(Application.Features.Locations.Commands.CreateLocation.CreateLocationCommand)">

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -58,16 +59,17 @@ namespace Infrastructure.Persistence.Identity
                         ValidateLifetime = true, // <- the "exp" will be validated
                         ValidateAudience = true,
                         ValidateIssuer = true,
+                        
                     };
-
+                    var jsonSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
                     options.Events = new JwtBearerEvents()
                     {
                         OnAuthenticationFailed = context =>
                         {
                             context.NoResult();
-                            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                             context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new Response<string>("Ошибка аутентификации"));
+                            var result = JsonConvert.SerializeObject(new Response<string>("Ошибка аутентификации"), jsonSettings);
                             return context.Response.WriteAsync(result);
                         },
                         OnChallenge = context =>
@@ -75,14 +77,14 @@ namespace Infrastructure.Persistence.Identity
                             context.HandleResponse();
                             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                             context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new Response<string>("Вы не авторизованы"));
+                            var result = JsonConvert.SerializeObject(new Response<string>("Вы не авторизованы"), jsonSettings);
                             return context.Response.WriteAsync(result);
                         },
                         OnForbidden = context =>
                         {
                             context.Response.StatusCode = StatusCodes.Status403Forbidden;
                             context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new Response<string>("You are not authorized to access this resource"));
+                            var result = JsonConvert.SerializeObject(new Response<string>("У вас нет доступа для этого ресурса"), jsonSettings);
                             return context.Response.WriteAsync(result);
                         },
                     };

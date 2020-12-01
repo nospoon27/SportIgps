@@ -10,7 +10,7 @@ namespace Application.DTOs.Account
 {
     public class AuthenticationResponse
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public string PhoneNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,7 +24,7 @@ namespace Application.DTOs.Account
 
         public AuthenticationResponse(User user, string jwtToken, string refreshToken)
         {
-            Id = user.Id;
+            UserId = user.Id;
             FirstName = user.FirstName;
             LastName = user.LastName;
             MiddleName = user.MiddleName;

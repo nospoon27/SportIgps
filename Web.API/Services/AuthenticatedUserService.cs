@@ -16,7 +16,7 @@ namespace Web.API.Services
             _httpContextAccessor = httpContextAccessor;
             int userId;
 
-            if (int.TryParse(_httpContextAccessor.HttpContext?.User?.FindFirstValue("uid"), out userId))
+            if (int.TryParse(_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier), out userId))
             {
                 UserId = userId;
             }

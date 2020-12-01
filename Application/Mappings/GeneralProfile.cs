@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Features.Locations.Queris.GetAllPaged;
 using Application.Features.Users.Queries.GetAll;
 using AutoMapper;
 using Domain.Entities;

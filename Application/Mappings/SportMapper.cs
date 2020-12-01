@@ -1,4 +1,4 @@
-﻿using Application.Features.Sports.Commands.CreateSport;
+﻿using Application.Features.Sports.Commands.Create;
 using Application.Features.Sports.Queries.GetAll;
 using Application.Features.Sports.Queries.GetAllPaged;
 using AutoMapper;
