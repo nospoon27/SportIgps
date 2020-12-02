@@ -7,7 +7,7 @@ namespace Application.Exceptions
     public class NotFoundException : Exception
     {
         public NotFoundException(string name, object key)
-            : base($"Объект {name} ({key}) не был найден.")
+            : base($"Объект {name} с ключом [{key}] не был найден.")
         {
         }
 
