@@ -9,7 +9,9 @@ namespace Domain.Common
         public virtual int Id { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime Created { get; set; }
+        public string CreatedIp { get; set; }
         public int? LastModifiedBy { get; set; }
         public DateTime? LastModified { get; set; }
+        public string LastModifiedIp { get; set; }
     }
 }

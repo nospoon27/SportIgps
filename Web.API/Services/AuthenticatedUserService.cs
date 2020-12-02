@@ -21,8 +21,13 @@ namespace Web.API.Services
                 UserId = userId;
             }
             else UserId = null;
+
+            RemoteIp = _httpContextAccessor.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For")
+                ? _httpContextAccessor.HttpContext.Request.Headers["X-Forwarded-For"].ToString()
+                : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
 
         public int? UserId { get; }
+        public string RemoteIp { get; }
     }
 }

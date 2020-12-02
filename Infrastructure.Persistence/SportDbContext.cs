@@ -46,10 +46,12 @@ namespace Infrastructure.Persistence
                     case EntityState.Added:
                         entry.Entity.Created = DateTime.Now;
                         entry.Entity.CreatedBy = _authenticatedUser.UserId;
+                        entry.Entity.CreatedIp = _authenticatedUser.RemoteIp;
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModified = DateTime.Now;
                         entry.Entity.LastModifiedBy = _authenticatedUser.UserId;
+                        entry.Entity.LastModifiedIp = _authenticatedUser.RemoteIp;
                         break;
                 }
             }
