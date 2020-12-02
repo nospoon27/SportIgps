@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Users;
+using Domain.Common;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Application.Features.Trainers.Queries.GetAll
 {
-    public class GetAllTrainersQueryResponse
+    public class GetAllTrainersQueryResponse : BaseEntity
     {
         public UserDTO User { get; set; }
         public int UserId { get; set; }
