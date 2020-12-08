@@ -1,4 +1,5 @@
 ﻿using Application.Parameters;
+using Application.Sieve.Models;
 using Application.Wrappers;
 using MediatR;
 using System;
@@ -7,10 +8,7 @@ using System.Text;
 
 namespace Application.Features.Workouts.Queries.GetAllPaged
 {
-    public class GetAllPagedWorkoutsQuery : ISortRequest, IPagedRequest, IRequest<Response<IList<GetAllPagedWorkoutsQueryResponse>>>
+    public class GetAllPagedWorkoutsQuery : SieveModel, IRequest<Response<IList<GetAllPagedWorkoutsResponse>>>
     {
-        public string Sort { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
     }
 }

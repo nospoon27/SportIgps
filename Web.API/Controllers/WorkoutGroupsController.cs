@@ -22,7 +22,7 @@ namespace Web.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedWorkoutGroupsQueryResponse>>>> GetPaged([FromQuery] GetAllPagedWorkoutGroupsQuery query)
+        public async Task<ActionResult<PagedResponse<IList<GetAllPagedWorkoutGroupsResponse>>>> GetPaged([FromQuery] GetAllPagedWorkoutGroupsQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

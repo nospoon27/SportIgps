@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.Features.WorkoutGroups.Queries.GetAllPaged
 {
-    public class GetAllPagedWorkoutGroupsQueryResponse : BaseEntity
+    public class GetAllPagedWorkoutGroupsResponse : BaseEntity
     {
         public string Name { get; set; }
     }

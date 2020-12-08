@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Workouts.Queries.GetAllPaged
 {
-    public class GetAllPagedWorkoutsQueryResponse
+    public class GetAllPagedWorkoutsResponse
     {
         public string Name { get; set; }
         public string Description { get; set; }

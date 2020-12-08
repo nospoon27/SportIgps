@@ -16,7 +16,7 @@ namespace Application.Mappings
         {
             CreateMap<CreateWorkoutGroupCommand, WorkoutGroup>().ReverseMap();
             CreateMap<WorkoutGroup, GetAllWorkoutGroupsQueryResponse>().ReverseMap();
-            CreateMap<WorkoutGroup, GetAllPagedWorkoutGroupsQueryResponse>().ReverseMap();
+            CreateMap<WorkoutGroup, GetAllPagedWorkoutGroupsResponse>().ReverseMap();
             CreateMap<WorkoutGroup, GetByIdWorkoutGroupQueryResponse>().ReverseMap();
         }
     }
