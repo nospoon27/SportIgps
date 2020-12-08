@@ -23,11 +23,11 @@ namespace Application.Features.Trainers.Queries.GetAllPaged
 
         public async Task<PagedResponse<IList<GetAllPagedTrainersQueryResponse>>> Handle(GetAllPagedTrainersQuery request, CancellationToken cancellationToken)
         {
-            var filter = new PagedRequest(request.PageNumber, request.PageSize);
+            var filter = new PagedRequest(request.Page, request.PageSize);
             var trainers = (await _unitOfWork.GetRepository<Trainer>()
                 .GetPagedListAsync(
                 selector: s => _mapper.Map<GetAllPagedTrainersQueryResponse>(s),
-                pageIndex: filter.PageNumber,
+                pageIndex: filter.Page,
                 orderBy: s => s.OrderBy(request.Sort),
                 pageSize: filter.PageSize)).ToPagedResponse();
 

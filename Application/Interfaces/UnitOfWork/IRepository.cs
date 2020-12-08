@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Sieve.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -17,6 +18,13 @@ namespace Application.Interfaces.UnitOfWork
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public interface IRepository<TEntity> where TEntity : class
     {
+        Task<IPagedList<TResult>> GetPagedListWithSieveAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+                                                                    SieveModel sieve,
+                                                                    Expression<Func<TEntity, bool>> predicate = null,
+                                                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                                    bool disableTracking = true,
+                                                                    CancellationToken cancellationToken = default(CancellationToken),
+                                                                    bool ignoreQueryFilters = false) where TResult : class;
         Task<IReadOnlyList<TEntity>> GetPagedResponseAsync(Expression<Func<TEntity, bool>> predicate = null,
                                          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                          Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,

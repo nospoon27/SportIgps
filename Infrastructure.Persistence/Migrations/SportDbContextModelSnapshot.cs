@@ -35,6 +35,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsChild")
                         .HasColumnType("boolean");
 
@@ -44,11 +47,20 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
+
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
+                    b.Property<string>("WorkoutDescription")
+                        .HasColumnType("text");
+
                     b.Property<int>("WorkoutId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("WorkoutName")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -96,6 +108,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<string>("ISOName")
                         .HasColumnType("text");
 
@@ -104,6 +119,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -123,6 +141,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -131,6 +152,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -194,11 +218,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -247,6 +277,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
 
@@ -255,6 +288,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<int>("WorkoutGroupId")
                         .HasColumnType("integer");
@@ -279,6 +315,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -287,6 +326,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -312,11 +354,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -341,11 +389,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<int>("SportId")
                         .HasColumnType("integer");
@@ -381,6 +435,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp without time zone");
 
@@ -395,6 +452,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
@@ -429,6 +489,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<int>("Id")
                         .HasColumnType("integer");
 
@@ -437,6 +500,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -458,6 +524,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -466,6 +535,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("integer");
@@ -508,11 +580,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -538,11 +616,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<int>("WorkoutGroupId")
                         .HasColumnType("integer");
@@ -569,11 +653,17 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreatedIp")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("LastModifiedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("LastModifiedIp")
+                        .HasColumnType("text");
 
                     b.Property<int>("TrainerId")
                         .HasColumnType("integer");

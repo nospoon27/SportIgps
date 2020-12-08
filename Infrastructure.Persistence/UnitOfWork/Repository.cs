@@ -1,8 +1,11 @@
 ﻿using Application.Interfaces.UnitOfWork;
+using Application.Sieve.Models;
+using Application.Sieve.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +21,17 @@ namespace Infrastructure.Persistence.UnitOfWork
     {
         protected readonly DbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
+        protected readonly ISieveProcessor _sieveProcessor;
+        private readonly SieveOptions _sieveOptions;
 
-        public Repository(DbContext dbContext)
+        public Repository(DbContext dbContext, 
+            ISieveProcessor sieveProcessor,
+            IOptions<SieveOptions> sieveOptions)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _dbSet = _dbContext.Set<TEntity>();
+            _sieveProcessor = sieveProcessor ?? throw new ArgumentNullException(nameof(sieveProcessor));
+            _sieveOptions = sieveOptions.Value;
         }
 
         public virtual void ChangeTable(string table)
@@ -760,6 +769,42 @@ namespace Infrastructure.Persistence.UnitOfWork
             {
                 return await query.ToListAsync(cancellationToken);
             }
+        }
+
+        public virtual Task<IPagedList<TResult>> GetPagedListWithSieveAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+                                                                    SieveModel sieve,
+                                                                    Expression<Func<TEntity, bool>> predicate = null,
+                                                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+                                                                    bool disableTracking = true,
+                                                                    CancellationToken cancellationToken = default(CancellationToken),
+                                                                    bool ignoreQueryFilters = false) where TResult : class
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (disableTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (ignoreQueryFilters)
+            {
+                query = query.IgnoreQueryFilters();
+            }
+
+            var _page = sieve.Page ?? 1;
+            var _pageSize = sieve.PageSize ?? _sieveOptions.DefaultPageSize;
+
+            return _sieveProcessor.Apply(sieve, query, applyPagination: false).Select(selector).ToPagedListAsync(_page, _pageSize, 1, cancellationToken);
         }
     }
 }

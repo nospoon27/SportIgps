@@ -6,6 +6,7 @@ using Application.Features.Locations.Queries.GetAllPaged;
 using Application.Features.Locations.Queris.GetAllPaged;
 using Application.Features.Locations.Queris.GetById;
 using Application.Parameters;
+using Application.Sieve.Models;
 using Application.Wrappers;
 using Infrastructure.Persistence.Identity.AccessControl;
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +25,7 @@ namespace Web.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll(SieveModel query)
         {
             return Ok(await Mediator.Send(new GetAllLocationsQuery()));
         }

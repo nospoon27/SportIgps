@@ -1,6 +1,7 @@
 ﻿using Application.Features.Users.Commands.DeleteUserById;
 using Application.Features.Users.Commands.UpdateUser;
 using Application.Features.Users.Queries.GetAll;
+using Application.Features.Users.Queries.GetAllPaged;
 using Application.Features.Users.Queries.GetById;
 using Application.Features.Users.Queries.GetCountryCodes;
 using Application.Wrappers;
@@ -14,9 +15,15 @@ namespace Web.API.Controllers
     public class UsersController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllUsersResponse>>>> Get([FromQuery] GetAllUsersQuery request)
+        public async Task<ActionResult<PagedResponse<IList<GetAllPagedUsersResponse>>>> GetPaged([FromQuery] GetAllPagedUsersQuery request)
         {
             return Ok(await Mediator.Send(request));
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<Response<IList<GetAllUsersResponse>>>> GetAll()
+        {
+            return Ok(await Mediator.Send(new GetAllUsersQuery()));
         }
 
         [HttpGet("{id}")]

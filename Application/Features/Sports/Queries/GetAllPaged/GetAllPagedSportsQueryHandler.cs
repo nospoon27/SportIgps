@@ -1,13 +1,10 @@
 ﻿using Application.Extensions;
 using Application.Interfaces.UnitOfWork;
-using Application.Parameters;
 using Application.Wrappers;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,11 +24,9 @@ namespace Application.Features.Sports.Queries.GetAllPaged
 
         public async Task<PagedResponse<IList<GetAllPagedSportsResponse>>> Handle(GetAllPagedSportsQuery request, CancellationToken cancellationToken)
         {
-            var validFilter = new PagedRequest(request.PageNumber, request.PageSize);
-            var sports = (await _unitOfWork.GetRepository<Sport>().GetPagedListAsync(
+            var sports = (await _unitOfWork.GetRepository<Sport>().GetPagedListWithSieveAsync(
                 selector: s => _mapper.Map<GetAllPagedSportsResponse>(s),
-                pageIndex: validFilter.PageNumber,
-                pageSize: validFilter.PageSize)).ToPagedResponse();
+                sieve: request)).ToPagedResponse();
 
             return sports;
         }

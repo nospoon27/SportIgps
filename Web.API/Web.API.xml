@@ -37,7 +37,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.GetAll">
+        <member name="M:Web.API.Controllers.LocationsController.GetAll(Application.Sieve.Models.SieveModel)">
             <summary>
             Все локации
             </summary>

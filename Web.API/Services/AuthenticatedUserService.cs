@@ -22,9 +22,12 @@ namespace Web.API.Services
             }
             else UserId = null;
 
-            RemoteIp = _httpContextAccessor.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For")
-                ? _httpContextAccessor.HttpContext.Request.Headers["X-Forwarded-For"].ToString()
-                : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                RemoteIp = _httpContextAccessor.HttpContext.Request.Headers.ContainsKey("X-Forwarded-For")
+                        ? _httpContextAccessor.HttpContext.Request.Headers["X-Forwarded-For"].ToString()
+                        : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(); 
+            }
         }
 
         public int? UserId { get; }

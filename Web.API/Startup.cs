@@ -36,7 +36,7 @@ namespace Web.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationLayer();
+            services.AddApplicationLayer(Configuration);
 
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 

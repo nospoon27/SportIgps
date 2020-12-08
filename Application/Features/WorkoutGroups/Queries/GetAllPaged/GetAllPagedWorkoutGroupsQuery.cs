@@ -10,7 +10,7 @@ namespace Application.Features.WorkoutGroups.Queries.GetAllPaged
     public class GetAllPagedWorkoutGroupsQuery : ISortRequest, IPagedRequest, IRequest<Response<IList<GetAllPagedWorkoutGroupsQueryResponse>>>
     {
         public string Sort { get; set; }
-        public int PageNumber { get; set; }
+        public int Page { get; set; }
         public int PageSize { get; set; }
     }
 }

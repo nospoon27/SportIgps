@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Account;
 using Application.DTOs.Users;
 using Application.Features.Users.Queries.GetAll;
+using Application.Features.Users.Queries.GetAllPaged;
 using Application.Features.Users.Queries.GetById;
 using Application.Features.Users.Queries.GetCountryCodes;
 using AutoMapper;
@@ -15,11 +16,9 @@ namespace Application.Mappings
     {
         public UserMapper()
         {
-            CreateMap<User, GetAllUsersResponse>()
-                .ForMember(x => x.CounrtyCode, o => o.MapFrom(x => x.CountryCode.Code));
-
-            CreateMap<User, GetUserByIdResponse>()
-                .ForMember(x => x.CounrtyCode, o => o.MapFrom(x => x.CountryCode.Code));
+            CreateMap<User, GetAllPagedUsersResponse>();
+            CreateMap<User, GetAllUsersResponse>();
+            CreateMap<User, GetUserByIdResponse>();
 
             CreateMap<AuthenticationRequest, User>().ReverseMap();
 

@@ -23,11 +23,11 @@ namespace Application.Features.WorkoutGroups.Queries.GetAllPaged
 
         public async Task<Response<IList<GetAllPagedWorkoutGroupsQueryResponse>>> Handle(GetAllPagedWorkoutGroupsQuery request, CancellationToken cancellationToken)
         {
-            var filter = new PagedRequest(request.PageNumber, request.PageSize);
+            var filter = new PagedRequest(request.Page, request.PageSize);
             var items = (await _unitOfWork.GetRepository<WorkoutGroup>()
                 .GetPagedListAsync(
                 selector: s => _mapper.Map<GetAllPagedWorkoutGroupsQueryResponse>(s),
-                pageIndex: filter.PageNumber,
+                pageIndex: filter.Page,
                 orderBy: s => s.OrderBy(request.Sort),
                 pageSize: filter.PageSize)).ToPagedResponse();
 

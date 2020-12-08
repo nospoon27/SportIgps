@@ -1,6 +1,7 @@
 ﻿using Application.Features.Sports.Commands.Create;
 using Application.Features.Sports.Queries.GetAll;
 using Application.Features.Sports.Queries.GetAllPaged;
+using Application.Features.Sports.Queries.GetById;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -13,9 +14,10 @@ namespace Application.Mappings
     {
         public SportMapper()
         {
+            CreateMap<CreateSportCommand, Sport>();
             CreateMap<Sport, GetAllSportsResponse>();
             CreateMap<Sport, GetAllPagedSportsResponse>();
-            CreateMap<CreateSportCommand, Sport>();
+            CreateMap<Sport, GetByIdSportQueryResponse>();
         }
     }
 }

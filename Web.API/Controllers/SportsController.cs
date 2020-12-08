@@ -3,6 +3,7 @@ using Application.Features.Sports.Commands.DeleteSportById;
 using Application.Features.Sports.Commands.UpdateSport;
 using Application.Features.Sports.Queries.GetAll;
 using Application.Features.Sports.Queries.GetAllPaged;
+using Application.Features.Sports.Queries.GetById;
 using Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,10 +15,16 @@ namespace Web.API.Controllers
 {
     public class SportsController : BaseApiController
     {
-        [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllSportsResponse>>>> GetAll([FromQuery] GetAllSportsQuery request)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<GetByIdSportQueryResponse>>> GetById([FromRoute] GetByIdSportQuery request)
         {
             return Ok(await Mediator.Send(request));
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<Response<IList<GetAllSportsResponse>>>> GetAll()
+        {
+            return Ok(await Mediator.Send(new GetAllSportsQuery()));
         }
 
         [HttpGet]

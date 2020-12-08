@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
+using Application.Sieve.Models;
+using Application.Sieve.Services;
 
 namespace Infrastructure.Persistence.UnitOfWork
 {
@@ -22,14 +25,21 @@ namespace Infrastructure.Persistence.UnitOfWork
         private readonly TContext _context;
         private bool disposed = false;
         private Dictionary<Type, object> repositories;
+        private readonly IOptions<SieveOptions> _sieveOptions;
+        private readonly ISieveProcessor _sieveProcessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork{TContext}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public UnitOfWork(TContext context)
+        public UnitOfWork(
+            TContext context,
+            IOptions<SieveOptions> sieveOptions,
+            ISieveProcessor sieveProcessor)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _sieveOptions = sieveOptions ?? throw new ArgumentNullException(nameof(sieveOptions));
+            _sieveProcessor = sieveProcessor ?? throw new ArgumentNullException(nameof(sieveProcessor));
         }
 
         /// <summary>
@@ -95,7 +105,7 @@ namespace Infrastructure.Persistence.UnitOfWork
             var type = typeof(TEntity);
             if (!repositories.ContainsKey(type))
             {
-                repositories[type] = new Repository<TEntity>(_context);
+                repositories[type] = new Repository<TEntity>(_context, _sieveProcessor, _sieveOptions);
             }
 
             return (IRepository<TEntity>)repositories[type];
