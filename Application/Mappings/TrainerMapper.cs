@@ -15,8 +15,6 @@ namespace Application.Mappings
     {
         public TrainerMapper()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
-
             CreateMap<CreateTrainerCommand, Trainer>();
             CreateMap<Trainer, GetAllTrainersQueryResponse>();
             CreateMap<Trainer, GetAllPagedTrainersResponse>();

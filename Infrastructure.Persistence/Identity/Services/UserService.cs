@@ -72,20 +72,13 @@ namespace Infrastructure.Persistence.Identity.Services
         public async Task<User> FindByIdWithRoleClaims(int id)
         {
             if (id == 0) throw new ArgumentException("id не может быть равен 0");
-            try
-            {
-                return await _unitOfWork
+            return await _unitOfWork
                         .GetRepository<User>()
                         .GetSingleOrDefaultAsync(
                         predicate: x => x.Id == id,
                         include: source => source.Include(u => u.UserRoles)
                         .ThenInclude(ur => ur.Role)
                         .ThenInclude(r => r.RoleClaims));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         public async Task AddRoleToUser(User user, string roleName)
