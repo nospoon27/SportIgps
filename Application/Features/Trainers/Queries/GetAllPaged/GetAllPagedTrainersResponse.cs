@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Application.Features.Trainers.Queries.GetAllPaged
 {
-    public class GetAllPagedTrainersQueryResponse : BaseEntity
+    public class GetAllPagedTrainersResponse : BaseEntity
     {
         public UserDTO User { get; set; }
         public int UserId { get; set; }

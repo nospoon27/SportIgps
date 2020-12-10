@@ -1,14 +1,12 @@
 ﻿using Application.Parameters;
+using Application.Sieve.Models;
 using Application.Wrappers;
 using MediatR;
 using System.Collections.Generic;
 
 namespace Application.Features.Trainers.Queries.GetAllPaged
 {
-    public class GetAllPagedTrainersQuery : ISortRequest, IPagedRequest, IRequest<PagedResponse<IList<GetAllPagedTrainersQueryResponse>>>
+    public class GetAllPagedTrainersQuery : SieveModel, IRequest<PagedResponse<IList<GetAllPagedTrainersResponse>>>
     {
-        public string Sort { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
     }
 }

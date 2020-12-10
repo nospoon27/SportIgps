@@ -21,13 +21,13 @@ namespace Web.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedTrainersQueryResponse>>>> GetPaged([FromQuery] GetAllPagedTrainersQuery query)
+        public async Task<ActionResult<PagedResponse<IList<GetAllPagedTrainersResponse>>>> GetPaged([FromQuery] GetAllPagedTrainersQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllPagedTrainersQueryResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<GetAllPagedTrainersResponse>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllPagedTrainersQuery()));
         }

@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Locations.Queries.GetAllPaged
 {
-    public class GetAllPagedLocationsQueryHandler : IRequestHandler<GetAllPagedLocationsQuery, PagedResponse<IList<GetAllPagedLocationsResponse>>>
+    public class GetAllPagedLocationsHandler : IRequestHandler<GetAllPagedLocationsQuery, PagedResponse<IList<GetAllPagedLocationsResponse>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISieveProcessor _sieveProcessor;
-        public GetAllPagedLocationsQueryHandler(
+        public GetAllPagedLocationsHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             ISieveProcessor sieveProcessor)
@@ -31,7 +31,6 @@ namespace Application.Features.Locations.Queries.GetAllPaged
             var locations = (await _unitOfWork.GetRepository<Location>().GetPagedListWithSieveAsync(
                 selector: s => _mapper.Map<GetAllPagedLocationsResponse>(s),
                 sieve: request)).ToPagedResponse();
-
 
             return locations;
         }

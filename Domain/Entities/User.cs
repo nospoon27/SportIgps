@@ -36,13 +36,12 @@ namespace Domain.Entities
         /// </summary>
         public int CountryCodeId { get; set; }
 
-        /// <summary>
-        /// Код страны
-        /// </summary>
         public CountryCode CountryCode { get; set; }
 
         [JsonIgnore]
         public string Password { get; set; }
+
+        public string Biography { get; set; }
 
         /// <summary>
         /// Роль - пользователь
@@ -50,23 +49,14 @@ namespace Domain.Entities
         [JsonIgnore]
         public IList<UserRole> UserRoles { get; set; }
 
-        public object Include(Func<object, object> p)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Токены обновления
         /// </summary>
         [JsonIgnore]
         public List<RefreshToken> RefreshTokens { get; set; }
 
+
         [JsonIgnore]
         public IList<WorkoutGroupClient> WorkoutGroupClients { get; set; }
-
-        /// <summary>
-        /// Биография
-        /// </summary>
-        public string Biography { get; set; }
     }
 }

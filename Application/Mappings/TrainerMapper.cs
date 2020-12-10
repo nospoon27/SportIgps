@@ -1,4 +1,5 @@
-﻿using Application.Features.Trainers.Commands.Create;
+﻿using Application.DTOs.Users;
+using Application.Features.Trainers.Commands.Create;
 using Application.Features.Trainers.Queries.GetAll;
 using Application.Features.Trainers.Queries.GetAllPaged;
 using Application.Features.Trainers.Queries.GetById;
@@ -14,9 +15,11 @@ namespace Application.Mappings
     {
         public TrainerMapper()
         {
+            CreateMap<User, UserDTO>().ReverseMap();
+
             CreateMap<CreateTrainerCommand, Trainer>();
-            CreateMap<Trainer, GetAllTrainersQueryResponse>().ForPath(dest => dest.User, opt => opt.MapFrom(x => x.User));
-            CreateMap<Trainer, GetAllPagedTrainersQueryResponse>();
+            CreateMap<Trainer, GetAllTrainersQueryResponse>();
+            CreateMap<Trainer, GetAllPagedTrainersResponse>();
             CreateMap<Trainer, GetByIdTrainerQueryResponse>().ReverseMap();
         }
     }

@@ -32,7 +32,9 @@ namespace Application.SieveProcessors
             mapper.Property<Location>(x => x.Description).CanFilter().CanSort();
             mapper.Property<Location>(x => x.PeopleAmount).CanFilter().CanSort();
 
-
+            // Sport
+            mapper.Property<Sport>(x => x.Name).CanFilter().CanSort();
+            mapper.Property<Sport>(x => x.Description).CanFilter().CanSort();
 
             return mapper;
         }
