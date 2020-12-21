@@ -16,6 +16,7 @@ namespace Application.Mappings
         public TrainerMapper()
         {
             CreateMap<CreateTrainerCommand, Trainer>();
+            CreateMap<Trainer, GetByIdTrainerQueryResponse>();
             CreateMap<Trainer, GetAllTrainersQueryResponse>();
             CreateMap<Trainer, GetAllPagedTrainersResponse>();
             CreateMap<Trainer, GetByIdTrainerQueryResponse>().ReverseMap();

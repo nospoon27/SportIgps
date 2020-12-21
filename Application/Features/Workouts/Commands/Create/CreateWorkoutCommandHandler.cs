@@ -22,6 +22,7 @@ namespace Application.Features.Workouts.Commands.Create
         {
             var workout = _mapper.Map<Workout>(request);
             await _unitOfWork.GetRepository<Workout>().InsertAsync(workout);
+            await _unitOfWork.SaveChangesAsync();
 
             return new Response<int>(workout.Id);
         }
