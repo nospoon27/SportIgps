@@ -1,14 +1,13 @@
-﻿using Domain.Common;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Abonements.Queries.GetAllPaged
+namespace Application.Features.Abonements.Queries.GetById
 {
-    public class GetAllPagedAbonementsResponse : BaseEntity
+    public class GetByIdAbonementResponse
     {
         public bool IsChild { get; set; }
         public AbonementLimit AbonementLimit { get; set; }

@@ -1,12 +1,13 @@
 ﻿using Domain.Common;
 using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Application.Features.AbonementLimits.Queries.GetAllPaged
 {
-    public class AbonementLimit : BaseEntity
+    public class GetAllPagedAbonementLimitsResponse : BaseEntity
     {
         public int VisitAmount { get; set; }
         public DateTime StartTime { get; set; }

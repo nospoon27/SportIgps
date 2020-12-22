@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Abonements.Queries.GetAllPaged
+namespace Application.Features.AbonementLimits.Queries.GetAllPaged
 {
-    public class GetAllPagedAbonementsQuery : SieveModel, IRequest<Response<IList<GetAllPagedAbonementsResponse>>>
+    public class GetAllPagedAbonementLimitsQuery : SieveModel, IRequest<PagedResponse<IList<GetAllPagedAbonementLimitsResponse>>>
     {
     }
 }

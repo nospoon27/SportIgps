@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Features.Abonements.Queries.GetAll
 {
-    public class GetAllAbonementsQuery : IRequest<Response<IList<GetAllAbonementsQueryResponse>>>
+    public class GetAllAbonementsQuery : IRequest<Response<IList<GetAllAbonementsResponse>>>
     {
     }
 }

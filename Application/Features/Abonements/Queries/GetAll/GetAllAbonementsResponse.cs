@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Application.Features.Abonements.Queries.GetAll
 {
-    public class GetAllAbonementsQueryResponse
+    public class GetAllAbonementsResponse
     {
         public bool IsChild { get; set; }
         /// <summary>

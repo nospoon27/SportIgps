@@ -1,4 +1,5 @@
 ﻿using Application.Features.Permissions.Commands.AddPermission;
+using Application.Features.Permissions.Commands.DeleteById;
 using Application.Features.Permissions.Commands.UpdatePermission;
 using Application.Features.Permissions.Queries.GetAll;
 using Application.Features.Permissions.Queries.GetCurrentUserPermissions;
@@ -35,9 +36,16 @@ namespace Web.API.Controllers
             return Ok(await Mediator.Send(new GetAllPermissionsQuery()));
         }
         
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         [Authorize (Roles = "admin")]
         public async Task<ActionResult<Response<int>>> Update([FromRoute]int id, [FromBody] UpdatePermissionCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<Response<int>>> Delete([FromRoute] DeletePermissionByIdCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

@@ -2,6 +2,7 @@
 using Application.Sieve.Services;
 using Domain.Common;
 using Domain.Entities;
+using Humanizer;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,46 @@ namespace Application.SieveProcessors
             // Sport
             mapper.Property<Sport>(x => x.Name).CanFilter().CanSort();
             mapper.Property<Sport>(x => x.Description).CanFilter().CanSort();
+
+            // Trainer
+            mapper.Property<Trainer>(t => t.User.LastName)
+                .HasName($"{nameof(User)}.{nameof(User.LastName)}".Camelize())
+                .CanFilter();
+            mapper.Property<Trainer>(t => t.User.FirstName)
+                .HasName($"{nameof(User)}.{nameof(User.FirstName)}".Camelize())
+                .CanFilter();
+            mapper.Property<Trainer>(t => t.User.MiddleName)
+                .HasName($"{nameof(User)}.{nameof(User.MiddleName)}".Camelize())
+                .CanFilter();
+
+            // Workout
+            mapper.Property<Workout>(w => w.Name).CanFilter().CanSort();
+
+            // WorkoutGroup
+            mapper.Property<WorkoutGroup>(wg => wg.Name).CanSort().CanFilter();
+
+            // User
+            mapper.Property<User>(u => u.LastName).CanFilter().CanSort();
+            mapper.Property<User>(u => u.FirstName).CanFilter().CanSort();
+            mapper.Property<User>(u => u.MiddleName).CanFilter().CanSort();
+
+            // Role
+            mapper.Property<Role>(r => r.Name).CanFilter().CanSort();
+
+            // RoleClaim
+            mapper.Property<RoleClaim>(rc => rc.Role.Name).CanFilter().CanSort();
+            mapper.Property<RoleClaim>(rc => rc.ClaimValue).CanFilter().CanSort();
+            mapper.Property<RoleClaim>(rc => rc.ClaimType).CanFilter().CanSort();
+
+            // UserRole
+            mapper.Property<UserRole>(ur => ur.Role.Name).CanFilter();
+            mapper.Property<UserRole>(ur => ur.User.LastName).CanFilter();
+            mapper.Property<UserRole>(ur => ur.User.FirstName).CanFilter();
+            mapper.Property<UserRole>(ur => ur.User.MiddleName).CanFilter();
+
+            // CountryCode
+            mapper.Property<CountryCode>(c => c.ISOName).CanFilter().CanSort();
+            mapper.Property<CountryCode>(c => c.Code).CanFilter().CanSort();
 
             return mapper;
         }
