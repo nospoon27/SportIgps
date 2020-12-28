@@ -15,7 +15,7 @@ namespace Domain.Entities
         /// Ограниченность
         /// </summary>
         public AbonementLimit AbonementLimit { get; set; }
-        public int AbonementLimitId { get; set; }
+        public int? AbonementLimitId { get; set; }
         public double Price { get; set; }
         public Workout Workout { get; set; }
         public int WorkoutId { get; set; }

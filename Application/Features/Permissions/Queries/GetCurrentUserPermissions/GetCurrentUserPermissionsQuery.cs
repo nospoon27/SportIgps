@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Features.Permissions.Queries.GetCurrentUserPermissions
 {
-    public class GetCurrentUserPermissionsQuery : IRequest<Response<IList<string>>>
+    public class GetCurrentUserPermissionsQuery : IRequest<Response<IList<GetCurrentUserPermissionsResponse>>>
     {
     }
 }

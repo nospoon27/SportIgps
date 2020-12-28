@@ -15,13 +15,22 @@ namespace Web.API.Controllers
 {
     public class PermissionsController : BaseApiController
     {
+        /// <summary>
+        /// Получить все Permissions текущего пользователя
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
-        [HttpGet]
+        [HttpGet("user")]
         public async Task<ActionResult<Response<string>>> GetCurrentUserPermissions()
         {
             return Ok(await Mediator.Send(new GetCurrentUserPermissionsQuery()));
         }
 
+        /// <summary>
+        /// Добавляет Permission к определенной роли
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize (Roles = "admin")]
         public async Task<ActionResult<Response<int>>> AddPermission(AddPermissionCommand request)
@@ -29,13 +38,23 @@ namespace Web.API.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        /// <summary>
+        /// Получить все Permissions
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("all")]
         [Authorize (Roles = "admin")]
-        public async Task<ActionResult<Response<IList<GetAllPermissionsResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<GetAllPermissionsResponse>>>> GetAll([FromQuery] GetAllPermissionsQuery request)
         {
-            return Ok(await Mediator.Send(new GetAllPermissionsQuery()));
+            return Ok(await Mediator.Send(request));
         }
         
+        /// <summary>
+        /// Изменить Permission
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Authorize (Roles = "admin")]
         public async Task<ActionResult<Response<int>>> Update([FromRoute]int id, [FromBody] UpdatePermissionCommand command)
@@ -43,6 +62,11 @@ namespace Web.API.Controllers
             return Ok(await Mediator.Send(command));
         }
 
+        /// <summary>
+        /// Удалить по Id
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<Response<int>>> Delete([FromRoute] DeletePermissionByIdCommand command)

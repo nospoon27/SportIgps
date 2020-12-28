@@ -22,10 +22,13 @@ namespace Application.Features.Permissions.Commands.UpdatePermission
         {
             var permission = await _unitOfWork.GetRepository<RoleClaim>()
                 .GetSingleOrDefaultAsync(predicate: x => x.Id == request.Id);
+            var role = await _unitOfWork.GetRepository<Role>().GetSingleOrDefaultAsync(predicate: r => r.Name == request.RoleName);
 
             if (permission == null) new KeyNotFoundException($"Permission с ключом {request.Id} не найден");
 
             permission.ClaimValue = request.Value;
+            permission.RoleId = role.Id;
+
             await _unitOfWork.SaveChangesAsync();
             
             return new Response<int>(request.Id);

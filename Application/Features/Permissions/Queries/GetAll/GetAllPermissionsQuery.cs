@@ -11,6 +11,6 @@ namespace Application.Features.Permissions.Queries.GetAll
 {
     public class GetAllPermissionsQuery : IRequest<Response<IList<GetAllPermissionsResponse>>>
     {
-        
+        public string RoleName { get; set; }
     }
 }

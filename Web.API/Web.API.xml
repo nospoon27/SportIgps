@@ -79,5 +79,39 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Web.API.Controllers.PermissionsController.GetCurrentUserPermissions">
+            <summary>
+            Получить все Permissions текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.PermissionsController.AddPermission(Application.Features.Permissions.Commands.AddPermission.AddPermissionCommand)">
+            <summary>
+            Добавляет Permission к определенной роли
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.PermissionsController.GetAll(Application.Features.Permissions.Queries.GetAll.GetAllPermissionsQuery)">
+            <summary>
+            Получить все Permissions
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.PermissionsController.Update(System.Int32,Application.Features.Permissions.Commands.UpdatePermission.UpdatePermissionCommand)">
+            <summary>
+            Изменить Permission
+            </summary>
+            <param name="id"></param>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Controllers.PermissionsController.Delete(Application.Features.Permissions.Commands.DeleteById.DeletePermissionByIdCommand)">
+            <summary>
+            Удалить по Id
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

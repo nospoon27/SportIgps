@@ -27,7 +27,7 @@ namespace Application.Features.Permissions.Commands.DeleteById
                     x.ClaimType == CustomClaimTypes.Permission
                     && x.Id == request.Id);
             _unitOfWork.GetRepository<RoleClaim>().Delete(item);
-
+            await _unitOfWork.SaveChangesAsync();
             return new Response<int>(item.Id);
         }
     }

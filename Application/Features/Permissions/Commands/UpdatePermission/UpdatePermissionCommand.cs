@@ -10,5 +10,6 @@ namespace Application.Features.Permissions.Commands.UpdatePermission
     {
         public int Id { get; set; }
         public string Value { get; set; }
+        public string RoleName { get; set; }
     }
 }

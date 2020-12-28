@@ -25,8 +25,8 @@ namespace Application.Features.Permissions.Queries.GetAll
         {
             var result = await _unitOfWork.GetRepository<RoleClaim>()
                 .GetAllAsync(
-                predicate: x => x.ClaimType == CustomClaimTypes.Permission,
-                orderBy: x => x.OrderBy(o => o.Role.Name),
+                predicate: x => x.ClaimType == CustomClaimTypes.Permission && (request.RoleName != null ? x.Role.Name == request.RoleName : true),
+                orderBy: x => x.OrderBy(o => o.Role.Name).ThenBy(x => x.ClaimValue),
                 include: source => source.Include(x => x.Role));
 
             return new Response<IList<GetAllPermissionsResponse>>(_mapper.Map<IList<GetAllPermissionsResponse>>(result));
