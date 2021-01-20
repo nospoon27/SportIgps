@@ -17,5 +17,10 @@ namespace Infrastructure.Persistence.Identity.AccessControl
             public const string Read = "Permissions.Locations.Read";
             public const string CreateUpdateDelete = "Permissions.Locations.CreateUpdateDelete";
         }
+
+        public static class Files
+        {
+            public const string ReadAll = "Permissions.Files.ReadAll";
+        }
     }
 }

@@ -31,6 +31,7 @@ namespace Infrastructure.Persistence.Identity
                 return new RsaSecurityKey(rsa);
             });
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
+            services.Configure<PathSettings>(configuration.GetSection("PathSettings"));
 
             services.AddAuthentication(x =>
             {

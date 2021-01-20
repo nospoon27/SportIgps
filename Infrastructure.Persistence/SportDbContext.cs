@@ -36,6 +36,7 @@ namespace Infrastructure.Persistence
         public DbSet<CountryCode> CountryCodes { get; set; }
         public DbSet<Abonement> Abonements { get; set; }
         public DbSet<AbonementLimit> AbonementLimits { get; set; }
+        public DbSet<FileEntity> FileEntities { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
