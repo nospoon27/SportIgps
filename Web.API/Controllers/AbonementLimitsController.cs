@@ -15,9 +15,12 @@ namespace Web.API.Controllers
 {
     public class AbonementLimitsController : BaseApiController
     {
+        private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         [HttpGet("{id}")]
         public async Task<ActionResult<IList<GetByIdAbonementLimitResponse>>> Get([FromRoute] GetByIdAbonementLimitQuery request)
         {
+            _logger.Info("INFO INFO");
             return Ok(await Mediator.Send(request));
         }
 

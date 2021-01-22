@@ -1,0 +1,12 @@
+2021-01-21 11:23:09.6613 Info Message Template Auto Format enabled
+2021-01-21 11:23:09.6686 Info Loading assembly: NLog.Web.AspNetCore
+2021-01-21 11:23:09.7144 Info Adding target FileTarget(Name=alldata)
+2021-01-21 11:23:09.7144 Info Adding target FileTarget(Name=otherFile-web)
+2021-01-21 11:23:09.7394 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Users\User\source\repos\SportIgps\Web.API\bin\Debug\net5.0\nlog.config
+2021-01-21 11:23:09.9493 Info Configuring from an XML element in C:\Users\User\source\repos\SportIgps\Web.API\bin\Debug\net5.0\nlog.config...
+2021-01-21 11:23:09.9493 Info Message Template Auto Format enabled
+2021-01-21 11:23:09.9493 Info Loading assembly: NLog.Web.AspNetCore
+2021-01-21 11:23:09.9493 Info Adding target FileTarget(Name=alldata)
+2021-01-21 11:23:09.9493 Info Adding target FileTarget(Name=otherFile-web)
+2021-01-21 11:23:09.9493 Info Closing old configuration.
+2021-01-21 11:23:09.9654 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Users\User\source\repos\SportIgps\Web.API\bin\Debug\net5.0\nlog.config

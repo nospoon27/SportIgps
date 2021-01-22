@@ -7,6 +7,7 @@ using Application.Features.Abonements.Queries.GetAllPaged;
 using Application.Features.Abonements.Queries.GetById;
 using Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

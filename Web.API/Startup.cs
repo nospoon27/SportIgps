@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -18,6 +19,8 @@ using Web.API.Filters;
 using Web.API.Handlers;
 using Web.API.Providers;
 using Web.API.Services;
+using NLog.Web;
+using Web.API.Middlewares;
 
 namespace Web.API
 {
@@ -32,6 +35,15 @@ namespace Web.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+
+                o.ValueCountLimit = int.MaxValue;
+            });
+
             services.AddApplicationLayer(Configuration);
 
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();

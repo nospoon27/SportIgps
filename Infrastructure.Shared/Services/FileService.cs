@@ -49,9 +49,9 @@ namespace Infrastructure.Shared.Services
                 .GetSingleOrDefaultAsync(predicate: x => x.Path == path);
         }
 
-        public Task<FileEntity> SaveFileAndReturn(IFormFile file)
+        public async Task<FileEntity> SaveFileAndReturn(IFormFile file)
         {
-            throw new NotImplementedException();
+            return await SaveFile(file);
         }
 
         public async Task<IList<FileEntity>> SaveFilesAndReturn(IList<IFormFile> files)
@@ -73,7 +73,7 @@ namespace Infrastructure.Shared.Services
             fileName = Path.GetFileName(fileName);
             return Path.GetFileNameWithoutExtension(fileName)
                 + "__"
-                + Guid.NewGuid().ToString().Substring(0, 2)
+                + Guid.NewGuid().ToString().Substring(0, 6)
                 + Path.GetExtension(fileName);
         }
 

@@ -1,18 +1,14 @@
-﻿using Application.Features.Files.Commands.UploadFile;
+﻿using Application.Exceptions;
+using Application.Features.Files.Commands.UploadFile;
 using Application.Features.Files.Commands.UploadFiles;
 using Application.Features.Files.Queries.GetAllFiles;
 using Application.Features.Files.Queries.GetFileById;
 using Application.Features.Roles.Commands.Delete;
 using Application.Wrappers;
-using Domain.Entities;
 using Infrastructure.Persistence.Identity.AccessControl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Web.API.Controllers
@@ -25,10 +21,15 @@ namespace Web.API.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpPost("single")]
-        public async Task<ActionResult<Response<UploadFileCommandResponse>>> UploadFile([FromBody] UploadFileCommand command)
+        [HttpPost("single"), DisableRequestSizeLimit]
+        public async Task<ActionResult<Response<UploadFileCommandResponse>>> UploadFile()
         {
-            return Ok(await Mediator.Send(command));
+            var files = HttpContext.Request.Form.Files;
+
+            CheckForFilesContains(files);
+            CheckForSingleFile(files);
+
+            return Ok(await Mediator.Send(new UploadFileCommand(files[0])));
         }
 
         [HttpGet("all"), Authorize(Permissions.Files.ReadAll)]
@@ -47,6 +48,16 @@ namespace Web.API.Controllers
         public async Task<ActionResult<Response<int>>> DeleteFileById([FromRoute] DeleteRoleByIdCommand command)
         {
             return Ok(await Mediator.Send(command));
+        }
+
+        private void CheckForSingleFile(IFormFileCollection files)
+        {
+            if (files.Count > 1) throw new ApiException("Файл должен быть 1");
+        }
+
+        private void CheckForFilesContains(IFormFileCollection files)
+        {
+            if (files.Count < 1) throw new ApiException("Ошибка при загрузке файла (файлов)");
         }
     }
 }
