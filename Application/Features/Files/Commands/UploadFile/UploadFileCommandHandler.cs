@@ -25,7 +25,7 @@ namespace Application.Features.Files.Commands.UploadFile
 
         public async Task<Response<UploadFileCommandResponse>> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
-            var response = await _fileService.SaveFileAndReturn(request.File);
+            var response = await _fileService.SaveFileAndReturn(request.File, request.FilesFolder);
             return new Response<UploadFileCommandResponse>(_mapper.Map<UploadFileCommandResponse>(response));
         }
     }

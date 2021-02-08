@@ -9,27 +9,47 @@ using Infrastructure.Persistence.Identity.AccessControl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Web.API.Controllers
 {
     public class FilesController : BaseApiController
     {
-        [HttpPost]
-        public async Task<ActionResult<Response<UploadFilesCommandResponse>>> UploadFiles([FromBody] UploadFilesCommand command)
+        [HttpGet]
+        public async Task<ActionResult> Test()
         {
+            FileInfo fileInfo = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "1.jpg"));
+            using(var image = await Image.LoadAsync(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "1.jpg")))
+            {
+                image.Mutate(x => x.Resize(50, 50));
+                image.Save(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "2.jpg"));
+                image.SaveAsPng(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "3.png"));
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Response<UploadFilesCommandResponse>>> UploadFiles([FromForm] UploadFilesCommand command)
+        {
+            var files = (await Request.ReadFormAsync()).Files;
+
+            CheckForFilesContains(files);
+
             return Ok(await Mediator.Send(command));
         }
 
         [HttpPost("single"), DisableRequestSizeLimit]
-        public async Task<ActionResult<Response<UploadFileCommandResponse>>> UploadFile()
+        public async Task<ActionResult<Response<UploadFileCommandResponse>>> UploadFile([FromForm] UploadFileCommand command)
         {
-            var files = HttpContext.Request.Form.Files;
+            var files = (await Request.ReadFormAsync()).Files;
 
             CheckForFilesContains(files);
             CheckForSingleFile(files);
 
-            return Ok(await Mediator.Send(new UploadFileCommand(files[0])));
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpGet("all"), Authorize(Permissions.Files.ReadAll)]

@@ -169,7 +169,7 @@ namespace Infrastructure.Persistence.Identity.Services
 
             var response = new MeResponse(user);
 
-            return new Response<MeResponse>(response);            
+            return new Response<MeResponse>(response);
         }
 
         public async Task<Response<IList<string>>> GetPermissions(int userId)

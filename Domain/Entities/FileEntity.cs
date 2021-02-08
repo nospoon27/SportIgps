@@ -20,6 +20,7 @@ namespace Domain.Entities
             Path = path;
         }
 
+        public string Url { get; set; }
         public string Path { get; set; }
         public string Title { get; set; }
         public string Summary { get; set; }

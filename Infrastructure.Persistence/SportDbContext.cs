@@ -22,6 +22,7 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserPhoto> UserPhotos { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }

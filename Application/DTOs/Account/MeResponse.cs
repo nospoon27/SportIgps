@@ -17,6 +17,8 @@ namespace Application.DTOs.Account
         public string JWT { get; set; }
         public string[] Roles { get; set; }
         public Gender Gender { get; set; }
+        public UserPhotoDTO UserPhoto { get; set; }
+        public int CountryCodeId { get; set; }
         public MeResponse(User user)
         {
             UserId = user.Id;
@@ -24,8 +26,20 @@ namespace Application.DTOs.Account
             LastName = user.LastName;
             MiddleName = user.MiddleName;
             PhoneNumber = user.PhoneNumber;
+            CountryCodeId = user.CountryCodeId;
             Roles = user.UserRoles?.Select(x => x.Role?.Name).ToArray();
             Gender = user.Gender;
+            UserPhoto = new UserPhotoDTO
+            {
+                DefaultUrl = user.UserPhoto.DefaultUrl,
+                SmallUrl = user.UserPhoto.SmallUrl
+            };
         }
+    }
+
+    public class UserPhotoDTO
+    {
+        public string DefaultUrl { get; set; }
+        public string SmallUrl { get; set; }
     }
 }

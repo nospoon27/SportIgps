@@ -32,7 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\files\" />
+    <Folder Include="wwwroot\files\images\" />
+    <Folder Include="wwwroot\files\any\" />
+    <Folder Include="wwwroot\files\documents\" />
   </ItemGroup>
 
   <ItemGroup>

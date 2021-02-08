@@ -25,7 +25,7 @@ namespace Application.Features.Files.Queries.GetFileById
 
         public async Task<Response<GetFileByIdResponse>> Handle(GetFileByIdRequest request, CancellationToken cancellationToken)
         {
-            var response = await _fileService.GetFile(request.Id);
+            var response = await _fileService.GetFileEntity(request.Id);
             return new Response<GetFileByIdResponse>(_mapper.Map<GetFileByIdResponse>(response));
         }
     }

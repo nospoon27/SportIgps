@@ -43,6 +43,8 @@ namespace Domain.Entities
 
         public string Biography { get; set; }
 
+        public UserPhoto UserPhoto { get; set; }
+
         /// <summary>
         /// Роль - пользователь
         /// </summary>
@@ -58,5 +60,10 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public IList<WorkoutGroupClient> WorkoutGroupClients { get; set; }
+
+        public void ChangeUserPhoto (UserPhoto userPhoto)
+        {
+            UserPhoto = userPhoto;
+        }
     }
 }

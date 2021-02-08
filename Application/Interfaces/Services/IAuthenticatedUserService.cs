@@ -8,5 +8,7 @@ namespace Application.Interfaces.Services
     {
         int? UserId { get; }
         string RemoteIp { get; }
+
+        int GetRequiredUserId();
     }
 }

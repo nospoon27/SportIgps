@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210202132742_AddFileUrl")]
+    partial class AddFileUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -486,6 +488,9 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("text");
+
                     b.Property<string>("Biography")
                         .HasColumnType("text");
 
@@ -536,54 +541,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("CountryCodeId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Domain.Entities.UserPhoto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreatedIp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DefaultPath")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DefaultUrl")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("LastModifiedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("LastModifiedIp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SmallPath")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SmallUrl")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserPhotos");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
@@ -882,17 +839,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("CountryCode");
                 });
 
-            modelBuilder.Entity("Domain.Entities.UserPhoto", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("UserPhoto")
-                        .HasForeignKey("Domain.Entities.UserPhoto", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("Domain.Entities.Role", "Role")
@@ -998,8 +944,6 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("RefreshTokens");
-
-                    b.Navigation("UserPhoto");
 
                     b.Navigation("UserRoles");
 

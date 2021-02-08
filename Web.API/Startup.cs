@@ -44,6 +44,9 @@ namespace Web.API
                 o.ValueCountLimit = int.MaxValue;
             });
 
+            // HttpContextAccessor (Context DI)
+            services.AddHttpContextAccessor();
+
             services.AddApplicationLayer(Configuration);
 
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
@@ -64,8 +67,7 @@ namespace Web.API
 
             // Swagger
             services.AddSwaggerExtension();
-            // HttpContextAccessor (Context DI)
-            services.AddHttpContextAccessor();
+            
             services.AddApiVersioningExtension();
 
             services.AddPersistenceInfrastructure(Configuration);

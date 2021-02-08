@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Services;
+﻿using Application.Exceptions;
+using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -32,5 +33,13 @@ namespace Web.API.Services
 
         public int? UserId { get; }
         public string RemoteIp { get; }
+
+        public int GetRequiredUserId()
+        {
+            int userId;
+            bool hasValue = int.TryParse(_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier), out userId);
+            if (!hasValue) throw new UnauthorizedException("Вы не авторизованы");
+            return userId;
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Application.DTOs.Account
     {
         public int UserId { get; set; }
         public string PhoneNumber { get; set; }
+        public int CountryCodeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -29,6 +30,7 @@ namespace Application.DTOs.Account
             LastName = user.LastName;
             MiddleName = user.MiddleName;
             PhoneNumber = user.PhoneNumber;
+            CountryCodeId = user.CountryCodeId;
             Roles = user.UserRoles?.Select(x => x.Role?.Name).ToArray();
             Gender = user.Gender;
             JWT = jwtToken;

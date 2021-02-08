@@ -1,4 +1,5 @@
-﻿using Application.Wrappers;
+﻿using Application.Interfaces.Services;
+using Application.Wrappers;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +13,7 @@ namespace Application.Features.Files.Commands.UploadFiles
 {
     public class UploadFilesCommand : IRequest<Response<IList<UploadFilesCommandResponse>>>
     {
-        public UploadFilesCommand(List<IFormFile> files)
-        {
-            Files = files;
-        }
-
         public List<IFormFile> Files { get; set; }
+        public FilesFolder FilesFolder { get; set; }
     }
 }

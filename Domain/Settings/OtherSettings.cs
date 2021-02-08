@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Settings
 {
-    public class PathSettings
+    public class OtherSettings
     {
-        public string FilesPath { get; set; }
+        public int SmallAvatarWidth { get; set; }
     }
 }

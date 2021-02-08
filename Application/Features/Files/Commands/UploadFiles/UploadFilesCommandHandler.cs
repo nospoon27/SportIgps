@@ -30,7 +30,7 @@ namespace Application.Features.Files.Commands.UploadFiles
 
         public async Task<Response<IList<UploadFilesCommandResponse>>> Handle(UploadFilesCommand request, CancellationToken cancellationToken)
         {
-            var response = await _fileService.SaveFilesAndReturn(request.Files);
+            var response = await _fileService.SaveFilesAndReturn(request.Files, request.FilesFolder);
             return new Response<IList<UploadFilesCommandResponse>>(
                 _mapper.Map<IList<UploadFilesCommandResponse>>(response));
         }

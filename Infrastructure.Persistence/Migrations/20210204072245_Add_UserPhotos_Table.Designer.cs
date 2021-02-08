@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210204072245_Add_UserPhotos_Table")]
+    partial class Add_UserPhotos_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -554,10 +556,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("CreatedIp")
                         .HasColumnType("text");
 
-                    b.Property<string>("DefaultPath")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DefaultUrl")
+                    b.Property<string>("Default")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModified")
@@ -569,13 +568,10 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedIp")
                         .HasColumnType("text");
 
-                    b.Property<string>("SmallPath")
+                    b.Property<string>("Small")
                         .HasColumnType("text");
 
-                    b.Property<string>("SmallUrl")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -886,9 +882,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.User", "User")
                         .WithOne("UserPhoto")
-                        .HasForeignKey("Domain.Entities.UserPhoto", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Domain.Entities.UserPhoto", "UserId");
 
                     b.Navigation("User");
                 });

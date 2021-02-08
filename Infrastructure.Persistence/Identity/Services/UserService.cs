@@ -31,6 +31,7 @@ namespace Infrastructure.Persistence.Identity.Services
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .Include(u => u.CountryCode)
+                .Include(u => u.UserPhoto)
                 .Include(u => u.RefreshTokens),
                 disableTracking: false);
 
@@ -64,6 +65,7 @@ namespace Infrastructure.Persistence.Identity.Services
                         predicate: x => x.Id == id,
                         include: source => source
                         .Include(x => x.CountryCode)
+                        .Include(x => x.UserPhoto)
                         .Include(u => u.UserRoles)
                         .ThenInclude(ur => ur.Role),
                         disableTracking: true);

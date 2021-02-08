@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210203112638_AddUserPhotosTable")]
+    partial class AddUserPhotosTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -531,9 +533,14 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
+                    b.Property<int?>("UserPhotoId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CountryCodeId");
+
+                    b.HasIndex("UserPhotoId");
 
                     b.ToTable("Users");
                 });
@@ -554,10 +561,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("CreatedIp")
                         .HasColumnType("text");
 
-                    b.Property<string>("DefaultPath")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DefaultUrl")
+                    b.Property<string>("Default")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModified")
@@ -569,19 +573,10 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedIp")
                         .HasColumnType("text");
 
-                    b.Property<string>("SmallPath")
+                    b.Property<string>("Small")
                         .HasColumnType("text");
-
-                    b.Property<string>("SmallUrl")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("UserPhotos");
                 });
@@ -879,18 +874,13 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.UserPhoto", "UserPhoto")
+                        .WithMany()
+                        .HasForeignKey("UserPhotoId");
+
                     b.Navigation("CountryCode");
-                });
 
-            modelBuilder.Entity("Domain.Entities.UserPhoto", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("UserPhoto")
-                        .HasForeignKey("Domain.Entities.UserPhoto", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.Navigation("UserPhoto");
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
@@ -998,8 +988,6 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("RefreshTokens");
-
-                    b.Navigation("UserPhoto");
 
                     b.Navigation("UserRoles");
 
