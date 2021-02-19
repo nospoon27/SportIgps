@@ -1,4 +1,5 @@
-﻿using Application.Features.Common;
+﻿using Application.Extensions;
+using Application.Features.Common;
 using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
@@ -22,6 +23,8 @@ namespace Application.Features.AbonementLimits.Commands.Create
         public async Task<Response<int>> Handle(CreateAbonementLimitCommand request, CancellationToken cancellationToken)
         {
             var item = _mapper.Map<AbonementLimit>(request);
+            item.StartTime = item.StartTime.ResetSeconds();
+            item.EndTime = item.EndTime.ResetSeconds();
             await _unitOfWork.GetRepository<AbonementLimit>().InsertAsync(item);
             await _unitOfWork.SaveChangesAsync();
 

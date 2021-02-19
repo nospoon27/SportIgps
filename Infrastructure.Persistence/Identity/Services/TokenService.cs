@@ -84,11 +84,11 @@ namespace Infrastructure.Persistence.Identity.Services
 
         public async Task<string> GetRefreshTokenAsync(int userId)
         {
-            var user = await _unitOfWork
-                .GetRepository<User>()
-                .GetAll()
-                .Include(x => x.RefreshTokens)
-                .SingleOrDefaultAsync(x => x.Id == userId);
+            var user = await _unitOfWork.GetRepository<User>()
+                .GetSingleOrDefaultAsync(
+                predicate: x => x.Id == userId,
+                include: s => s.Include(u => u.RefreshTokens));
+
             if (user == null) throw new ApiException("Пользователь не найден");
 
             var token = user.RefreshTokens

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Application.DTOs.Account.Validation
 {
-    public class AuthenticationRequestValidator : AbstractValidator<AuthenticationRequest>
+    public class AuthenticationRequestValidation : AbstractValidator<AuthenticationRequest>
     {
         private readonly string Required = "Поле {PropertyName} обязательно к заполнению";
 
-        public AuthenticationRequestValidator()
+        public AuthenticationRequestValidation()
         {
             RuleFor(x => x.Password)
                 .NotNull()

@@ -14,5 +14,7 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public IList<WorkoutGroupClient> WorkoutGroupClients { get; set; }
+        public int LocationId { get; set; }
+        public Location Location { get; set; }
     }
 }

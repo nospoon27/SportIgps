@@ -1,4 +1,5 @@
-﻿using Application.Features.Common;
+﻿using Application.Extensions;
+using Application.Features.Common;
 using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
@@ -24,8 +25,8 @@ namespace Application.Features.AbonementLimits.Commands.Update
             var item = await _unitOfWork.GetRepository<AbonementLimit>().FindAsync(request.Id);
 
             item.VisitAmount = request.VisitAmount;
-            item.StartTime = request.StartTime;
-            item.EndTime = request.EndTime;
+            item.StartTime = request.StartTime.ResetSeconds();
+            item.EndTime = request.EndTime.ResetSeconds();
 
             await _unitOfWork.SaveChangesAsync();
             return new Response<int>(request.Id);

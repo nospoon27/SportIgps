@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Identity
 {
@@ -65,29 +66,38 @@ namespace Infrastructure.Persistence.Identity
                     var jsonSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
                     options.Events = new JwtBearerEvents()
                     {
-                        OnAuthenticationFailed = context =>
-                        {
-                            context.NoResult();
-                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new Response<string>("Ошибка аутентификации"), jsonSettings);
-                            return context.Response.WriteAsync(result);
-                        },
+                        //OnAuthenticationFailed = context =>
+                        //{
+                        //    context.NoResult();
+                        //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        //    context.Response.ContentType = "application/json";
+                        //    var result = JsonConvert.SerializeObject(new Response<string>("Ошибка аутентификации"), jsonSettings);
+                        //    return context.Response.WriteAsync(result);
+                        //},
                         OnChallenge = context =>
                         {
+                            bool v = context.Handled;
+                            if (!context.Handled)
+                            {
+                                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                                context.Response.ContentType = "application/json";
+                                var result = JsonConvert.SerializeObject(new Response<string>("Вы не авторизованы"), jsonSettings);
+                                context.Response.WriteAsync(result);
+                            }
                             context.HandleResponse();
-                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new Response<string>("Вы не авторизованы"), jsonSettings);
-                            return context.Response.WriteAsync(result);
+                            //context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            //context.Response.ContentType = "application/json";
+                            //var result = JsonConvert.SerializeObject(new Response<string>("Вы не авторизованы"), jsonSettings);
+                            //return context.Response.WriteAsync(result);
+                            return Task.CompletedTask;
                         },
-                        OnForbidden = context =>
-                        {
-                            context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                            context.Response.ContentType = "application/json";
-                            var result = JsonConvert.SerializeObject(new Response<string>("У вас нет доступа для этого ресурса"), jsonSettings);
-                            return context.Response.WriteAsync(result);
-                        },
+                        //OnForbidden = context =>
+                        //{
+                        //    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        //    context.Response.ContentType = "application/json";
+                        //    var result = JsonConvert.SerializeObject(new Response<string>("У вас нет доступа для этого ресурса"), jsonSettings);
+                        //    return context.Response.WriteAsync(result);
+                        //},
                     };
                 });
         }

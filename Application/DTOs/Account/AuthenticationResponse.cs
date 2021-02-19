@@ -19,8 +19,7 @@ namespace Application.DTOs.Account
         public string JWT { get; set; }
         public string[] Roles { get; set; }
         public Gender Gender { get; set; }
-
-        [JsonIgnore]
+        public UserPhotoDTO UserPhoto { get; set; }
         public string RefreshToken { get; set; }
 
         public AuthenticationResponse(User user, string jwtToken, string refreshToken)
@@ -35,6 +34,11 @@ namespace Application.DTOs.Account
             Gender = user.Gender;
             JWT = jwtToken;
             RefreshToken = refreshToken;
+            UserPhoto = new UserPhotoDTO()
+            {
+                DefaultUrl = user.UserPhoto?.DefaultUrl,
+                SmallUrl = user.UserPhoto?.SmallUrl
+            };
         }
     }
 }

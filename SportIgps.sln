@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Shared", "In
 		{D41DF2E8-0C80-4477-8D05-7D7EBF4AD28C} = {D41DF2E8-0C80-4477-8D05-7D7EBF4AD28C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence.Tests", "Infrastructure.Persistence.Tests\Infrastructure.Persistence.Tests.csproj", "{8FC8BAB3-322D-48D7-9A5B-878583AB37C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Persistence.Tests", "Infrastructure.Persistence.Tests\Infrastructure.Persistence.Tests.csproj", "{8FC8BAB3-322D-48D7-9A5B-878583AB37C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

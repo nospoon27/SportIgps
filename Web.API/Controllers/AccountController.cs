@@ -61,8 +61,9 @@ namespace Web.API.Controllers
         {
             var cookieRefreshToken = Request.Cookies["refreshToken"];
             var ipAddress = GenerateIPAddress();
+            
             var result = await _accountService.RefreshToken(cookieRefreshToken, ipAddress);
-            if (result == null) throw new  UnauthorizedException("Невалидный токен");
+            if (result == null) throw new UnauthorizedException("Невалидный токен");
             setTokenCookie(result.Data.RefreshToken);
             return Ok(result);
         }
@@ -92,8 +93,8 @@ namespace Web.API.Controllers
         [HttpGet("me")]
         public async Task<ActionResult> Me()
         {
-            var userId = _authenticatedUserService.UserId;
-            var response = await _accountService.AccountData(userId.Value);
+            var userId = _authenticatedUserService.GetRequiredUserId();
+            var response = await _accountService.AccountData(userId);
             return Ok(response);
         }
 
@@ -103,6 +104,16 @@ namespace Web.API.Controllers
         {
             var userId = _authenticatedUserService.UserId;
             var response = await _accountService.GetPermissions(userId.Value);
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpPost("changePassword")]
+        public async Task<ActionResult<Response<bool>>> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            var userId = _authenticatedUserService.GetRequiredUserId();
+            var response = await _accountService.ChangePassword(userId, request.CurrentPassword, request.NewPassword);
+
             return Ok(response);
         }
 

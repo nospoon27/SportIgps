@@ -15,5 +15,6 @@ namespace Application.Interfaces.Services
         Task<Response<bool>> RevokeToken(string token, string ipAddress);
         Task<Response<MeResponse>> AccountData(int userId);
         Task<Response<IList<string>>> GetPermissions(int userId);
+        Task<Response<bool>> ChangePassword(int userId, string currentPassword, string newPassword);
     }
 }

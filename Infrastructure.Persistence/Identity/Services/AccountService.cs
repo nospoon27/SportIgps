@@ -62,8 +62,8 @@ namespace Infrastructure.Persistence.Identity.Services
             var user = await _userService.FindByPhoneNumber(countryCode, request.PhoneNumber);
             if (user == null || !_passwordHashService.VerifyHashedPassword(user.Password, request.Password))
             {
-                _logger.LogInformation($"{nameof(AuthenticateAsync)}, не найден пользователь с номером {request.PhoneNumber}");
-                throw new ApiException($"Вы ввели неправильный пароль или логин");
+                _logger.LogInformation($"{nameof(AuthenticateAsync)}, не найден пользователь с номером {request.PhoneNumber}.");
+                throw new ApiException($"Вы ввели неправильный пароль или логин.");
             }
 
             var jwt = _tokenService.GenerateJWToken(user);
@@ -81,23 +81,14 @@ namespace Infrastructure.Persistence.Identity.Services
         public async Task<Response<string>> RegisterAsync(RegisterRequest request, string origin)
         {
             var countryCode = await _countryCodeService.GetById(request.CountryCodeId);
-            //var userWithSameUserName = await _userService.FindByPhoneNumber(countryCode, request.PhoneNumber);
-            //if (userWithSameUserName != null)
-            //{
-            //    _logger.LogInformation($"{nameof(RegisterAsync)}, пользователь {request.PhoneNumber} уже существует");
-            //    throw new ApiException($"Пользователь с таким номером телефона уже существует");
-            //}
 
             var user = _mapper.Map<User>(request);
-            //var user = new User()
-            //{
-            //    FirstName = request.FirstName,
-            //    LastName = request.LastName,
-            //    PhoneNumber = request.PhoneNumber,
-            //    Password = request.Password
-            //};
+            
             user.CountryCodeId = countryCode.Id;
             user.Gender = user.Gender;
+
+            // Хэшируем пароль
+            user.Password = _passwordHashService.HashPassword(user.Password);
 
             // Добавляем пользователя
             await _userService.AddNewUser(user, true);
@@ -113,9 +104,10 @@ namespace Infrastructure.Persistence.Identity.Services
 
         public async Task<Response<AuthenticationResponse>> RefreshToken(string cookieRefreshToken, string ipAddress)
         {
-            var userId = _authenticatedUserService.UserId;
+            //var userId = _authenticatedUserService.GetRequiredUserId();
 
-            var token = cookieRefreshToken ?? await _tokenService.GetRefreshTokenAsync(userId.Value);
+            //var token = cookieRefreshToken ?? await _tokenService.GetRefreshTokenAsync(userId);
+            var token = cookieRefreshToken;
             var user = await _unitOfWork.GetRepository<User>()
                 .GetSingleOrDefaultAsync(
                 predicate: x => x.RefreshTokens.Any(x => x.Token == token),
@@ -187,6 +179,20 @@ namespace Infrastructure.Persistence.Identity.Services
                 .Select(rc => rc.ClaimValue));
 
             return new Response<IList<string>>(permissions.ToList());
+        }
+
+        public async Task<Response<bool>> ChangePassword(int userId, string currentPassword, string newPassword)
+        {
+            var user = await _unitOfWork.GetRepository<User>().FindAsync(userId);
+            bool isEqual = _passwordHashService.VerifyHashedPassword(user.Password, currentPassword);
+            if (!isEqual) throw new ApiException("Вы ввели текущий пароль неверно.");
+
+            user.Password =  _passwordHashService.HashPassword(newPassword);
+
+            _unitOfWork.GetRepository<User>().Update(user);
+            await _unitOfWork.SaveChangesAsync();
+
+            return new Response<bool>(true);
         }
     }
 }

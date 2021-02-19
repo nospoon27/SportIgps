@@ -38,6 +38,8 @@ namespace Infrastructure.Persistence
         public DbSet<Abonement> Abonements { get; set; }
         public DbSet<AbonementLimit> AbonementLimits { get; set; }
         public DbSet<FileEntity> FileEntities { get; set; }
+        public DbSet<ScheduleEvent> ScheduleEvents { get; set; }
+        public DbSet<ScheduleEventTrainer> ScheduleEventTrainers { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
