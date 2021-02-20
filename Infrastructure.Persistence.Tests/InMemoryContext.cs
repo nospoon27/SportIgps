@@ -14,17 +14,13 @@ namespace Infrastructure.Persistence.Tests
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
-        
+        public DbSet<Trainer> Trainers { get; set; }
+        public DbSet<UserPhoto> UserPhotos { get; set; }
+        public DbSet<ScheduleEvent> ScheduleEvents { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase("test");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

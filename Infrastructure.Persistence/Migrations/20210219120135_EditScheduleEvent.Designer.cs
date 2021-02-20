@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210219120135_EditScheduleEvent")]
+    partial class EditScheduleEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,17 +55,12 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<int?>("WorkoutGroupId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("WorkoutId")
+                    b.Property<int>("WorkoutId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AbonementLimitId");
-
-                    b.HasIndex("WorkoutGroupId");
 
                     b.HasIndex("WorkoutId");
 
@@ -761,6 +758,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int?>("TrainerId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("WorkoutGroupId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
@@ -768,6 +768,8 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("SportId");
 
                     b.HasIndex("TrainerId");
+
+                    b.HasIndex("WorkoutGroupId");
 
                     b.ToTable("Workout");
                 });
@@ -788,9 +790,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("CreatedIp")
                         .HasColumnType("text");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
 
@@ -806,14 +805,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int>("SportId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("SportId");
 
                     b.ToTable("WorkoutGroups");
                 });
@@ -904,19 +898,15 @@ namespace Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("AbonementLimitId");
 
-                    b.HasOne("Domain.Entities.WorkoutGroup", "WorkoutGroup")
-                        .WithMany()
-                        .HasForeignKey("WorkoutGroupId");
-
                     b.HasOne("Domain.Entities.Workout", "Workout")
                         .WithMany()
-                        .HasForeignKey("WorkoutId");
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AbonementLimit");
 
                     b.Navigation("Workout");
-
-                    b.Navigation("WorkoutGroup");
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
@@ -1083,11 +1073,19 @@ namespace Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("TrainerId");
 
+                    b.HasOne("Domain.Entities.WorkoutGroup", "WorkoutGroup")
+                        .WithMany()
+                        .HasForeignKey("WorkoutGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Location");
 
                     b.Navigation("Sport");
 
                     b.Navigation("Trainer");
+
+                    b.Navigation("WorkoutGroup");
                 });
 
             modelBuilder.Entity("Domain.Entities.WorkoutGroup", b =>
@@ -1098,15 +1096,7 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Sport", "Sport")
-                        .WithMany()
-                        .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Location");
-
-                    b.Navigation("Sport");
                 });
 
             modelBuilder.Entity("Domain.Entities.WorkoutGroupClient", b =>

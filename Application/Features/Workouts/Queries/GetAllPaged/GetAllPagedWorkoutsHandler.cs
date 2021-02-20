@@ -29,8 +29,8 @@ namespace Application.Features.Workouts.Queries.GetAllPaged
                 sieve: request,
                 include: s => s.Include(x => x.Location)
                                .Include(x => x.Sport)
-                               .Include(x => x.Trainer).ThenInclude(x => x.User)
-                               .Include(x => x.WorkoutGroup))).ToPagedResponse();
+                               .Include(x => x.Trainer).ThenInclude(x => x.User))
+                ).ToPagedResponse();
 
             return items;
         }

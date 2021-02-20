@@ -28,7 +28,6 @@ namespace Application.Features.Workouts.Commands.Update
             workout.Name = request.Name;
             workout.SportId = request.SportId;
             workout.TrainerId = request.TrainerId;
-            workout.WorkoutGroupId = request.WorkoutGroupId;
 
             await _unitOfWork.SaveChangesAsync();
 

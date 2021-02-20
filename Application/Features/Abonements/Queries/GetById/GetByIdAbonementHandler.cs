@@ -28,6 +28,7 @@ namespace Application.Features.Abonements.Queries.GetById
                 selector: x => _mapper.Map<GetByIdAbonementResponse>(x),
                 include: s => s
                 .Include(x => x.Workout)
+                .Include(x => x.WorkoutGroup)
                 .Include(x => x.AbonementLimit));
             return new Response<GetByIdAbonementResponse>(item);
         }

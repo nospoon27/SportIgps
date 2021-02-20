@@ -7,6 +7,7 @@ using Application.Wrappers;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.WorkoutGroups.Queries.GetAllPaged
 {
-    public class GetAllPagedWorkoutGroupsHandler : CommonHandler, IRequestHandler<GetAllPagedWorkoutGroupsQuery ,Response<IList<GetAllPagedWorkoutGroupsResponse>>>
+    public class GetAllPagedWorkoutGroupsHandler : CommonHandler, IRequestHandler<GetAllPagedWorkoutGroupsQuery, Response<IList<GetAllPagedWorkoutGroupsResponse>>>
     {
         public GetAllPagedWorkoutGroupsHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
@@ -25,6 +26,11 @@ namespace Application.Features.WorkoutGroups.Queries.GetAllPaged
         {
             var items = (await _unitOfWork.GetRepository<WorkoutGroup>().GetPagedListWithSieveAsync(
                 selector: s => _mapper.Map<GetAllPagedWorkoutGroupsResponse>(s),
+                include: s => s.Include(x => x.Location)
+                .Include(x => x.Sport)
+                .Include(x => x.WorkoutGroupTrainers)
+                .ThenInclude(x => x.Trainer)
+                .ThenInclude(x => x.User),
                 sieve: request)).ToPagedResponse();
 
             return items;

@@ -10,5 +10,6 @@ namespace Application.Features.WorkoutGroups.Commands.Create
     {
         public string Name { get; set; }
         public int LocationId { get; set; }
+        public int SportId { get; set; }
     }
 }

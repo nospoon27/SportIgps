@@ -11,7 +11,6 @@ namespace Application.Features.Workouts.Queries.GetAll
         public string Description { get; set; }
         public int LocationId { get; set; }
         public int SportId { get; set; }
-        public int WorkoutGroupId { get; set; }
         public int? TrainerId { get; set; }
     }
 }

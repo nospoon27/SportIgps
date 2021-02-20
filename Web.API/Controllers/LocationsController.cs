@@ -25,7 +25,7 @@ namespace Web.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll(SieveModel query)
+        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllLocationsQuery()));
         }

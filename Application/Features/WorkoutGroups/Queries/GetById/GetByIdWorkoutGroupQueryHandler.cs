@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.WorkoutGroups.Queries.GetById
 {
@@ -21,7 +22,15 @@ namespace Application.Features.WorkoutGroups.Queries.GetById
 
         public async Task<Response<GetByIdWorkoutGroupQueryResponse>> Handle(GetByIdWorkoutGroupQuery request, CancellationToken cancellationToken)
         {
-            var item = (await _unitOfWork.GetRepository<WorkoutGroup>().FindAsync(request.Id)) ?? throw new NotFoundException(nameof(WorkoutGroup), request.Id);
+            var item = await _unitOfWork.GetRepository<WorkoutGroup>()
+                .GetSingleOrDefaultAsync(
+                include: s => s.Include(x => x.Location)
+                .Include(x => x.Sport)
+                .Include(x => x.WorkoutGroupTrainers)
+                .ThenInclude(x => x.Trainer)
+                .ThenInclude(x => x.User),
+                predicate: x => x.Id == request.Id);
+            if (item == null) throw new NotFoundException(nameof(WorkoutGroup), request.Id);
 
             return new Response<GetByIdWorkoutGroupQueryResponse>(_mapper.Map<GetByIdWorkoutGroupQueryResponse>(item));
         }

@@ -1,21 +1,20 @@
-﻿using Domain.Common;
+﻿using Application.Wrappers;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Application.Features.ScheduleEvents.Commands.Create
 {
-    public class ScheduleEvent : BaseEntity
+    public class CreateScheduleEventCommand : IRequest<Response<int>>
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int WorkoutGroupId { get; set; }
-        public WorkoutGroup WorkoutGroup { get; set; }
         public bool TrainerMembershipIsChanged { get; set; }
-        public IList<Trainer> Trainers { get; set; }
-        public Location Location { get; set; }
+        public IList<int> Trainers { get; set; }
         public int LocationId { get; set; }
     }
 }

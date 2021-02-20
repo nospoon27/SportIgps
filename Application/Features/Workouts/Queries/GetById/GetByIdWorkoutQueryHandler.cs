@@ -23,7 +23,11 @@ namespace Application.Features.Workouts.Queries.GetById
         public async Task<Response<GetByIdWorkoutQueryResponse>> Handle(GetByIdWorkoutQuery request, CancellationToken cancellationToken)
         {
             var workout = (await _unitOfWork.GetRepository<Workout>().GetSingleOrDefaultAsync(
-                predicate: x => x.Id == request.Id))
+                predicate: x => x.Id == request.Id,
+                include: s => s.Include(x => x.Sport)
+                .Include(x => x.Location)
+                .Include(x => x.Trainer)
+                .ThenInclude(x => x.User)))
                 ?? throw new NotFoundException(nameof(Workout), request.Id);
 
             return new Response<GetByIdWorkoutQueryResponse>(_mapper.Map<GetByIdWorkoutQueryResponse>(workout));

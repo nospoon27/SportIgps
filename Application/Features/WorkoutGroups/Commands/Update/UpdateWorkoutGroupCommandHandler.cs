@@ -26,6 +26,9 @@ namespace Application.Features.WorkoutGroups.Commands.Update
             if (item == null) throw new NotFoundException("WorkoutGroup", request.Id);
 
             item.Name = request.Name;
+            item.Description = request.Description;
+            item.LocationId = request.LocationId;
+            item.SportId = request.SportId;
             await _unitOfWork.SaveChangesAsync();
 
             return new Response<int>(request.Id);

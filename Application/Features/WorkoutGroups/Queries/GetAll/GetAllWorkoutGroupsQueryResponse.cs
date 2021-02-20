@@ -8,5 +8,7 @@ namespace Application.Features.WorkoutGroups.Queries.GetAll
     public class GetAllWorkoutGroupsQueryResponse : BaseEntity
     {
         public string Name { get; set; }
+        public int LocationId { get; set; }
+        public int SportId { get; set; }
     }
 }

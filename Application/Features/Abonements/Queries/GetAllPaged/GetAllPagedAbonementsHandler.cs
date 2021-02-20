@@ -27,7 +27,8 @@ namespace Application.Features.Abonements.Queries.GetAllPaged
                 selector: s => _mapper.Map<GetAllPagedAbonementsResponse>(s),
                 sieve: request,
                 include: s => s.Include(x => x.AbonementLimit)
-                               .Include(x => x.Workout))).ToPagedResponse();
+                               .Include(x => x.Workout)
+                               .Include(x => x.WorkoutGroup))).ToPagedResponse();
             return items;
         }
     }
