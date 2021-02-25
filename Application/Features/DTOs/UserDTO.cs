@@ -1,13 +1,15 @@
-﻿using Domain.Entities.Enums;
+﻿using Domain.Common;
+using Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.Features.Users.Queries.GetAllPaged
+namespace Application.Features.DTOs
 {
-    public class GetAllPagedUsersResponse
+    public class UserDTO : BaseEntity
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }

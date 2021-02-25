@@ -1,4 +1,5 @@
 ﻿using Application.Features.Common;
+using Application.Features.DTOs;
 using Application.Features.Locations.Queries.GetAll;
 using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
@@ -13,17 +14,17 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Users.Queries.GetAll
 {
-    public class GetAllUsersQueryHandler : CommonHandler, IRequestHandler<GetAllUsersQuery, Response<IList<GetAllUsersResponse>>>
+    public class GetAllUsersQueryHandler : CommonHandler, IRequestHandler<GetAllUsersQuery, Response<IList<UserDTO>>>
     {
         public GetAllUsersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        public async Task<Response<IList<GetAllUsersResponse>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IList<UserDTO>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
             var items = await _unitOfWork.GetRepository<User>().GetAllAsync();
-            var mapped = _mapper.Map<IList<GetAllUsersResponse>>(items);
-            return new Response<IList<GetAllUsersResponse>>(mapped);
+            var mapped = _mapper.Map<IList<UserDTO>>(items);
+            return new Response<IList<UserDTO>>(mapped);
         }
     }
 }

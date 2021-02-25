@@ -1,4 +1,5 @@
-﻿using Application.Features.Locations.Queries.GetAllPaged;
+﻿using Application.Features.DTOs;
+using Application.Features.Locations.Queries.GetAllPaged;
 using Application.Parameters;
 using Application.Sieve.Models;
 using Application.Wrappers;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace Application.Features.Locations.Queris.GetAllPaged
 {
-    public class GetAllPagedLocationsQuery : SieveModel, IRequest<PagedResponse<IList<GetAllPagedLocationsResponse>>>
+    public class GetAllPagedLocationsQuery : SieveModel, IRequest<PagedResponse<IList<LocationDTO>>>
     {
     }
 }

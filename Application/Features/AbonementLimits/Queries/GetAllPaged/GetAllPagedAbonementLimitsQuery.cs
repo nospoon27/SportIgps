@@ -1,4 +1,5 @@
-﻿using Application.Sieve.Models;
+﻿using Application.Features.DTOs;
+using Application.Sieve.Models;
 using Application.Wrappers;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.AbonementLimits.Queries.GetAllPaged
 {
-    public class GetAllPagedAbonementLimitsQuery : SieveModel, IRequest<PagedResponse<IList<GetAllPagedAbonementLimitsResponse>>>
+    public class GetAllPagedAbonementLimitsQuery : SieveModel, IRequest<PagedResponse<IList<AbonementLimitDTO>>>
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Queries.GetById;
+﻿using Application.Features.DTOs;
+using Application.Features.Users.Queries.GetById;
 using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Locations.Queris.GetById
 {
-    public class GetLocationByIdHandler : IRequestHandler<GetLocationByIdQuery, Response<GetLocationByIdResponse>>
+    public class GetLocationByIdHandler : IRequestHandler<GetLocationByIdQuery, Response<LocationDTO>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,11 +24,11 @@ namespace Application.Features.Locations.Queris.GetById
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<Response<GetLocationByIdResponse>> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<LocationDTO>> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
         {
             var location = await _unitOfWork.GetRepository<Location>().FindAsync(request.Id);
             if (location == null) throw new KeyNotFoundException($"Локация с ключом {request.Id} не найдена");
-            var response = new Response<GetLocationByIdResponse>(_mapper.Map<GetLocationByIdResponse>(location));
+            var response = new Response<LocationDTO>(_mapper.Map<LocationDTO>(location));
 
             return response;
         }

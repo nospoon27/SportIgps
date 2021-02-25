@@ -1,4 +1,5 @@
-﻿using Application.Features.Users.Commands.DeleteUserById;
+﻿using Application.Features.DTOs;
+using Application.Features.Users.Commands.DeleteUserById;
 using Application.Features.Users.Commands.UpdateUser;
 using Application.Features.Users.Queries.GetAll;
 using Application.Features.Users.Queries.GetAllPaged;
@@ -15,19 +16,19 @@ namespace Web.API.Controllers
     public class UsersController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedUsersResponse>>>> GetPaged([FromQuery] GetAllPagedUsersQuery request)
+        public async Task<ActionResult<PagedResponse<IList<UserDTO>>>> GetPaged([FromQuery] GetAllPagedUsersQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllUsersResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<UserDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllUsersQuery()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetUserByIdResponse>> Get([FromRoute] int id)
+        public async Task<ActionResult<UserDTO>> Get([FromRoute] int id)
         {
             return Ok(await Mediator.Send(new GetUserByIdQuery { Id = id }));
         }
@@ -46,7 +47,7 @@ namespace Web.API.Controllers
         }
 
         [HttpGet("countryCodes")]
-        public async Task<ActionResult<Response<IList<GetCountryCodesResponse>>>> GetCountryCodes()
+        public async Task<ActionResult<Response<IList<CountryCodeDTO>>>> GetCountryCodes()
         {
             return Ok(await Mediator.Send(new GetCountryCodesQuery()));
         }

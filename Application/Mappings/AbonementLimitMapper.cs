@@ -2,6 +2,7 @@
 using Application.Features.AbonementLimits.Queries.GetAll;
 using Application.Features.AbonementLimits.Queries.GetAllPaged;
 using Application.Features.AbonementLimits.Queries.GetById;
+using Application.Features.DTOs;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -18,9 +19,7 @@ namespace Application.Mappings
         {
             CreateMap<CreateAbonementLimitCommand, AbonementLimit>().ReverseMap();
 
-            CreateMap<AbonementLimit, GetAllAbonementLimitsResponse>();
-            CreateMap<AbonementLimit, GetByIdAbonementLimitResponse>();
-            CreateMap<AbonementLimit, GetAllPagedAbonementLimitsResponse>();
+            CreateMap<AbonementLimit, AbonementLimitDTO>();
         }
     }
 }

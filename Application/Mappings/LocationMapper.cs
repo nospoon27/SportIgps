@@ -1,4 +1,5 @@
-﻿using Application.Features.Locations.Commands.CreateLocation;
+﻿using Application.Features.DTOs;
+using Application.Features.Locations.Commands.CreateLocation;
 using Application.Features.Locations.Commands.UpdateLocation;
 using Application.Features.Locations.Queries.GetAll;
 using Application.Features.Locations.Queries.GetAllPaged;
@@ -15,10 +16,8 @@ namespace Application.Mappings
     {
         public LocationMapper()
         {
-            CreateMap<GetLocationByIdResponse, Location>().ReverseMap();
-            CreateMap<GetAllPagedLocationsResponse, Location>().ReverseMap();
+            CreateMap<Location, LocationDTO>();
             CreateMap<CreateLocationCommand, Location>().ReverseMap();
-            CreateMap<GetAllLocationsResponse, Location>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Wrappers;
+﻿using Application.Features.DTOs;
+using Application.Wrappers;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Application.Features.Users.Queries.GetCountryCodes
 {
-    public class GetCountryCodesQuery : IRequest<Response<IList<GetCountryCodesResponse>>>
+    public class GetCountryCodesQuery : IRequest<Response<IList<CountryCodeDTO>>>
     {
     }
 }

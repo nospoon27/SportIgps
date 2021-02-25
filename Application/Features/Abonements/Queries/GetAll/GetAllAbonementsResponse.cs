@@ -6,6 +6,7 @@ namespace Application.Features.Abonements.Queries.GetAll
 {
     public class GetAllAbonementsResponse
     {
+        public int Id { get; set; }
         public bool IsChild { get; set; }
         /// <summary>
         /// Ограниченность

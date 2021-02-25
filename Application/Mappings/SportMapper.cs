@@ -1,4 +1,5 @@
-﻿using Application.Features.Sports.Commands.Create;
+﻿using Application.Features.DTOs;
+using Application.Features.Sports.Commands.Create;
 using Application.Features.Sports.Queries.GetAll;
 using Application.Features.Sports.Queries.GetAllPaged;
 using Application.Features.Sports.Queries.GetById;
@@ -15,9 +16,7 @@ namespace Application.Mappings
         public SportMapper()
         {
             CreateMap<CreateSportCommand, Sport>();
-            CreateMap<Sport, GetAllSportsResponse>();
-            CreateMap<Sport, GetAllPagedSportsResponse>();
-            CreateMap<Sport, GetByIdSportQueryResponse>();
+            CreateMap<Sport, SportDTO>();
         }
     }
 }

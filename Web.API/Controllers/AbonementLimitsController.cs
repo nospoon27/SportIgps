@@ -4,6 +4,7 @@ using Application.Features.AbonementLimits.Commands.Update;
 using Application.Features.AbonementLimits.Queries.GetAll;
 using Application.Features.AbonementLimits.Queries.GetAllPaged;
 using Application.Features.AbonementLimits.Queries.GetById;
+using Application.Features.DTOs;
 using Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,20 +19,20 @@ namespace Web.API.Controllers
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IList<GetByIdAbonementLimitResponse>>> Get([FromRoute] GetByIdAbonementLimitQuery request)
+        public async Task<ActionResult<IList<AbonementLimitDTO>>> Get([FromRoute] GetByIdAbonementLimitQuery request)
         {
             _logger.Info("INFO INFO");
             return Ok(await Mediator.Send(request));
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<IList<GetAllPagedAbonementLimitsResponse>>>> GetAllPaged([FromQuery] GetAllPagedAbonementLimitsQuery request)
+        public async Task<ActionResult<Response<IList<AbonementLimitDTO>>>> GetAllPaged([FromQuery] GetAllPagedAbonementLimitsQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllAbonementLimitsResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<AbonementLimitDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllAbonementLimitsQuery()));
         }

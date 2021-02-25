@@ -1,4 +1,5 @@
-﻿using Application.Wrappers;
+﻿using Application.Features.DTOs;
+using Application.Wrappers;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Application.Features.Users.Queries.GetAll
 {
-    public class GetAllUsersQuery : IRequest<Response<IList<GetAllUsersResponse>>>
+    public class GetAllUsersQuery : IRequest<Response<IList<UserDTO>>>
     {
     }
 }

@@ -1,6 +1,6 @@
-﻿using Application.DTOs.Users;
-using Application.Extensions;
+﻿using Application.Extensions;
 using Application.Features.Common;
+using Application.Features.DTOs;
 using Application.Interfaces.UnitOfWork;
 using Application.Interfaces.UnitOfWork.Sorting;
 using Application.Parameters;
@@ -17,16 +17,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Trainers.Queries.GetAllPaged
 {
-    public class GetAllPagedTrainersHandler : CommonHandler, IRequestHandler<GetAllPagedTrainersQuery, PagedResponse<IList<GetAllPagedTrainersResponse>>>
+    public class GetAllPagedTrainersHandler : CommonHandler, IRequestHandler<GetAllPagedTrainersQuery, PagedResponse<IList<TrainerDTO>>>
     {
         public GetAllPagedTrainersHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        public async Task<PagedResponse<IList<GetAllPagedTrainersResponse>>> Handle(GetAllPagedTrainersQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResponse<IList<TrainerDTO>>> Handle(GetAllPagedTrainersQuery request, CancellationToken cancellationToken)
         {
             var trainers = (await _unitOfWork.GetRepository<Trainer>().GetPagedListWithSieveAsync(
-                selector: s => _mapper.Map<GetAllPagedTrainersResponse>(s),
+                selector: s => _mapper.Map<TrainerDTO>(s),
                 sieve: request,
                 include: s => s.Include(x => x.User))).ToPagedResponse();
             //var trainers = (await _unitOfWork.GetRepository<Trainer>().GetPagedListWithSieveAsync(

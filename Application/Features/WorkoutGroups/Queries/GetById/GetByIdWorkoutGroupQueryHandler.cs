@@ -11,16 +11,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Application.Features.DTOs;
 
 namespace Application.Features.WorkoutGroups.Queries.GetById
 {
-    public class GetByIdWorkoutGroupQueryHandler : CommonHandler, IRequestHandler<GetByIdWorkoutGroupQuery, Response<GetByIdWorkoutGroupQueryResponse>>
+    public class GetByIdWorkoutGroupQueryHandler : CommonHandler, IRequestHandler<GetByIdWorkoutGroupQuery, Response<WorkoutGroupDTO>>
     {
         public GetByIdWorkoutGroupQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        public async Task<Response<GetByIdWorkoutGroupQueryResponse>> Handle(GetByIdWorkoutGroupQuery request, CancellationToken cancellationToken)
+        public async Task<Response<WorkoutGroupDTO>> Handle(GetByIdWorkoutGroupQuery request, CancellationToken cancellationToken)
         {
             var item = await _unitOfWork.GetRepository<WorkoutGroup>()
                 .GetSingleOrDefaultAsync(
@@ -32,7 +33,7 @@ namespace Application.Features.WorkoutGroups.Queries.GetById
                 predicate: x => x.Id == request.Id);
             if (item == null) throw new NotFoundException(nameof(WorkoutGroup), request.Id);
 
-            return new Response<GetByIdWorkoutGroupQueryResponse>(_mapper.Map<GetByIdWorkoutGroupQueryResponse>(item));
+            return new Response<WorkoutGroupDTO>(_mapper.Map<WorkoutGroupDTO>(item));
         }
     }
 }

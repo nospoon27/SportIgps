@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Features.Common;
+using Application.Features.DTOs;
 using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
@@ -14,23 +15,21 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Workouts.Queries.GetById
 {
-    public class GetByIdWorkoutQueryHandler : CommonHandler, IRequestHandler<GetByIdWorkoutQuery, Response<GetByIdWorkoutQueryResponse>>
+    public class GetByIdWorkoutQueryHandler : CommonHandler, IRequestHandler<GetByIdWorkoutQuery, Response<WorkoutDTO>>
     {
         public GetByIdWorkoutQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        public async Task<Response<GetByIdWorkoutQueryResponse>> Handle(GetByIdWorkoutQuery request, CancellationToken cancellationToken)
+        public async Task<Response<WorkoutDTO>> Handle(GetByIdWorkoutQuery request, CancellationToken cancellationToken)
         {
             var workout = (await _unitOfWork.GetRepository<Workout>().GetSingleOrDefaultAsync(
                 predicate: x => x.Id == request.Id,
                 include: s => s.Include(x => x.Sport)
-                .Include(x => x.Location)
-                .Include(x => x.Trainer)
-                .ThenInclude(x => x.User)))
+                .Include(x => x.Location)))
                 ?? throw new NotFoundException(nameof(Workout), request.Id);
 
-            return new Response<GetByIdWorkoutQueryResponse>(_mapper.Map<GetByIdWorkoutQueryResponse>(workout));
+            return new Response<WorkoutDTO>(_mapper.Map<WorkoutDTO>(workout));
         }
     }
 }

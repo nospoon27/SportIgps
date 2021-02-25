@@ -13,7 +13,5 @@ namespace Domain.Entities
         public int LocationId { get; set; }
         public Sport Sport { get; set; }
         public int SportId { get; set; }
-        public Trainer Trainer { get; set; }
-        public int? TrainerId { get; set; }
     }
 }

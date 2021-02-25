@@ -29,7 +29,6 @@ namespace Infrastructure.Persistence
         public DbSet<WorkoutGroup> WorkoutGroups { get; set; }
         public DbSet<WorkoutGroupClient> WorkoutGroupClients { get; set; }
         public DbSet<WorkoutGroupTrainer> WorkoutGroupTrainers { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<TrainerSpecialization> TrainerSpecializations { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -40,6 +39,7 @@ namespace Infrastructure.Persistence
         public DbSet<FileEntity> FileEntities { get; set; }
         public DbSet<ScheduleEvent> ScheduleEvents { get; set; }
         public DbSet<ScheduleEventTrainer> ScheduleEventTrainers { get; set; }
+        public DbSet<PersonalTraining> PersonalTrainings { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

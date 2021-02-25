@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(SportDbContext))]
-    partial class SportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210225085618_AddPersonalTrainings")]
+    partial class AddPersonalTrainings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -762,11 +764,16 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("SportId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("TrainerId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
 
                     b.HasIndex("SportId");
+
+                    b.HasIndex("TrainerId");
 
                     b.ToTable("Workout");
                 });
@@ -1094,9 +1101,15 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Trainer", "Trainer")
+                        .WithMany()
+                        .HasForeignKey("TrainerId");
+
                     b.Navigation("Location");
 
                     b.Navigation("Sport");
+
+                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("Domain.Entities.WorkoutGroup", b =>

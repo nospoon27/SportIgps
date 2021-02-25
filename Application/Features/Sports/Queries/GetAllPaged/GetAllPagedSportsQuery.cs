@@ -1,4 +1,5 @@
-﻿using Application.Parameters;
+﻿using Application.Features.DTOs;
+using Application.Parameters;
 using Application.Sieve.Models;
 using Application.Wrappers;
 using MediatR;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Application.Features.Sports.Queries.GetAllPaged
 {
-    public class GetAllPagedSportsQuery : SieveModel, IRequest<PagedResponse<IList<GetAllPagedSportsResponse>>>
+    public class GetAllPagedSportsQuery : SieveModel, IRequest<PagedResponse<IList<SportDTO>>>
     {
     }
 }

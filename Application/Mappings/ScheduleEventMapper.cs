@@ -1,4 +1,5 @@
-﻿using Application.Features.ScheduleEvents.Commands.Create;
+﻿using Application.Features.DTOs;
+using Application.Features.ScheduleEvents.Commands.Create;
 using Application.Features.ScheduleEvents.Queries.GetScheduleEventByWorkoutGroup.DTOs;
 using Application.Features.ScheduleEvents.Queries.GetWorkoutGroup;
 using Domain.Entities;
@@ -14,17 +15,8 @@ namespace Application.Mappings
     {
         public ScheduleEventMapper()
         {
-            CreateMap<ScheduleEvent, GetScheduleEventsByWorkoutGroupResponse>()
+            CreateMap<ScheduleEvent, ScheduleEventDTO>()
                 .ForMember(f => f.Location, o => o.MapFrom(x => x.Location.Name));
-
-            CreateMap<Trainer, ScheduleTrainerDTO>()
-                .ForMember(f => f.Id, o => o.MapFrom(x => x.Id))
-                .ForMember(f => f.UserId, o => o.MapFrom(x => x.User.Id))
-                .ForMember(f => f.Avatar, o =>
-                {
-                    o.PreCondition(x => x.User.UserPhoto != null);
-                    o.MapFrom(x => x.User.UserPhoto.SmallUrl);
-                });
 
             CreateMap<Trainer, int>()
                 .ConvertUsing(src => src.Id);

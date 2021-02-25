@@ -9,6 +9,7 @@ namespace Application.Features.WorkoutGroups.Commands.Create
     public class CreateWorkoutGroupCommand : IRequest<Response<int>>
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         public int LocationId { get; set; }
         public int SportId { get; set; }
     }

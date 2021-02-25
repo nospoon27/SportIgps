@@ -1,21 +1,20 @@
-﻿using Application.Features.ScheduleEvents.Queries.GetScheduleEventByWorkoutGroup.DTOs;
+﻿using Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.ScheduleEvents.Queries.GetWorkoutGroup
+namespace Application.Features.DTOs
 {
-    public class GetScheduleEventsByWorkoutGroupResponse
+    public class ScheduleEventDTO : BaseEntity
     {
-        public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int Duration => (End - Start).Minutes;
         public int WorkoutGroupId { get; set; }
         public bool TrainerMembershipIsChanged { get; set; }
-        public IList<ScheduleTrainerDTO> Trainers { get; set; }
+        public IList<TrainerDTO> Trainers { get; set; }
         public string Location { get; set; }
     }
 }

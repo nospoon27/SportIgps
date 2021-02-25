@@ -1,4 +1,5 @@
-﻿using Application.Features.Trainers.Commands.Create;
+﻿using Application.Features.DTOs;
+using Application.Features.Trainers.Commands.Create;
 using Application.Features.Trainers.Commands.DeleteById;
 using Application.Features.Trainers.Commands.Update;
 using Application.Features.Trainers.Queries.GetAllPaged;
@@ -15,19 +16,19 @@ namespace Web.API.Controllers
     public class TrainersController : BaseApiController
     {
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<GetByIdTrainerQueryResponse>>> GetById([FromRoute] GetByIdTrainerQuery query)
+        public async Task<ActionResult<Response<TrainerDTO>>> GetById([FromRoute] GetByIdTrainerQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedTrainersResponse>>>> GetPaged([FromQuery] GetAllPagedTrainersQuery query)
+        public async Task<ActionResult<PagedResponse<IList<TrainerDTO>>>> GetPaged([FromQuery] GetAllPagedTrainersQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllPagedTrainersResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<TrainerDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllPagedTrainersQuery()));
         }

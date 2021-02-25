@@ -1,4 +1,5 @@
-﻿using Application.Features.Sports.Commands.Create;
+﻿using Application.Features.DTOs;
+using Application.Features.Sports.Commands.Create;
 using Application.Features.Sports.Commands.DeleteSportById;
 using Application.Features.Sports.Commands.UpdateSport;
 using Application.Features.Sports.Queries.GetAll;
@@ -16,19 +17,19 @@ namespace Web.API.Controllers
     public class SportsController : BaseApiController
     {
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<GetByIdSportQueryResponse>>> GetById([FromRoute] GetByIdSportQuery request)
+        public async Task<ActionResult<Response<SportDTO>>> GetById([FromRoute] GetByIdSportQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllSportsResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<SportDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllSportsQuery()));
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedSportsResponse>>>> GetAllPaged(
+        public async Task<ActionResult<PagedResponse<IList<SportDTO>>>> GetAllPaged(
             [FromQuery] GetAllPagedSportsQuery request)
         {
             return Ok(await Mediator.Send(request));

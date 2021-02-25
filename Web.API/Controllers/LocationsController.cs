@@ -1,4 +1,5 @@
-﻿using Application.Features.Locations.Commands.CreateLocation;
+﻿using Application.Features.DTOs;
+using Application.Features.Locations.Commands.CreateLocation;
 using Application.Features.Locations.Commands.DeleteLocationById;
 using Application.Features.Locations.Commands.UpdateLocation;
 using Application.Features.Locations.Queries.GetAll;
@@ -25,7 +26,7 @@ namespace Web.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllLocationsResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<LocationDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllLocationsQuery()));
         }
@@ -36,7 +37,7 @@ namespace Web.API.Controllers
         /// <param name="id">id локации</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<GetLocationByIdResponse>>> Get([FromRoute] int id)
+        public async Task<ActionResult<Response<LocationDTO>>> Get([FromRoute] int id)
         {
             return Ok(await Mediator.Send(new GetLocationByIdQuery { Id = id }));
         }
@@ -47,7 +48,7 @@ namespace Web.API.Controllers
         /// <param name="query">Пагинация и сортировка</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<GetAllPagedLocationsResponse>>> GetAllPaged([FromQuery] GetAllPagedLocationsQuery query)
+        public async Task<ActionResult<PagedResponse<LocationDTO>>> GetAllPaged([FromQuery] GetAllPagedLocationsQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

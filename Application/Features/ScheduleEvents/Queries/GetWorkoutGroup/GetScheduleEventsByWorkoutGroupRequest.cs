@@ -1,4 +1,5 @@
-﻿using Application.Wrappers;
+﻿using Application.Features.DTOs;
+using Application.Wrappers;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.ScheduleEvents.Queries.GetWorkoutGroup
 {
-    public class GetScheduleEventsByWorkoutGroupRequest : IRequest<Response<IList<GetScheduleEventsByWorkoutGroupResponse>>>
+    public class GetScheduleEventsByWorkoutGroupRequest : IRequest<Response<IList<ScheduleEventDTO>>>
     {
         public int WorkoutGroupId { get; set; }
         public DateTime Start { get; set; }

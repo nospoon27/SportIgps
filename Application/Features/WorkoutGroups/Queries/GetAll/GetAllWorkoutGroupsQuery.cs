@@ -1,4 +1,5 @@
-﻿using Application.Parameters;
+﻿using Application.Features.DTOs;
+using Application.Parameters;
 using Application.Wrappers;
 using MediatR;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Application.Features.WorkoutGroups.Queries.GetAll
 {
-    public class GetAllWorkoutGroupsQuery : IRequest<Response<IList<GetAllWorkoutGroupsQueryResponse>>>
+    public class GetAllWorkoutGroupsQuery : IRequest<Response<IList<WorkoutGroupDTO>>>
     {
         
     }

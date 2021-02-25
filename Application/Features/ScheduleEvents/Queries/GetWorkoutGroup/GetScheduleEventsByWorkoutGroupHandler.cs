@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.UnitOfWork;
+﻿using Application.Features.DTOs;
+using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
 using Domain.Entities;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.ScheduleEvents.Queries.GetWorkoutGroup
 {
-    public class GetScheduleEventsByWorkoutGroupHandler : IRequestHandler<GetScheduleEventsByWorkoutGroupRequest, Response<IList<GetScheduleEventsByWorkoutGroupResponse>>>
+    public class GetScheduleEventsByWorkoutGroupHandler : IRequestHandler<GetScheduleEventsByWorkoutGroupRequest, Response<IList<ScheduleEventDTO>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -26,7 +27,7 @@ namespace Application.Features.ScheduleEvents.Queries.GetWorkoutGroup
             _mapper = mapper;
         }
 
-        public async Task<Response<IList<GetScheduleEventsByWorkoutGroupResponse>>> Handle(GetScheduleEventsByWorkoutGroupRequest request, CancellationToken cancellationToken)
+        public async Task<Response<IList<ScheduleEventDTO>>> Handle(GetScheduleEventsByWorkoutGroupRequest request, CancellationToken cancellationToken)
         {
             var events = await _unitOfWork.GetRepository<ScheduleEvent>()
                 .GetAllAsync(
@@ -36,9 +37,9 @@ namespace Application.Features.ScheduleEvents.Queries.GetWorkoutGroup
                     .ThenInclude(t => t.User)
                     .ThenInclude(u => u.UserPhoto));
 
-            var result = _mapper.Map<IList<GetScheduleEventsByWorkoutGroupResponse>>(events);
+            var result = _mapper.Map<IList<ScheduleEventDTO>>(events);
 
-            return new Response<IList<GetScheduleEventsByWorkoutGroupResponse>>(result);
+            return new Response<IList<ScheduleEventDTO>>(result);
         }
 
         private Expression<Func<ScheduleEvent, bool>> GetPredicate(GetScheduleEventsByWorkoutGroupRequest request)

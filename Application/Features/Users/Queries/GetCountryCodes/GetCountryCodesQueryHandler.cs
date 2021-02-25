@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.UnitOfWork;
+﻿using Application.Features.DTOs;
+using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
 using Domain.Entities;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Users.Queries.GetCountryCodes
 {
-    public class GetCountryCodesQueryHandler : IRequestHandler<GetCountryCodesQuery, Response<IList<GetCountryCodesResponse>>>
+    public class GetCountryCodesQueryHandler : IRequestHandler<GetCountryCodesQuery, Response<IList<CountryCodeDTO>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,10 +24,10 @@ namespace Application.Features.Users.Queries.GetCountryCodes
             _mapper = mapper;
         }
 
-        public async Task<Response<IList<GetCountryCodesResponse>>> Handle(GetCountryCodesQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IList<CountryCodeDTO>>> Handle(GetCountryCodesQuery request, CancellationToken cancellationToken)
         {
             var countryCodes = await _unitOfWork.GetRepository<CountryCode>().GetAllAsync();
-            return new Response<IList<GetCountryCodesResponse>>(_mapper.Map<IList<GetCountryCodesResponse>>(countryCodes));
+            return new Response<IList<CountryCodeDTO>>(_mapper.Map<IList<CountryCodeDTO>>(countryCodes));
         }
     }
 }

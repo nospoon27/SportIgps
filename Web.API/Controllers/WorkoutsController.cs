@@ -1,4 +1,5 @@
-﻿using Application.Features.Workouts.Commands.Create;
+﻿using Application.Features.DTOs;
+using Application.Features.Workouts.Commands.Create;
 using Application.Features.Workouts.Commands.DeleteById;
 using Application.Features.Workouts.Commands.Update;
 using Application.Features.Workouts.Queries.GetAll;
@@ -16,19 +17,19 @@ namespace Web.API.Controllers
     public class WorkoutsController : BaseApiController
     {
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<GetByIdWorkoutQueryResponse>>> GetById([FromRoute] GetByIdWorkoutQuery query)
+        public async Task<ActionResult<Response<WorkoutDTO>>> GetById([FromRoute] GetByIdWorkoutQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<IList<GetAllPagedWorkoutsResponse>>>> GetPaged([FromQuery] GetAllPagedWorkoutsQuery query)
+        public async Task<ActionResult<PagedResponse<IList<WorkoutDTO>>>> GetPaged([FromQuery] GetAllPagedWorkoutsQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllWorkoutsQueryResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<WorkoutDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllWorkoutsQuery()));
         }
