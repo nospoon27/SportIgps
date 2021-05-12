@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Web.API.Configurations.ControllerModelConventions
 {
     // НЕ РАБОТАЕТ
+    [Obsolete]
     public class CamelCaseRoutingConvention : IControllerModelConvention
     {
         public void Apply(ControllerModel controller)

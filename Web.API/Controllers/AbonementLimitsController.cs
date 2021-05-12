@@ -11,10 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
-    public class AbonementLimitsController : BaseApiController
+    /// <summary>
+    /// Ограничения абонементов
+    /// </summary>
+    public class AbonementLimitsController : BaseCrudApiController
     {
         private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -26,7 +30,7 @@ namespace Web.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<IList<AbonementLimitDTO>>>> GetAllPaged([FromQuery] GetAllPagedAbonementLimitsQuery request)
+        public async Task<ActionResult<PagedResponse<IList<AbonementLimitDTO>>>> GetAllPaged([FromQuery] GetAllPagedAbonementLimitsQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
@@ -45,7 +49,7 @@ namespace Web.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody] CreateAbonementLimitCommand command)
+        public async Task<ActionResult<Response<int>>> Create([FromBody] CreateAbonementLimitCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

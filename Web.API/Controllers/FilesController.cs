@@ -13,6 +13,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System.IO;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
@@ -22,7 +23,7 @@ namespace Web.API.Controllers
         public async Task<ActionResult> Test()
         {
             FileInfo fileInfo = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "1.jpg"));
-            using(var image = await Image.LoadAsync(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "1.jpg")))
+            using (var image = await Image.LoadAsync(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "1.jpg")))
             {
                 image.Mutate(x => x.Resize(50, 50));
                 image.Save(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "2.jpg"));

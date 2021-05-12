@@ -2,16 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Web.API.Controllers
+namespace Web.API.Common
 {
     [ApiController]
-    [Route("api/v{version:apiVersion=1}/[controller]")]
+    [Route("api/crud/[controller]")]
     [Produces("application/json")]
-    public class WithVersionBaseApiController : ControllerBase
+    public class BaseCrudApiController : ControllerBase
     {
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();

@@ -14,7 +14,7 @@ namespace Domain.Entities
         public int WorkoutGroupId { get; set; }
         public WorkoutGroup WorkoutGroup { get; set; }
         public bool TrainerMembershipIsChanged { get; set; }
-        public IList<Trainer> Trainers { get; set; }
+        public IList<ScheduleEventTrainer> ScheduleEventTrainers { get; set; }
         public Location Location { get; set; }
         public int LocationId { get; set; }
     }

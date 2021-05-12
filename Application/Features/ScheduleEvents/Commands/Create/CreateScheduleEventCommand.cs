@@ -13,7 +13,6 @@ namespace Application.Features.ScheduleEvents.Commands.Create
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int WorkoutGroupId { get; set; }
-        public bool TrainerMembershipIsChanged { get; set; }
         public IList<int> Trainers { get; set; }
         public int LocationId { get; set; }
     }

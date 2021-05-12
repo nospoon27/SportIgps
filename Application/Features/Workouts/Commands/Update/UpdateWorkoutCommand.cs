@@ -13,7 +13,5 @@ namespace Application.Features.Workouts.Commands.Update
         public string Description { get; set; }
         public int LocationId { get; set; }
         public int SportId { get; set; }
-        public int WorkoutGroupId { get; set; }
-        public int? TrainerId { get; set; }
     }
 }

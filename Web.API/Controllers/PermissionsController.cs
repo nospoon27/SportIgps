@@ -10,29 +10,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
-    public class PermissionsController : BaseApiController
+    /// <summary>
+    /// Доступы
+    /// </summary>
+    public class PermissionsController : BaseCrudApiController
     {
+
         /// <summary>
         /// Получить все Permissions текущего пользователя
         /// </summary>
         /// <returns></returns>
         [Authorize]
         [HttpGet("user")]
-        public async Task<ActionResult<Response<string>>> GetCurrentUserPermissions()
+        public async Task<ActionResult<Response<IList<GetCurrentUserPermissionsResponse>>>> GetCurrentUserPermissions()
         {
             return Ok(await Mediator.Send(new GetCurrentUserPermissionsQuery()));
         }
-
         /// <summary>
         /// Добавляет Permission к определенной роли
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize (Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Response<int>>> AddPermission(AddPermissionCommand request)
         {
             return Ok(await Mediator.Send(request));
@@ -43,12 +47,12 @@ namespace Web.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("all")]
-        [Authorize (Roles = "admin")]
+        //[Authorize (Roles = "admin")]
         public async Task<ActionResult<Response<IList<GetAllPermissionsResponse>>>> GetAll([FromQuery] GetAllPermissionsQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
-        
+
         /// <summary>
         /// Изменить Permission
         /// </summary>
@@ -56,8 +60,8 @@ namespace Web.API.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [Authorize (Roles = "admin")]
-        public async Task<ActionResult<Response<int>>> Update([FromRoute]int id, [FromBody] UpdatePermissionCommand command)
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<Response<int>>> Update([FromRoute] int id, [FromBody] UpdatePermissionCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

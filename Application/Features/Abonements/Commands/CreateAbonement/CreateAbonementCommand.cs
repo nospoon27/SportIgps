@@ -12,5 +12,6 @@ namespace Application.Features.Abonements.Commands.CreateAbonement
         public int AbonementLimitId { get; set; }
         public double Price { get; set; }
         public int WorkoutId { get; set; }
+        public int? WorkoutGroupId { get; set; }
     }
 }

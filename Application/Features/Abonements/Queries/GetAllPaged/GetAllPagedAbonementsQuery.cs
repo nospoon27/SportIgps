@@ -1,4 +1,5 @@
-﻿using Application.Sieve.Models;
+﻿using Application.Features.DTOs;
+using Application.Sieve.Models;
 using Application.Wrappers;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Abonements.Queries.GetAllPaged
 {
-    public class GetAllPagedAbonementsQuery : SieveModel, IRequest<Response<IList<GetAllPagedAbonementsResponse>>>
+    public class GetAllPagedAbonementsQuery : SieveModel, IRequest<Response<IList<AbonementDTO>>>
     {
     }
 }

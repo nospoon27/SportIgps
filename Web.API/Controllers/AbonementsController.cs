@@ -5,6 +5,7 @@ using Application.Features.Abonements.Commands.UpdateAbonement;
 using Application.Features.Abonements.Queries.GetAll;
 using Application.Features.Abonements.Queries.GetAllPaged;
 using Application.Features.Abonements.Queries.GetById;
+using Application.Features.DTOs;
 using Application.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,25 +13,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
-    public class AbonementsController : BaseApiController
+    /// <summary>
+    /// Абонементы
+    /// </summary>
+    public class AbonementsController : BaseCrudApiController
     {
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<GetByIdAbonementResponse>>> GetById([FromRoute] GetByIdAbonementQuery request)
+        public async Task<ActionResult<Response<AbonementDTO>>> GetById([FromRoute] GetByIdAbonementQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<IList<GetAllPagedAbonementsResponse>>>> GetAllPaged([FromQuery] GetAllPagedAbonementsQuery request)
+        public async Task<ActionResult<Response<IList<AbonementDTO>>>> GetAllPaged([FromQuery] GetAllPagedAbonementsQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<Response<IList<GetAllAbonementsResponse>>>> GetAll()
+        public async Task<ActionResult<Response<IList<AbonementDTO>>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAllAbonementsQuery()));
         }

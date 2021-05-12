@@ -33,7 +33,8 @@ namespace Application.Features.ScheduleEvents.Queries.GetWorkoutGroup
                 .GetAllAsync(
                 predicate: GetPredicate(request),
                 orderBy: x => x.OrderBy(e => e.Start).ThenBy(e => e.End),
-                include: x => x.Include(x => x.Trainers)
+                include: x => x.Include(x => x.ScheduleEventTrainers)
+                    .ThenInclude(x => x.Trainer)
                     .ThenInclude(t => t.User)
                     .ThenInclude(u => u.UserPhoto));
 

@@ -18,7 +18,7 @@ namespace Web.API.Extensions
             {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",

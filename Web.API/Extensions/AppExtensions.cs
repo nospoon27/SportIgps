@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Web.API.Extensions
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sport WebAPI");
                 c.RoutePrefix = string.Empty;
+                c.DocExpansion(DocExpansion.None);
             });
         }
         public static void UseErrorHandlingMiddleware(this IApplicationBuilder app)

@@ -12,6 +12,5 @@ namespace Application.Features.Workouts.Commands.Create
         public string Description { get; set; }
         public int LocationId { get; set; }
         public int SportId { get; set; }
-        public int? TrainerId { get; set; }
     }
 }

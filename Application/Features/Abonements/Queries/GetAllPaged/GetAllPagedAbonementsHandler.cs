@@ -1,5 +1,6 @@
 ﻿using Application.Extensions;
 using Application.Features.Common;
+using Application.Features.DTOs;
 using Application.Interfaces.UnitOfWork;
 using Application.Wrappers;
 using AutoMapper;
@@ -15,16 +16,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Abonements.Queries.GetAllPaged
 {
-    public class GetAllPagedAbonementsHandler : CommonHandler, IRequestHandler<GetAllPagedAbonementsQuery, Response<IList<GetAllPagedAbonementsResponse>>>
+    public class GetAllPagedAbonementsHandler : CommonHandler, IRequestHandler<GetAllPagedAbonementsQuery, Response<IList<AbonementDTO>>>
     {
         public GetAllPagedAbonementsHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        public async Task<Response<IList<GetAllPagedAbonementsResponse>>> Handle(GetAllPagedAbonementsQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IList<AbonementDTO>>> Handle(GetAllPagedAbonementsQuery request, CancellationToken cancellationToken)
         {
             var items = (await _unitOfWork.GetRepository<Abonement>().GetPagedListWithSieveAsync(
-                selector: s => _mapper.Map<GetAllPagedAbonementsResponse>(s),
+                selector: s => _mapper.Map<AbonementDTO>(s),
                 sieve: request,
                 include: s => s.Include(x => x.AbonementLimit)
                                .Include(x => x.Workout)

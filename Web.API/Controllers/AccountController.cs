@@ -9,12 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Common;
 using Web.API.Filters;
 
 namespace Web.API.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController : WithVersionBaseApiController
+    public class AccountController : BaseApiController
     {
         private readonly IAccountService _accountService;
         private readonly IAuthenticatedUserService _authenticatedUserService;
@@ -57,12 +58,13 @@ namespace Web.API.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("refreshToken")]
-        public async Task<ActionResult<Response<AuthenticationResponse>>> RefreshToken()
+        public async Task<ActionResult<Response<AuthenticationResponse>>> RefreshToken(RefreshTokenRequest request)
         {
-            var cookieRefreshToken = Request.Cookies["refreshToken"];
+            var token = !string.IsNullOrEmpty(request.Token) ? request.Token : Request.Cookies["refreshToken"];
+            if (token == null) throw new ApiException("Токен обновления не найден.");
             var ipAddress = GenerateIPAddress();
-            
-            var result = await _accountService.RefreshToken(cookieRefreshToken, ipAddress);
+
+            var result = await _accountService.RefreshToken(token, ipAddress);
             if (result == null) throw new UnauthorizedException("Невалидный токен");
             setTokenCookie(result.Data.RefreshToken);
             return Ok(result);
@@ -77,7 +79,7 @@ namespace Web.API.Controllers
         public async Task<ActionResult<Response<bool>>> RevokeToken([FromBody] RevokeTokenRequest request)
         {
             var refreshToken = request.Token ?? Request.Cookies["refreshToken"];
-            
+
             if (string.IsNullOrEmpty(refreshToken)) throw new ApiException("Ошибка обновления доступа");
             var result = await _accountService.RevokeToken(refreshToken, GenerateIPAddress());
             Response.Cookies.Delete("refreshToken");

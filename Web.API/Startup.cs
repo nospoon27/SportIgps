@@ -123,8 +123,7 @@ namespace Web.API
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "api/v{version:apiVersion}/{controller}/{id?}"
-                    );
+                    pattern: "api/v{version:apiVersion}/{controller}/{id?}");
                 endpoints.MapControllers();
             });
         }

@@ -4,67 +4,49 @@
         <name>Web.API</name>
     </assembly>
     <members>
-        <member name="M:Web.API.Controllers.AccountController.Authenticate(Application.DTOs.Account.AuthenticationRequest)">
+        <member name="T:Web.API.Areas.crud.Controllers.AbonementLimitsController">
             <summary>
-            Аутентификация
+            Ограничения абонементов
             </summary>
-            <param name="request"></param>
-            <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.AccountController.RegisterAsync(Application.DTOs.Account.RegisterRequest)">
+        <member name="T:Web.API.Areas.crud.Controllers.AbonementsController">
             <summary>
-            Регистрация
+            Абонементы
             </summary>
-            <param name="request"></param>
-            <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.AccountController.RefreshToken">
+        <member name="T:Web.API.Areas.crud.Controllers.LocationsController">
             <summary>
-            Обновление токена
+            Локации
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.AccountController.RevokeToken(Application.DTOs.Account.RevokeTokenRequest)">
-            <summary>
-            Отозвать токен
-            </summary>
-            <param name="request"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Web.API.Controllers.AccountController.Me">
-            <summary>
-            Получить данные пользователя
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Web.API.Controllers.LocationsController.GetAll">
+        <member name="M:Web.API.Areas.crud.Controllers.LocationsController.GetAll">
             <summary>
             Все локации
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.Get(System.Int32)">
+        <member name="M:Web.API.Areas.crud.Controllers.LocationsController.Get(System.Int32)">
             <summary>
             Локация по id
             </summary>
             <param name="id">id локации</param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.GetAllPaged(Application.Features.Locations.Queris.GetAllPaged.GetAllPagedLocationsQuery)">
+        <member name="M:Web.API.Areas.crud.Controllers.LocationsController.GetAllPaged(Application.Features.Locations.Queris.GetAllPaged.GetAllPagedLocationsQuery)">
             <summary>
             Локации с пагинацией и сортировкой
             </summary>
             <param name="query">Пагинация и сортировка</param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.Create(Application.Features.Locations.Commands.CreateLocation.CreateLocationCommand)">
+        <member name="M:Web.API.Areas.crud.Controllers.LocationsController.Create(Application.Features.Locations.Commands.CreateLocation.CreateLocationCommand)">
             <summary>
             Добавить локацию
             </summary>
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.Update(System.Int32,Application.Features.Locations.Commands.UpdateLocation.UpdateLocationCommand)">
+        <member name="M:Web.API.Areas.crud.Controllers.LocationsController.Update(System.Int32,Application.Features.Locations.Commands.UpdateLocation.UpdateLocationCommand)">
             <summary>
             Изменить локацию
             </summary>
@@ -72,33 +54,32 @@
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.LocationsController.Delete(System.Int32)">
+        <member name="M:Web.API.Areas.crud.Controllers.LocationsController.Delete(System.Int32)">
             <summary>
             Удалить локацию
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.PermissionsController.GetCurrentUserPermissions">
+        <member name="T:Web.API.Areas.crud.Controllers.PermissionsController">
             <summary>
-            Получить все Permissions текущего пользователя
+            Доступы
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.PermissionsController.AddPermission(Application.Features.Permissions.Commands.AddPermission.AddPermissionCommand)">
+        <member name="M:Web.API.Areas.crud.Controllers.PermissionsController.AddPermission(Application.Features.Permissions.Commands.AddPermission.AddPermissionCommand)">
             <summary>
             Добавляет Permission к определенной роли
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.PermissionsController.GetAll(Application.Features.Permissions.Queries.GetAll.GetAllPermissionsQuery)">
+        <member name="M:Web.API.Areas.crud.Controllers.PermissionsController.GetAll(Application.Features.Permissions.Queries.GetAll.GetAllPermissionsQuery)">
             <summary>
             Получить все Permissions
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.PermissionsController.Update(System.Int32,Application.Features.Permissions.Commands.UpdatePermission.UpdatePermissionCommand)">
+        <member name="M:Web.API.Areas.crud.Controllers.PermissionsController.Update(System.Int32,Application.Features.Permissions.Commands.UpdatePermission.UpdatePermissionCommand)">
             <summary>
             Изменить Permission
             </summary>
@@ -106,12 +87,91 @@
             <param name="command"></param>
             <returns></returns>
         </member>
-        <member name="M:Web.API.Controllers.PermissionsController.Delete(Application.Features.Permissions.Commands.DeleteById.DeletePermissionByIdCommand)">
+        <member name="M:Web.API.Areas.crud.Controllers.PermissionsController.Delete(Application.Features.Permissions.Commands.DeleteById.DeletePermissionByIdCommand)">
             <summary>
             Удалить по Id
             </summary>
             <param name="command"></param>
             <returns></returns>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.PersonalTrainingController">
+            <summary>
+            Персональные тренеровки
+            </summary>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.RolesController">
+            <summary>
+            Роли
+            </summary>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.ScheduleEventsController">
+            <summary>
+            События расписания
+            </summary>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.SportsController">
+            <summary>
+            Виды спорта
+            </summary>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.UsersController">
+            <summary>
+            Пользователи
+            </summary>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.WorkoutGroupsController">
+            <summary>
+            Групповые занятия
+            </summary>
+        </member>
+        <member name="T:Web.API.Areas.crud.Controllers.WorkoutsController">
+            <summary>
+            Занятия
+            </summary>
+        </member>
+        <member name="M:Web.API.Areas.general.Controllers.AccountController.Authenticate(Application.DTOs.Account.AuthenticationRequest)">
+            <summary>
+            Аутентификация
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Areas.general.Controllers.AccountController.RegisterAsync(Application.DTOs.Account.RegisterRequest)">
+            <summary>
+            Регистрация
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Areas.general.Controllers.AccountController.RefreshToken(Application.DTOs.Account.RefreshTokenRequest)">
+            <summary>
+            Обновление токена
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Areas.general.Controllers.AccountController.RevokeToken(Application.DTOs.Account.RevokeTokenRequest)">
+            <summary>
+            Отозвать токен
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Areas.general.Controllers.AccountController.Me">
+            <summary>
+            Получить данные пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.API.Areas.general.Controllers.PermissionsController.GetCurrentUserPermissions">
+            <summary>
+            Получить все Permissions текущего пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Web.API.Controllers.TrainersController">
+            <summary>
+            Тренеры
+            </summary>
         </member>
     </members>
 </doc>

@@ -29,6 +29,10 @@ namespace Application.Features.ScheduleEvents.Commands.Create
             RuleFor(x => new { x.Start, x.End })
                 .Must(x => GetDifferenceBetweenDatesInMunute(x.Start, x.End) > MIN_DURATION_IN_MINUTE)
                 .WithMessage($"Продолжительность занятия не должно быть меньше {MIN_DURATION_IN_MINUTE} минут");
+
+            RuleFor(x => x.Trainers)
+                .NotNull().WithMessage("Тренеы не указаны")
+                .Must(x => x.Count > 0).WithMessage("Должен быть хотя бы 1 тренер");
         }
 
         private int GetDirrerenceBetweenDatesInHour(DateTime start, DateTime end)

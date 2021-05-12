@@ -13,8 +13,10 @@ namespace Application.Features.DTOs
         public DateTime End { get; set; }
         public int Duration => (End - Start).Minutes;
         public int WorkoutGroupId { get; set; }
+        public WorkoutGroupDTO WorkoutGroup { get; set; }
         public bool TrainerMembershipIsChanged { get; set; }
         public IList<TrainerDTO> Trainers { get; set; }
-        public string Location { get; set; }
+        public int LocationId { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

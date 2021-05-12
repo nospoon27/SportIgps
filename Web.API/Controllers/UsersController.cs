@@ -10,10 +10,14 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
-    public class UsersController : BaseApiController
+    /// <summary>
+    /// Пользователи
+    /// </summary>
+    public class UsersController : BaseCrudApiController
     {
         [HttpGet]
         public async Task<ActionResult<PagedResponse<IList<UserDTO>>>> GetPaged([FromQuery] GetAllPagedUsersQuery request)

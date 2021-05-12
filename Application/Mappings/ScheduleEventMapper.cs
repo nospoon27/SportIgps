@@ -22,7 +22,6 @@ namespace Application.Mappings
                 .ConvertUsing(src => src.Id);
 
             CreateMap<CreateScheduleEventCommand, ScheduleEvent>()
-                .ForMember(f => f.Trainers, o => o.MapFrom(x => x.Trainers))
                 .ForMember(f => f.LocationId, o => o.MapFrom(x => x.LocationId));
         }
     }

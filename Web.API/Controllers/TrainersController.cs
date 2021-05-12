@@ -2,6 +2,7 @@
 using Application.Features.Trainers.Commands.Create;
 using Application.Features.Trainers.Commands.DeleteById;
 using Application.Features.Trainers.Commands.Update;
+using Application.Features.Trainers.Queries.GetAll;
 using Application.Features.Trainers.Queries.GetAllPaged;
 using Application.Features.Trainers.Queries.GetById;
 using Application.Wrappers;
@@ -10,10 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
-    public class TrainersController : BaseApiController
+    /// <summary>
+    /// Тренеры
+    /// </summary>
+    public class TrainersController : BaseCrudApiController
     {
         [HttpGet("{id}")]
         public async Task<ActionResult<Response<TrainerDTO>>> GetById([FromRoute] GetByIdTrainerQuery query)
@@ -30,7 +35,7 @@ namespace Web.API.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<Response<IList<TrainerDTO>>>> GetAll()
         {
-            return Ok(await Mediator.Send(new GetAllPagedTrainersQuery()));
+            return Ok(await Mediator.Send(new GetAllTrainersQuery()));
         }
 
         [HttpPost]

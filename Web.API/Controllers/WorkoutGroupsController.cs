@@ -11,10 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.API.Common;
 
 namespace Web.API.Controllers
 {
-    public class WorkoutGroupsController : BaseApiController
+    /// <summary>
+    /// Групповые занятия
+    /// </summary>
+    public class WorkoutGroupsController : BaseCrudApiController
     {
         [HttpGet("{id}")]
         public async Task<ActionResult<Response<WorkoutGroupDTO>>> GetById([FromRoute] GetByIdWorkoutGroupQuery query)
